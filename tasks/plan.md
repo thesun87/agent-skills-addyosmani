@@ -15,11 +15,11 @@ Xây web đặt món cho Tuấn Linh Coffee bằng Next.js 15 + Prisma + Supabas
 | AD3 | Mỗi slice tự thêm **migration Prisma riêng** cho bảng nó cần (catalog → order/settings → admin) | Giữ lát cắt dọc; migration luôn tuần tự, không chạy song song |
 | AD4 | **Rate limit lưu trong Postgres** (bảng `RateLimitHit`, cửa sổ trượt) | Chạy đúng trên serverless Vercel mà không thêm dịch vụ (Upstash) — không cần hỏi thêm dependency |
 | AD5 | Realtime = **polling** (admin 5s, khách 15s) | Đủ đáp ứng tiêu chí ≤10s/≤15s; tránh phức tạp Supabase Realtime/WebSocket ở v1 |
-| AD6 | Thời gian lưu UTC trong DB; mọi phép tính giờ mở cửa/khung pickup dùng `Asia/Ho_Chi_Minh` qua `Intl`/`date-fns-tz` | Vercel chạy UTC — tránh lệch 7 tiếng |
+| AD6 | Thời gian lưu UTC trong DB; giờ mở cửa/khung pickup tính theo giờ VN bằng **offset cố định UTC+7** (VN không có DST) — không cần `date-fns-tz` | Vercel chạy UTC — tránh lệch 7 tiếng; bớt một dependency |
 | AD7 | Giỏ hàng chỉ lưu **productId + optionIds + quantity** ở client; giá hiển thị tính lại từ menu hiện tại | Giá cũ trong localStorage không bao giờ được tin; server tính lại khi đặt |
 | AD8 | Ảnh upload qua server action admin → Supabase Storage bằng **service role key chỉ ở server** | Không lộ key ra client; bucket public chỉ đọc |
 
-> Dependency ngoài Tech Stack trong spec: `date-fns-tz` (AD6), `bcryptjs`. Cả hai nhỏ, phục vụ trực tiếp yêu cầu đã duyệt — **cần bạn đồng ý** cùng lúc duyệt plan này.
+> Dependency ngoài Tech Stack trong spec: `bcryptjs` (`date-fns-tz` không còn cần — xem AD6). Đã được đồng ý.
 
 ## Dependency Graph
 
@@ -49,7 +49,7 @@ T1 Scaffold ──► T2 Supabase+Prisma ──► T3 Pure libs
 ### Phase 1 — Foundation
 - [x] T1: Scaffold dự án + design tokens + công cụ chất lượng (M)
 - [x] T2: Supabase local + Prisma + schema catalog + harness test tích hợp (M)
-- [ ] T3: Thư viện thuần: money, pricing, opening-hours (S)
+- [x] T3: Thư viện thuần: money, pricing, opening-hours (S)
 
 **Checkpoint 1** — build/lint/typecheck/test xanh; `supabase start` + `db:migrate` chạy được trên máy Windows.
 

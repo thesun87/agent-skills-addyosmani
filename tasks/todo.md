@@ -47,17 +47,17 @@
 
 ---
 
-### - [ ] T3: Thư viện thuần — money, pricing, opening-hours
+### - [x] T3: Thư viện thuần — money, pricing, opening-hours
 
 **Description:** TDD 3 module thuần: `formatVnd` (29000 → "29.000đ"); `calculateLinePrice` (base + delta options) và `calculateTotals` (theo snippet trong SPEC); `isOpenNow`, `nextOpeningTime`, `pickupSlots` (khung 15', sớm nhất now+15', trong giờ mở cửa, timezone `Asia/Ho_Chi_Minh`).
 
 **Acceptance criteria:**
-- [ ] `calculateTotals`: pickup phí 0; dưới ngưỡng có phí; bằng ngưỡng miễn phí
-- [ ] `isOpenNow` đúng ở biên 06:59/07:00/21:59/22:00 giờ VN khi máy chạy UTC
-- [ ] Coverage 100% cho 3 file này
+- [x] `calculateTotals`: pickup phí 0; dưới ngưỡng có phí; bằng ngưỡng miễn phí
+- [x] `isOpenNow` đúng ở biên 06:59/07:00/21:59/22:00 giờ VN khi máy chạy UTC
+- [x] Coverage 100% cho 3 file này
 
 **Verification:**
-- [ ] `pnpm test tests/unit/lib -- --coverage`
+- [x] `pnpm test tests/unit/lib -- --coverage`
 
 **Dependencies:** T1
 **Files likely touched:** `src/lib/money.ts`, `src/lib/pricing.ts`, `src/lib/opening-hours.ts`, `tests/unit/lib/*.test.ts`
@@ -66,7 +66,7 @@
 ---
 
 ### Checkpoint 1: Foundation
-- [ ] Tất cả lệnh build/lint/typecheck/test xanh
+- [x] Tất cả lệnh build/lint/typecheck/test xanh
 - [ ] Stack local khởi động từ đầu theo README trong ≤ 10 phút
 - [ ] Review với người dùng trước khi sang Phase 2
 
