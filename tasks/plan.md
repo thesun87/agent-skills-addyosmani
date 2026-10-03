@@ -48,7 +48,7 @@ T1 Scaffold ──► T2 Supabase+Prisma ──► T3 Pure libs
 
 ### Phase 1 — Foundation
 - [x] T1: Scaffold dự án + design tokens + công cụ chất lượng (M)
-- [ ] T2: Supabase local + Prisma + schema catalog + harness test tích hợp (M)
+- [x] T2: Supabase local + Prisma + schema catalog + harness test tích hợp (M)
 - [ ] T3: Thư viện thuần: money, pricing, opening-hours (S)
 
 **Checkpoint 1** — build/lint/typecheck/test xanh; `supabase start` + `db:migrate` chạy được trên máy Windows.

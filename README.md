@@ -14,7 +14,9 @@
 
 ```bash
 pnpm install
-cp .env.example .env.local
+cp .env.example .env
+pnpm supabase start      # Postgres + Storage local (cần Docker)
+pnpm db:migrate && pnpm db:seed
 pnpm dev                 # http://localhost:3000
 ```
 

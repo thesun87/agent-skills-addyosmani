@@ -116,7 +116,7 @@ Seed sẵn menu kiểu quán cafe Việt phổ biến, giá tham khảo mặt b�
 |---|---|
 | Framework | Next.js 15 (App Router, Server Components, Server Actions / Route Handlers) |
 | Ngôn ngữ | TypeScript 5 (`strict: true`) |
-| DB / ORM | PostgreSQL 16 + Prisma 6 |
+| DB / ORM | PostgreSQL 17 (Supabase) + Prisma 6 |
 | Validation | Zod (dùng chung schema cho form client và server) |
 | Auth admin | Auth.js v5 (Credentials provider) + bcrypt |
 | UI | Tailwind CSS 4 |
@@ -142,7 +142,8 @@ pnpm format                          # prettier --write .
 pnpm test                            # Vitest (unit + integration)
 pnpm test -- --coverage              # kèm báo cáo coverage
 pnpm test:e2e                        # Playwright
-pnpm db:migrate                      # prisma migrate dev
+pnpm db:migrate                      # prisma migrate dev (dev DB)
+pnpm db:deploy                       # prisma migrate deploy (test/prod DB)
 pnpm db:seed                         # seed danh mục, món mẫu, admin mặc định
 pnpm db:studio                       # prisma studio
 pnpm supabase start                  # Postgres + Storage local (cần Docker Desktop)

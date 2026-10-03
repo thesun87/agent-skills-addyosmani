@@ -1,0 +1,65 @@
+// Tuấn Linh Coffee — database schema. See SPEC.md "Mô hình dữ liệu".
+// Money is always stored as integer VND.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Category {
+  id        String    @id @default(cuid())
+  name      String
+  sortOrder Int       @default(0)
+  isVisible Boolean   @default(true)
+  products  Product[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Product {
+  id           String        @id @default(cuid())
+  categoryId   String
+  category     Category      @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  name         String
+  description  String        @default("")
+  basePrice    Int
+  imageUrl     String?
+  sortOrder    Int           @default(0)
+  isAvailable  Boolean       @default(true)
+  /// Archived products are hidden instead of hard-deleted once they appear in orders.
+  isArchived   Boolean       @default(false)
+  optionGroups OptionGroup[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  @@index([categoryId, sortOrder])
+}
+
+model OptionGroup {
+  id         String   @id @default(cuid())
+  productId  String
+  product    Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  name       String
+  isRequired Boolean  @default(false)
+  maxSelect  Int      @default(1)
+  sortOrder  Int      @default(0)
+  options    Option[]
+
+  @@index([productId])
+}
+
+model Option {
+  id         String      @id @default(cuid())
+  groupId    String
+  group      OptionGroup @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  name       String
+  priceDelta Int         @default(0)
+  sortOrder  Int         @default(0)
+
+  @@index([groupId])
+}

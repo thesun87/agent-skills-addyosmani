@@ -27,18 +27,18 @@
 
 ---
 
-### - [ ] T2: Supabase local + Prisma + schema catalog + harness test tích hợp
+### - [x] T2: Supabase local + Prisma + schema catalog + harness test tích hợp
 
 **Description:** Thêm Supabase CLI (devDependency), `supabase init`. Cấu hình Prisma trỏ vào Postgres local. Tạo migration đầu tiên gồm `Category`, `Product`, `OptionGroup`, `Option`. Prisma client singleton. Harness test tích hợp: dùng DB test riêng, reset giữa các test. Seed tối thiểu 2 danh mục, 4 món để dev.
 
 **Acceptance criteria:**
-- [ ] `pnpm supabase start` → `pnpm db:migrate` → `pnpm db:seed` chạy thành công trên Windows
-- [ ] Integration test mẫu tạo/đọc `Product` qua Prisma và tự dọn dữ liệu
-- [ ] Biến môi trường DB nằm trong `.env.example` với giá trị local mặc định của Supabase CLI
+- [x] `pnpm supabase start` → `pnpm db:migrate` → `pnpm db:seed` chạy thành công trên Windows
+- [x] Integration test mẫu tạo/đọc `Product` qua Prisma và tự dọn dữ liệu
+- [x] Biến môi trường DB nằm trong `.env.example` với giá trị local mặc định của Supabase CLI
 
 **Verification:**
-- [ ] `pnpm test tests/integration`
-- [ ] Manual: `pnpm db:studio` thấy dữ liệu seed
+- [x] `pnpm test tests/integration`
+- [x] Manual: `pnpm db:studio` thấy dữ liệu seed
 
 **Dependencies:** T1
 **Files likely touched:** `supabase/config.toml`, `prisma/schema.prisma`, `prisma/seed.ts`, `src/lib/db.ts`, `tests/integration/setup.ts`
