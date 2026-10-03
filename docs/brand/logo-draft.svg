@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 200" width="520" height="200" role="img" aria-labelledby="title">
+  <title id="title">Tuấn Linh Coffee — logo draft</title>
+
+  <!-- Mark: cup whose steam rises as a flame (Hỏa), with a leaf (Mộc sinh Hỏa) -->
+  <g transform="translate(20 10)">
+    <circle cx="90" cy="90" r="86" fill="#B8322A"/>
+    <circle cx="90" cy="90" r="76" fill="none" stroke="#FBF5EC" stroke-width="2" opacity="0.6"/>
+
+    <!-- Flame-shaped steam -->
+    <path d="M90 22
+             C 104 40, 112 52, 108 68
+             C 106 78, 98 84, 90 86
+             C 80 84, 72 76, 73 65
+             C 74 56, 80 52, 82 44
+             C 86 52, 88 58, 86 64
+             C 92 58, 96 48, 90 22 Z"
+          fill="#E8892B"/>
+    <path d="M90 52 C 97 62, 98 72, 90 80 C 84 76, 83 68, 90 52 Z" fill="#FBF5EC" opacity="0.85"/>
+
+    <!-- Cup -->
+    <path d="M52 92 H128 L120 140 C 118 150, 110 156, 100 156 H80 C 70 156, 62 150, 60 140 Z" fill="#FBF5EC"/>
+    <path d="M127 102 C 146 102, 146 130, 122 130" fill="none" stroke="#FBF5EC" stroke-width="7" stroke-linecap="round"/>
+    <rect x="46" y="86" width="88" height="9" rx="4.5" fill="#FBF5EC"/>
+    <path d="M60 112 H120" stroke="#B8322A" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
+
+    <!-- Leaf -->
+    <path d="M36 128 C 34 108, 48 96, 64 98 C 64 116, 52 128, 36 128 Z" fill="#4E7A47"/>
+    <path d="M38 126 C 46 116, 54 108, 62 100" fill="none" stroke="#FBF5EC" stroke-width="1.6" stroke-linecap="round"/>
+  </g>
+
+  <!-- Wordmark (convert to paths once finalized) -->
+  <g font-family="Lora, 'Times New Roman', serif" fill="#3A2620">
+    <text x="214" y="104" font-size="50" font-weight="700" letter-spacing="1">TUẤN LINH</text>
+  </g>
+  <rect x="216" y="122" width="40" height="3" rx="1.5" fill="#E8892B"/>
+  <text x="266" y="132" font-family="'Be Vietnam Pro', Arial, sans-serif" font-size="18" font-weight="600"
+        letter-spacing="9" fill="#B8322A">COFFEE</text>
+</svg>

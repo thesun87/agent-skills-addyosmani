@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+/* Brand tokens — Hỏa palette, see SPEC.md "Thương hiệu & nội dung". Light theme only in v1. */
+@theme {
+  --color-primary: #b8322a;
+  --color-primary-hover: #962720;
+  --color-accent: #e8892b;
+  --color-support: #4e7a47;
+  --color-surface: #fbf5ec;
+  --color-surface-raised: #fffdf9;
+  --color-text: #3a2620;
+  --color-text-muted: #7a5e52;
+
+  --font-sans: var(--font-be-vietnam-pro), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-lora), ui-serif, Georgia, serif;
+}
+
+html {
+  color-scheme: light;
+}
+
+body {
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+}
