@@ -68,17 +68,17 @@ T1 Scaffold ──► T2 Supabase+Prisma ──► T3 Pure libs
 
 ### Phase 3 — Admin xử lý đơn
 - [x] T9b: Prototype UI admin (danh sách + chi tiết đơn) — **chủ quán duyệt trước khi code T11** (S)
-- [ ] T10: Đăng nhập admin + khoá sau 5 lần sai (A1) (M)
-- [ ] T11: Danh sách đơn + polling + âm báo (A4) (M)
-- [ ] T12: Chuyển trạng thái, huỷ có lý do, xác nhận đã nhận tiền (A5, A6) (M)
+- [x] T10: Đăng nhập admin + khoá sau 5 lần sai (A1) (M)
+- [x] T11: Danh sách đơn + polling + âm báo (A4) (M)
+- [x] T12: Chuyển trạng thái, huỷ có lý do, xác nhận đã nhận tiền (A5, A6) (M)
 
 **Checkpoint 3** — E2E #3 (admin xử lý → khách thấy cập nhật) xanh.
 
 ### Phase 4 — Admin quản lý menu & cài đặt
-- [ ] T13: CRUD danh mục (A2) (S)
-- [ ] T14: CRUD món + tuỳ chọn + hết hàng + lưu trữ (A3) (M)
-- [ ] T15: Upload ảnh món qua S3 (Supabase Storage) + đổi `imageUrl` → `imageKey` (A3) (S)
-- [ ] T16: Trang cài đặt quán (A7) (M)
+- [x] T13: CRUD danh mục (A2) (S)
+- [x] T14: CRUD món + tuỳ chọn + hết hàng + lưu trữ (A3) (M)
+- [x] T15: Upload ảnh món qua S3 (Supabase Storage) + đổi `imageUrl` → `imageKey` (A3) (S)
+- [x] T16: Trang cài đặt quán (A7) (M)
 
 **Checkpoint 4** — E2E #4 (tắt món → khách không thêm được) xanh; coverage ≥ 80%.
 
