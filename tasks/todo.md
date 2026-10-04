@@ -149,17 +149,17 @@
 
 ---
 
-### - [ ] T7: Server action `placeOrder` (C5, C7, C9-API) ⚠️
+### - [x] T7: Server action `placeOrder` (C5, C7, C9-API) ⚠️
 
 **Description:** Migration thêm `Order`, `OrderItem`, `OrderStatusHistory`, `ShopSettings`, `RateLimitHit`; seed `ShopSettings` (07:00–22:00, ship 15.000đ, free ≥150.000đ, bán kính 5km). `placeOrder`: Zod validate (SĐT VN, pickupAt hợp lệ) → kiểm giờ mở cửa → rate limit 5 đơn/10 phút/IP → trong transaction đọc giá DB, từ chối món hết hàng/lưu trữ/option không thuộc món → tính tổng → tạo đơn `PENDING` với snapshot + mã `CF-YYMMDD-XXXX` (không trùng).
 
 **Acceptance criteria:**
-- [ ] Giá/tổng client gửi bị bỏ qua; tổng lưu = `calculateTotals` theo giá DB
-- [ ] Ngoài giờ → `SHOP_CLOSED`; món hết hàng → `ITEM_UNAVAILABLE` kèm tên món; lần thứ 6 trong 10 phút → `RATE_LIMITED`
-- [ ] Mã đơn đúng định dạng, duy nhất (test sinh 1.000 mã)
+- [x] Giá/tổng client gửi bị bỏ qua; tổng lưu = `calculateTotals` theo giá DB
+- [x] Ngoài giờ → `SHOP_CLOSED`; món hết hàng → `ITEM_UNAVAILABLE` kèm tên món; lần thứ 6 trong 10 phút → `RATE_LIMITED`
+- [x] Mã đơn đúng định dạng, duy nhất (test sinh 1.000 mã)
 
 **Verification:**
-- [ ] `pnpm test tests/integration/checkout tests/unit/features/orders`
+- [x] `pnpm test tests/integration/checkout tests/unit/features/orders`
 
 **Dependencies:** T3, T6 (dùng `cartLineSchema`)
 **Files likely touched:** `prisma/schema.prisma` (+migration), `src/features/checkout/{actions.ts,schema.ts}`, `src/features/orders/{repository.ts,order-code.ts}`, `src/lib/rate-limit.ts`, tests

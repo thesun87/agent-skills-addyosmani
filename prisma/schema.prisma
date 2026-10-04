@@ -63,3 +63,109 @@ model Option {
 
   @@index([groupId])
 }
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  PREPARING
+  READY_FOR_PICKUP
+  DELIVERING
+  COMPLETED
+  CANCELLED
+}
+
+enum PaymentStatus {
+  UNPAID
+  PAID
+}
+
+enum PaymentMethod {
+  COD
+  BANK_TRANSFER
+}
+
+enum FulfillmentType {
+  DELIVERY
+  PICKUP
+}
+
+model Order {
+  id              String               @id @default(cuid())
+  code            String               @unique
+  status          OrderStatus          @default(PENDING)
+  paymentStatus   PaymentStatus        @default(UNPAID)
+  paymentMethod   PaymentMethod
+  fulfillment     FulfillmentType
+  customerName    String
+  customerPhone   String
+  deliveryAddress String?
+  pickupAt        DateTime?
+  note            String?
+  cancelReason    String?
+  subtotal        Int
+  shippingFee     Int
+  total           Int
+  items           OrderItem[]
+  statusHistory   OrderStatusHistory[]
+  createdAt       DateTime             @default(now())
+  updatedAt       DateTime             @updatedAt
+
+  @@index([customerPhone])
+  @@index([status, createdAt])
+  @@index([createdAt])
+}
+
+model OrderItem {
+  id              String      @id @default(cuid())
+  orderId         String
+  order           Order       @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId       String
+  productName     String
+  productImage    String?
+  unitPrice       Int
+  quantity        Int
+  lineTotal       Int
+  selectedOptions Json        @default("[]")
+  note            String?
+
+  @@index([orderId])
+  @@index([productId])
+}
+
+model OrderStatusHistory {
+  id          String       @id @default(cuid())
+  orderId     String
+  order       Order        @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  fromStatus  OrderStatus?
+  toStatus    OrderStatus
+  note        String?
+  createdById String?
+  createdAt   DateTime     @default(now())
+
+  @@index([orderId])
+}
+
+model ShopSettings {
+  id                    String   @id @default("default")
+  shopName              String   @default("Tuấn Linh Coffee")
+  address               String   @default("123 Đường Cà Phê, Quận 1, TP. HCM")
+  phone                 String   @default("0987654321")
+  openTime              String   @default("07:00")
+  closeTime             String   @default("22:00")
+  deliveryRadiusKm      Int      @default(5)
+  shippingFee           Int      @default(15000)
+  freeShippingThreshold Int      @default(150000)
+  bankBin               String   @default("970422")
+  bankAccountNo         String   @default("0987654321")
+  bankAccountName       String   @default("TUAN LINH COFFEE")
+  updatedAt             DateTime @updatedAt
+}
+
+model RateLimitHit {
+  id        String   @id @default(cuid())
+  key       String
+  createdAt DateTime @default(now())
+
+  @@index([key, createdAt])
+}
+

@@ -57,8 +57,34 @@ async function main() {
     }
   }
 
+  // Seed default shop settings (07:00 - 22:00, ship 15k, free threshold 150k, 5km)
+  await db.shopSettings.upsert({
+    where: { id: "default" },
+    create: {
+      id: "default",
+      shopName: "Tuấn Linh Coffee",
+      address: "123 Đường Cà Phê, Quận 1, TP. HCM",
+      phone: "0987654321",
+      openTime: "07:00",
+      closeTime: "22:00",
+      deliveryRadiusKm: 5,
+      shippingFee: 15000,
+      freeShippingThreshold: 150000,
+      bankBin: "970422",
+      bankAccountNo: "0987654321",
+      bankAccountName: "TUAN LINH COFFEE",
+    },
+    update: {
+      openTime: "07:00",
+      closeTime: "22:00",
+      deliveryRadiusKm: 5,
+      shippingFee: 15000,
+      freeShippingThreshold: 150000,
+    },
+  });
+
   const productCount = SEED_MENU.reduce((sum, c) => sum + c.products.length, 0);
-  console.info(`Seeded ${SEED_MENU.length} categories, ${productCount} products.`);
+  console.info(`Seeded ${SEED_MENU.length} categories, ${productCount} products, and ShopSettings.`);
 }
 
 main()
