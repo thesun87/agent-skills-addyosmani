@@ -170,3 +170,16 @@ model RateLimitHit {
   @@index([key, createdAt])
 }
 
+model AdminUser {
+  id             String    @id @default(cuid())
+  email          String    @unique
+  name           String    @default("Thu Ngân Quầy 1")
+  passwordHash   String
+  failedAttempts Int       @default(0)
+  lockedUntil    DateTime?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  @@index([email])
+}
+

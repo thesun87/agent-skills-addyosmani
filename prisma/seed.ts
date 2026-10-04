@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import bcrypt from "bcryptjs";
 import { SEED_MENU, SEED_OPTION_GROUPS, type SeedProduct } from "./seed-data/menu";
 
 const db = new PrismaClient();
@@ -105,9 +106,23 @@ async function main() {
     },
   });
 
+  // Seed default admin user
+  const adminEmail = process.env.SEED_ADMIN_EMAIL || "admin@tuanlinh.coffee";
+  const adminPassword = process.env.SEED_ADMIN_PASSWORD || "Admin123!@";
+  const passwordHash = await bcrypt.hash(adminPassword, 10);
+  await db.adminUser.upsert({
+    where: { email: adminEmail },
+    create: {
+      email: adminEmail,
+      name: "Thu Ngân Quầy 1",
+      passwordHash,
+    },
+    update: {},
+  });
+
   const productCount = SEED_MENU.reduce((sum, c) => sum + c.products.length, 0);
   console.info(
-    `Seeded ${SEED_MENU.length} categories, ${productCount} products, and ShopSettings.`,
+    `Seeded ${SEED_MENU.length} categories, ${productCount} products, ShopSettings, and AdminUser.`,
   );
 }
 

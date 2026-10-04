@@ -242,21 +242,21 @@
 
 ---
 
-### - [ ] T10: Đăng nhập admin (A1)
+### - [x] T10: Đăng nhập admin (A1)
 
 **Description:** Migration `AdminUser`; seed 1 admin từ biến môi trường `SEED_ADMIN_EMAIL/PASSWORD` (không hardcode). Auth.js v5 Credentials + bcrypt; khoá 15' sau 5 lần sai; middleware chặn `/admin/**`; helper `requireAdmin()` gọi ở mọi server action/route admin. Trang `/admin/dang-nhap`, nút đăng xuất, layout admin cơ bản.
 
 **UI Reference:** `docs/design/admin-prototype.html` (#section-login, modal đăng nhập, nút đăng xuất ở sidebar & modal xác nhận `#logout-modal`) · [admin-ui-notes.md](../docs/design/admin-ui-notes.md#21-màn-hình-đăng-nhập-admindang-nhap--a1)
 
 **Acceptance criteria:**
-- [ ] Giao diện form đăng nhập và popup xác nhận đăng xuất khớp 100% prototype đã duyệt
-- [ ] Chưa đăng nhập vào `/admin/*` → chuyển về trang đăng nhập; gọi thẳng server action admin → bị từ chối
-- [ ] Sai 5 lần → khoá 15 phút, thông báo tiếng Việt khớp prototype, không tiết lộ email có tồn tại hay không
-- [ ] Mật khẩu chỉ lưu dạng hash
+- [x] Giao diện form đăng nhập và popup xác nhận đăng xuất khớp 100% prototype đã duyệt
+- [x] Chưa đăng nhập vào `/admin/*` → chuyển về trang đăng nhập; gọi thẳng server action admin → bị từ chối
+- [x] Sai 5 lần → khoá 15 phút, thông báo tiếng Việt khớp prototype, không tiết lộ email có tồn tại hay không
+- [x] Mật khẩu chỉ lưu dạng hash
 
 **Verification:**
-- [ ] `pnpm test tests/integration/auth`
-- [ ] Manual: đăng nhập/đăng xuất, thử sai 5 lần
+- [x] `pnpm test tests/integration/auth`
+- [x] Manual: đăng nhập/đăng xuất, thử sai 5 lần
 
 **Dependencies:** T2
 **Files likely touched:** `prisma/schema.prisma` (+migration), `src/features/auth/{config.ts,require-admin.ts}`, `src/middleware.ts`, `src/app/admin/dang-nhap/page.tsx`, `src/app/admin/layout.tsx`
