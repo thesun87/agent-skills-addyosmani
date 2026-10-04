@@ -184,4 +184,73 @@ describe("ProductOptionsSheet", () => {
     fireEvent.keyDown(window, { key: "Escape" });
     expect(onClose).toHaveBeenCalled();
   });
+
+  it("does not leak options from previous product when product prop changes", () => {
+    const onAddToCart = vi.fn();
+    const secondProduct = {
+      id: "prod-tra-dao",
+      categoryId: "cat-tra",
+      name: "Trà đào cam sả",
+      description: "Trà đen đào",
+      basePrice: 39_000,
+      imageUrl: null,
+      isAvailable: true,
+      isArchived: false,
+      sortOrder: 1,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      optionGroups: [
+        {
+          id: "grp-tra-size",
+          productId: "prod-tra-dao",
+          name: "Size",
+          isRequired: true,
+          maxSelect: 1,
+          sortOrder: 0,
+          options: [
+            {
+              id: "opt-tra-size-m",
+              groupId: "grp-tra-size",
+              name: "M",
+              priceDelta: 0,
+              sortOrder: 0,
+            },
+          ],
+        },
+      ],
+    };
+
+    const { rerender } = render(
+      <ProductOptionsSheet
+        product={sampleProductWithOptions}
+        isOpen={true}
+        onClose={vi.fn()}
+        onAddToCart={onAddToCart}
+      />,
+    );
+
+    // Select Size L on first product
+    fireEvent.click(screen.getByRole("button", { name: /size l/i }));
+
+    // Switch to second product
+    rerender(
+      <ProductOptionsSheet
+        product={secondProduct}
+        isOpen={true}
+        onClose={vi.fn()}
+        onAddToCart={onAddToCart}
+      />,
+    );
+
+    // Select M on second product
+    fireEvent.click(screen.getByRole("button", { name: /^m$/i }));
+    fireEvent.click(screen.getByRole("button", { name: /thêm vào giỏ/i }));
+
+    expect(onAddToCart).toHaveBeenCalledWith({
+      productId: "prod-tra-dao",
+      optionIds: ["opt-tra-size-m"],
+      quantity: 1,
+      note: "",
+    });
+  });
 });

@@ -64,12 +64,15 @@ export function MenuCatalog({ categories, onSelectProduct, onAddToCart }: MenuCa
         ))}
       </div>
 
-      <ProductOptionsSheet
-        product={selectedProduct}
-        isOpen={selectedProduct !== null}
-        onClose={() => setSelectedProduct(null)}
-        onAddToCart={handleAddToCart}
-      />
+      {selectedProduct && (
+        <ProductOptionsSheet
+          key={selectedProduct.id}
+          product={selectedProduct}
+          isOpen={true}
+          onClose={() => setSelectedProduct(null)}
+          onAddToCart={handleAddToCart}
+        />
+      )}
     </div>
   );
 }

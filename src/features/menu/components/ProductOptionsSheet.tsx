@@ -23,11 +23,27 @@ export function ProductOptionsSheet({
   const [selectedOptions, setSelectedOptions] = useState<Record<string, string[]>>({});
   const [quantity, setQuantity] = useState<number>(1);
   const [note, setNote] = useState<string>("");
+  const [prevProductId, setPrevProductId] = useState(product?.id);
 
-  // Collect all selected option IDs in order
+  // Reset state when active product changes (React official render-time state adjustment pattern)
+  if (product?.id !== prevProductId) {
+    setPrevProductId(product?.id);
+    setSelectedOptions({});
+    setQuantity(1);
+    setNote("");
+  }
+
+  // Collect only option IDs that belong to the current product
   const selectedOptionIds = useMemo(() => {
-    return Object.values(selectedOptions).flat();
-  }, [selectedOptions]);
+    if (!product) return [];
+    const validGroupIds = new Set(product.optionGroups.map((g) => g.id));
+    const validOptionIds = new Set(product.optionGroups.flatMap((g) => g.options.map((o) => o.id)));
+
+    return Object.entries(selectedOptions)
+      .filter(([groupId]) => validGroupIds.has(groupId))
+      .flatMap(([, optIds]) => optIds)
+      .filter((optId) => validOptionIds.has(optId));
+  }, [product, selectedOptions]);
 
   // Calculate pricing
   const { lineTotal, areRequiredGroupsSatisfied } = useMemo(() => {
