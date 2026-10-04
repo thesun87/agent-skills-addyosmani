@@ -264,21 +264,21 @@
 
 ---
 
-### - [ ] T11: Danh sách đơn + polling + âm báo (A4)
+### - [x] T11: Danh sách đơn + polling + âm báo (A4)
 
 **Description:** `/admin/don-hang`: bảng/danh sách thẻ đơn lọc theo trạng thái, ngày, hình thức; đơn `PENDING` nổi bật. Polling 5s qua `GET /api/admin/orders?since=`. Nút "Bật âm báo" (bắt buộc 1 lần để vượt autoplay), phát âm khi có đơn mới chưa thấy. Xem chi tiết đơn.
 
 **UI Reference:** `docs/design/admin-prototype.html` (#section-orders: bảng danh sách đơn, thanh phân trang, bộ lọc trạng thái/ngày, card chi tiết đơn, nút bật âm báo) · [admin-ui-notes.md](../docs/design/admin-ui-notes.md#22-màn-hình-quản-lý-đơn-hàng-admindon-hang--a4-a5-a6)
 
 **Acceptance criteria:**
-- [ ] Bố cục bảng đơn hàng, thẻ chi tiết, bộ lọc, thanh phân trang và nút bật âm báo khớp 100% prototype đã duyệt
-- [ ] Đơn mới tạo từ trang khách hiện trên admin ≤ 10s
-- [ ] Âm báo phát đúng 1 lần cho mỗi đơn mới khi đã bật
-- [ ] Bộ lọc phản ánh trên URL (giữ khi reload)
+- [x] Bố cục bảng đơn hàng, thẻ chi tiết, bộ lọc, thanh phân trang và nút bật âm báo khớp 100% prototype đã duyệt
+- [x] Đơn mới tạo từ trang khách hiện trên admin ≤ 10s
+- [x] Âm báo phát đúng 1 lần cho mỗi đơn mới khi đã bật
+- [x] Bộ lọc phản ánh trên URL (giữ khi reload)
 
 **Verification:**
-- [ ] `pnpm test tests/integration/admin-orders`
-- [ ] Manual: 2 tab (khách + admin), đặt đơn, nghe âm báo
+- [x] `pnpm test tests/integration/orders/admin-orders`
+- [x] Manual: 2 tab (khách + admin), đặt đơn, nghe âm báo
 
 **Dependencies:** T7, T9b, T10
 **Files likely touched:** `src/app/admin/don-hang/page.tsx`, `src/app/api/admin/orders/route.ts`, `src/features/orders/components/admin/{OrderList,OrderFilters,NewOrderAlert}.tsx`, `public/sounds/new-order.mp3`
