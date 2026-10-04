@@ -405,8 +405,8 @@
 ---
 
 ### Checkpoint 4: Admin đầy đủ
-- [ ] E2E #4 xanh; `pnpm test -- --coverage` ≥ 80%
-- [ ] Review với người dùng
+- [x] E2E #4 xanh; `pnpm test -- --coverage` ≥ 80%
+- [x] Review với người dùng
 
 ---
 

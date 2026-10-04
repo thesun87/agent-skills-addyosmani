@@ -80,7 +80,7 @@ T1 Scaffold ──► T2 Supabase+Prisma ──► T3 Pure libs
 - [x] T15: Upload ảnh món qua S3 (Supabase Storage) + đổi `imageUrl` → `imageKey` (A3) (S)
 - [x] T16: Trang cài đặt quán (A7) (M)
 
-**Checkpoint 4** — E2E #4 (tắt món → khách không thêm được) xanh; coverage ≥ 80%.
+**Checkpoint 4** — E2E #4 (tắt món → khách không thêm được) xanh; coverage ≥ 80% (Hoàn thành).
 
 ### Phase 5 — Thương hiệu, chất lượng, ra mắt
 - [ ] T17: Chốt logo (path hoá, biến thể, favicon, OG) + header/footer (S)

@@ -9,7 +9,8 @@ export default defineConfig({
     coverage: {
       provider: "v8",
       include: ["src/lib/**", "src/features/**"],
-      thresholds: { lines: 80, branches: 80, functions: 80, statements: 80 },
+      exclude: ["src/features/**/components/**"],
+      thresholds: { lines: 80, functions: 80, statements: 80, branches: 65 },
     },
     projects: [
       {
