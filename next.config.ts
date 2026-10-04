@@ -45,6 +45,20 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: "/admin",
+        destination: "/admin/don-hang",
+        permanent: false,
+      },
+      {
+        source: "/admin/login",
+        destination: "/admin/dang-nhap",
+        permanent: false,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

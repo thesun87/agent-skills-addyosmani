@@ -50,7 +50,7 @@ export function LoginForm() {
             r="76"
             fill="none"
             stroke="#FBF5EC"
-            stroke-width="2"
+            strokeWidth="2"
             opacity="0.6"
           />
           <path
@@ -65,8 +65,8 @@ export function LoginForm() {
             d="M127 102 C 146 102, 146 130, 122 130"
             fill="none"
             stroke="#FBF5EC"
-            stroke-width="7"
-            stroke-linecap="round"
+            strokeWidth="7"
+            strokeLinecap="round"
           />
           <path
             d="M36 128 C 34 108, 48 96, 64 98 C 64 116, 52 128, 36 128 Z"
