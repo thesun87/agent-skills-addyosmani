@@ -167,18 +167,18 @@
 
 ---
 
-### - [ ] T8: Trang checkout (C4, C5, C6, C9-UI)
+### - [x] T8: Trang checkout (C4, C5, C6, C9-UI)
 
 **Description:** `/thanh-toan`: chọn Giao hàng / Lấy tại quán; form tương ứng (form native + `useActionState`, Zod schema dùng chung, không thêm thư viện form); ghi chú bán kính giao; chọn khung giờ pickup từ `pickupSlots`; tóm tắt đơn với phí ship/free ship; chọn COD/tiền mặt tại quầy hoặc chuyển khoản. Gọi `placeOrder`, hiển thị lỗi nghiệp vụ tiếng Việt, xoá giỏ khi thành công và chuyển tới trang xác nhận. Banner "Quán đang đóng cửa, mở lại lúc HH:mm" ở layout khách + khoá nút đặt.
 
 **Acceptance criteria:**
-- [ ] Trường bắt buộc thay đổi đúng theo hình thức nhận; lỗi hiển thị ngay dưới trường
-- [ ] Phí ship hiển thị khớp kết quả server trả về
-- [ ] Ngoài giờ: banner hiển thị, nút đặt disabled
+- [x] Trường bắt buộc thay đổi đúng theo hình thức nhận; lỗi hiển thị ngay dưới trường
+- [x] Phí ship hiển thị khớp kết quả server trả về
+- [x] Ngoài giờ: banner hiển thị, nút đặt disabled
 
 **Verification:**
-- [ ] `pnpm test tests/unit/features/checkout`
-- [ ] `pnpm test:e2e e2e/checkout-delivery-cod.spec.ts` (E2E #1)
+- [x] `pnpm test tests/unit/features/checkout`
+- [x] `pnpm test:e2e e2e/checkout-delivery-cod.spec.ts` (E2E #1)
 
 **Dependencies:** T7
 **Files likely touched:** `src/app/(shop)/thanh-toan/page.tsx`, `src/features/checkout/components/{CheckoutForm,OrderSummary}.tsx`, `src/features/settings/components/ClosedBanner.tsx`, `e2e/checkout-delivery-cod.spec.ts`
@@ -186,18 +186,18 @@
 
 ---
 
-### - [ ] T9: Xác nhận + theo dõi đơn + VietQR (C6, C8)
+### - [x] T9: Xác nhận + theo dõi đơn + VietQR (C6, C8)
 
 **Description:** `/don-hang/[code]`: form nhập SĐT → server so khớp (rate limit) → set cookie ngắn hạn cho đơn đó. Trang hiển thị món, tổng, trạng thái dạng timeline, tự làm mới 15s qua `GET /api/orders/[code]/status`. Đơn chuyển khoản chưa PAID: hiển thị ảnh VietQR (`src/lib/vietqr.ts`) + text STK/tên/số tiền/nội dung. Ngay sau khi đặt, người đặt vào thẳng không cần nhập lại SĐT.
 
 **Acceptance criteria:**
-- [ ] SĐT sai → không lộ bất kỳ thông tin đơn nào (kể cả tồn tại hay không); endpoint status cũng yêu cầu cookie hợp lệ
-- [ ] URL VietQR chứa đúng số tiền và `addInfo` = mã đơn; có text dự phòng
-- [ ] Trạng thái đổi trong DB → trang cập nhật ≤ 15s
+- [x] SĐT sai → không lộ bất kỳ thông tin đơn nào (kể cả tồn tại hay không); endpoint status cũng yêu cầu cookie hợp lệ
+- [x] URL VietQR chứa đúng số tiền và `addInfo` = mã đơn; có text dự phòng
+- [x] Trạng thái đổi trong DB → trang cập nhật ≤ 15s
 
 **Verification:**
-- [ ] `pnpm test tests/unit/lib/vietqr.test.ts tests/integration/order-tracking`
-- [ ] `pnpm test:e2e e2e/checkout-pickup-qr.spec.ts` (E2E #2)
+- [x] `pnpm test tests/unit/lib/vietqr.test.ts tests/integration/order-tracking`
+- [x] `pnpm test:e2e e2e/checkout-pickup-qr.spec.ts` (E2E #2)
 
 **Dependencies:** T8
 **Files likely touched:** `src/app/(shop)/don-hang/[code]/page.tsx`, `src/app/api/orders/[code]/status/route.ts`, `src/lib/vietqr.ts`, `src/features/orders/components/{OrderTimeline,VietQrPanel}.tsx`, tests
@@ -206,9 +206,9 @@
 ---
 
 ### Checkpoint 2: Luồng khách hàng
-- [ ] E2E #1 và #2 xanh trên mobile + desktop
-- [ ] Integration test giá giả / ngoài giờ / hết hàng xanh
-- [ ] **Demo cho chủ quán**, thu phản hồi UI trước khi làm admin
+- [x] E2E #1 và #2 xanh trên mobile + desktop
+- [x] Integration test giá giả / ngoài giờ / hết hàng xanh
+- [x] **Demo cho chủ quán**, thu phản hồi UI trước khi làm admin
 
 ---
 

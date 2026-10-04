@@ -15,11 +15,7 @@ export interface ShopCartWrapperProps {
   };
 }
 
-export function ShopCartWrapper({
-  children,
-  menuProducts,
-  settings,
-}: ShopCartWrapperProps) {
+export function ShopCartWrapper({ children, menuProducts, settings }: ShopCartWrapperProps) {
   return (
     <CartProvider>
       {children}

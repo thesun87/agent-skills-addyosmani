@@ -1,10 +1,6 @@
 import { z } from "zod";
 import type { MenuProduct } from "@/features/menu/queries";
-import {
-  calculateTotals,
-  type FulfillmentType,
-  type PricedLine,
-} from "@/lib/pricing";
+import { calculateTotals, type FulfillmentType, type PricedLine } from "@/lib/pricing";
 
 export const CART_STORAGE_KEY = "tuanlinh_cart_v1";
 
@@ -87,9 +83,7 @@ export function cartReducer(state: CartState, action: CartAction): CartState {
       }
       return {
         items: state.items.map((item) =>
-          item.id === action.id
-            ? { ...item, quantity: Math.min(99, action.quantity) }
-            : item,
+          item.id === action.id ? { ...item, quantity: Math.min(99, action.quantity) } : item,
         ),
       };
     }
@@ -267,8 +261,7 @@ export function deriveCart(
     }
 
     const unitPrice =
-      product.basePrice +
-      resolvedOptions.reduce((sum, opt) => sum + opt.priceDelta, 0);
+      product.basePrice + resolvedOptions.reduce((sum, opt) => sum + opt.priceDelta, 0);
     const lineTotal = unitPrice * item.quantity;
 
     lines.push({
@@ -297,10 +290,7 @@ export function deriveCart(
 
   const totalItemCount = availableLines.reduce((sum, l) => sum + l.quantity, 0);
 
-  const amountNeededForFreeShipping = Math.max(
-    0,
-    settings.freeShippingThreshold - totals.subtotal,
-  );
+  const amountNeededForFreeShipping = Math.max(0, settings.freeShippingThreshold - totals.subtotal);
 
   const progressToFreeShipping = Math.min(
     100,

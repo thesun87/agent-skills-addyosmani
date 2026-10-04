@@ -40,7 +40,7 @@ export function HeaderCartButton({ cartCount }: HeaderCartButtonProps) {
     <button
       type="button"
       onClick={openDrawer}
-      className="border-border/80 bg-surface text-text hover:border-text/20 relative inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-xs font-semibold transition-all hover:bg-[#f3e8d8] cursor-pointer"
+      className="border-border/80 bg-surface text-text hover:border-text/20 relative inline-flex cursor-pointer items-center gap-2 rounded-full border px-3 py-1.5 text-xs font-semibold transition-all hover:bg-[#f3e8d8]"
       aria-label={`Giỏ hàng, hiện có ${count} món`}
     >
       {content}

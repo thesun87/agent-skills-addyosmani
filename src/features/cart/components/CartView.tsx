@@ -25,10 +25,10 @@ export function CartView({ menuProducts, settings }: CartViewProps) {
   return (
     <div className="mx-auto max-w-4xl px-4 py-8">
       {/* Title & Clear action */}
-      <div className="flex items-center justify-between border-b border-border/80 pb-4">
+      <div className="border-border/80 flex items-center justify-between border-b pb-4">
         <div>
-          <h1 className="font-display text-2xl font-bold text-text">Giỏ hàng</h1>
-          <p className="text-xs text-text-muted mt-1">
+          <h1 className="font-display text-text text-2xl font-bold">Giỏ hàng</h1>
+          <p className="text-text-muted mt-1 text-xs">
             {derived.totalItemCount > 0
               ? `${derived.totalItemCount} món đang chờ bạn thanh toán`
               : "Không có món nào trong giỏ"}
@@ -38,7 +38,7 @@ export function CartView({ menuProducts, settings }: CartViewProps) {
           <button
             type="button"
             onClick={clearCart}
-            className="text-xs font-semibold text-danger hover:underline"
+            className="text-danger text-xs font-semibold hover:underline"
           >
             Xoá tất cả
           </button>
@@ -47,16 +47,17 @@ export function CartView({ menuProducts, settings }: CartViewProps) {
 
       {derived.lines.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-20 text-center">
-          <div className="flex h-20 w-20 items-center justify-center rounded-full bg-surface text-4xl">
+          <div className="bg-surface flex h-20 w-20 items-center justify-center rounded-full text-4xl">
             🛒
           </div>
-          <h2 className="mt-4 font-bold text-lg text-text">Giỏ hàng của bạn đang trống</h2>
-          <p className="mt-2 text-sm text-text-muted max-w-sm">
-            Thưởng thức cà phê Robusta Đắk Lắk đậm đà và trà trái cây thanh mát cùng Tuấn Linh Coffee.
+          <h2 className="text-text mt-4 text-lg font-bold">Giỏ hàng của bạn đang trống</h2>
+          <p className="text-text-muted mt-2 max-w-sm text-sm">
+            Thưởng thức cà phê Robusta Đắk Lắk đậm đà và trà trái cây thanh mát cùng Tuấn Linh
+            Coffee.
           </p>
           <Link
             href="/"
-            className="mt-6 rounded-full bg-primary px-6 py-3 font-bold text-sm text-white shadow-xs hover:bg-primary-hover transition-colors"
+            className="bg-primary hover:bg-primary-hover mt-6 rounded-full px-6 py-3 text-sm font-bold text-white shadow-xs transition-colors"
           >
             Xem thực đơn ngay
           </Link>
@@ -66,31 +67,31 @@ export function CartView({ menuProducts, settings }: CartViewProps) {
           {/* Item List Column */}
           <div className="space-y-4 lg:col-span-2">
             {/* Free shipping meter */}
-            <div className="rounded-2xl border border-border/70 bg-[#f7eedf] p-4 text-sm">
+            <div className="border-border/70 rounded-2xl border bg-[#f7eedf] p-4 text-sm">
               {derived.amountNeededForFreeShipping === 0 ? (
-                <div className="flex items-center gap-2 font-bold text-support">
+                <div className="text-support flex items-center gap-2 font-bold">
                   <span>🎉</span>
                   <span>Đơn hàng của bạn đã được MIỄN PHÍ giao hàng!</span>
                 </div>
               ) : (
                 <div className="text-text">
                   Thêm{" "}
-                  <span className="font-bold text-primary">
+                  <span className="text-primary font-bold">
                     {formatVnd(derived.amountNeededForFreeShipping)}
                   </span>{" "}
-                  nữa để nhận <span className="font-bold text-support">Miễn phí giao hàng</span>
+                  nữa để nhận <span className="text-support font-bold">Miễn phí giao hàng</span>
                 </div>
               )}
               <div className="mt-2.5 h-2 w-full overflow-hidden rounded-full bg-[#e5d7c3]">
                 <div
-                  className="h-full rounded-full bg-support transition-all duration-300"
+                  className="bg-support h-full rounded-full transition-all duration-300"
                   style={{ width: `${derived.progressToFreeShipping}%` }}
                 />
               </div>
             </div>
 
             {/* Items */}
-            <div className="divide-y divide-border/70 rounded-2xl border border-border/80 bg-surface-raised p-4 sm:p-6 shadow-xs">
+            <div className="divide-border/70 border-border/80 bg-surface-raised divide-y rounded-2xl border p-4 shadow-xs sm:p-6">
               {derived.lines.map((line) => (
                 <div
                   key={line.id}
@@ -98,7 +99,7 @@ export function CartView({ menuProducts, settings }: CartViewProps) {
                     !line.isAvailable ? "opacity-60" : ""
                   }`}
                 >
-                  <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-xl bg-surface border border-border/60 overflow-hidden">
+                  <div className="bg-surface border-border/60 flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-xl border">
                     {line.productImage ? (
                       // eslint-disable-next-line @next/next/no-img-element
                       <img
@@ -114,11 +115,11 @@ export function CartView({ menuProducts, settings }: CartViewProps) {
                   <div className="flex flex-1 flex-col justify-between">
                     <div>
                       <div className="flex items-start justify-between gap-2">
-                        <h3 className="font-bold text-base text-text">{line.productName}</h3>
+                        <h3 className="text-text text-base font-bold">{line.productName}</h3>
                         <button
                           type="button"
                           onClick={() => removeItem(line.id)}
-                          className="text-xs text-text-muted hover:text-danger p-1"
+                          className="text-text-muted hover:text-danger p-1 text-xs"
                           aria-label={`Xoá ${line.productName}`}
                         >
                           ✕
@@ -126,19 +127,19 @@ export function CartView({ menuProducts, settings }: CartViewProps) {
                       </div>
 
                       {line.selectedOptions.length > 0 && (
-                        <p className="mt-1 text-xs text-text-muted">
+                        <p className="text-text-muted mt-1 text-xs">
                           {line.selectedOptions.map((opt) => opt.name).join(", ")}
                         </p>
                       )}
 
                       {line.note && (
-                        <p className="mt-0.5 text-xs italic text-text-muted">
+                        <p className="text-text-muted mt-0.5 text-xs italic">
                           Ghi chú: {line.note}
                         </p>
                       )}
 
                       {!line.isAvailable && (
-                        <p className="mt-1 text-xs font-semibold text-danger">
+                        <p className="text-danger mt-1 text-xs font-semibold">
                           ⚠️ {line.unavailableReason ?? "Món tạm hết hàng"}
                         </p>
                       )}
@@ -146,34 +147,34 @@ export function CartView({ menuProducts, settings }: CartViewProps) {
 
                     <div className="mt-3 flex items-center justify-between">
                       {line.isAvailable ? (
-                        <div className="flex h-8 items-center rounded-full border border-border/80 bg-surface px-1.5">
+                        <div className="border-border/80 bg-surface flex h-8 items-center rounded-full border px-1.5">
                           <button
                             type="button"
                             onClick={() => updateQuantity(line.id, line.quantity - 1)}
-                            className="flex h-6 w-6 items-center justify-center text-sm font-bold text-text hover:bg-black/5 rounded-full"
+                            className="text-text flex h-6 w-6 items-center justify-center rounded-full text-sm font-bold hover:bg-black/5"
                             aria-label="Giảm số lượng"
                           >
                             −
                           </button>
-                          <span className="w-8 text-center text-xs font-bold text-text">
+                          <span className="text-text w-8 text-center text-xs font-bold">
                             {line.quantity}
                           </span>
                           <button
                             type="button"
                             onClick={() => updateQuantity(line.id, line.quantity + 1)}
-                            className="flex h-6 w-6 items-center justify-center text-sm font-bold text-text hover:bg-black/5 rounded-full"
+                            className="text-text flex h-6 w-6 items-center justify-center rounded-full text-sm font-bold hover:bg-black/5"
                             aria-label="Tăng số lượng"
                           >
                             +
                           </button>
                         </div>
                       ) : (
-                        <span className="rounded-md bg-danger/10 px-2 py-0.5 text-xs font-bold text-danger">
+                        <span className="bg-danger/10 text-danger rounded-md px-2 py-0.5 text-xs font-bold">
                           Không tính vào đơn
                         </span>
                       )}
 
-                      <span className="font-bold text-base text-primary">
+                      <span className="text-primary text-base font-bold">
                         {line.isAvailable ? formatVnd(line.lineTotal) : "0đ"}
                       </span>
                     </div>
@@ -185,28 +186,28 @@ export function CartView({ menuProducts, settings }: CartViewProps) {
 
           {/* Summary Column */}
           <div className="lg:col-span-1">
-            <div className="sticky top-24 rounded-2xl border border-border/80 bg-surface-raised p-5 shadow-xs">
-              <h2 className="font-display font-bold text-base text-text">Tóm tắt đơn hàng</h2>
+            <div className="border-border/80 bg-surface-raised sticky top-24 rounded-2xl border p-5 shadow-xs">
+              <h2 className="font-display text-text text-base font-bold">Tóm tắt đơn hàng</h2>
 
-              <div className="mt-4 space-y-2 border-b border-border/70 pb-4 text-sm">
-                <div className="flex justify-between text-text-muted">
+              <div className="border-border/70 mt-4 space-y-2 border-b pb-4 text-sm">
+                <div className="text-text-muted flex justify-between">
                   <span>Tạm tính</span>
-                  <span className="font-semibold text-text">{formatVnd(derived.subtotal)}</span>
+                  <span className="text-text font-semibold">{formatVnd(derived.subtotal)}</span>
                 </div>
-                <div className="flex justify-between text-xs text-text-muted">
+                <div className="text-text-muted flex justify-between text-xs">
                   <span>Phí giao hàng</span>
                   <span>Tính tại checkout</span>
                 </div>
               </div>
 
-              <div className="mt-4 flex justify-between font-bold text-lg text-text">
+              <div className="text-text mt-4 flex justify-between text-lg font-bold">
                 <span>Tổng cộng</span>
                 <span className="text-primary">{formatVnd(derived.subtotal)}</span>
               </div>
 
               <Link
                 href="/thanh-toan"
-                className={`mt-6 flex h-12 w-full items-center justify-center rounded-full bg-primary font-bold text-sm text-white shadow-xs transition-all hover:bg-primary-hover active:scale-98 ${
+                className={`bg-primary hover:bg-primary-hover mt-6 flex h-12 w-full items-center justify-center rounded-full text-sm font-bold text-white shadow-xs transition-all active:scale-98 ${
                   derived.availableLines.length === 0 ? "pointer-events-none opacity-50" : ""
                 }`}
               >
@@ -215,7 +216,7 @@ export function CartView({ menuProducts, settings }: CartViewProps) {
 
               <Link
                 href="/"
-                className="mt-3 block text-center text-xs font-semibold text-text-muted hover:text-text"
+                className="text-text-muted hover:text-text mt-3 block text-center text-xs font-semibold"
               >
                 ← Tiếp tục chọn món
               </Link>

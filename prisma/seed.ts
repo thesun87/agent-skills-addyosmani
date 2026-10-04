@@ -84,7 +84,9 @@ async function main() {
   });
 
   const productCount = SEED_MENU.reduce((sum, c) => sum + c.products.length, 0);
-  console.info(`Seeded ${SEED_MENU.length} categories, ${productCount} products, and ShopSettings.`);
+  console.info(
+    `Seeded ${SEED_MENU.length} categories, ${productCount} products, and ShopSettings.`,
+  );
 }
 
 main()

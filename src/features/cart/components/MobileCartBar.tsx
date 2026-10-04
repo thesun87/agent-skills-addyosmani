@@ -24,19 +24,19 @@ export function MobileCartBar({ menuProducts, settings }: MobileCartBarProps) {
   if (items.length === 0 || isDrawerOpen) return null;
 
   return (
-    <div className="fixed bottom-4 left-4 right-4 z-40 md:hidden">
+    <div className="fixed right-4 bottom-4 left-4 z-40 md:hidden">
       <button
         type="button"
         onClick={openDrawer}
-        className="flex w-full items-center justify-between rounded-2xl bg-primary px-4 py-3.5 text-white shadow-xl shadow-primary/30 transition-transform active:scale-98"
+        className="bg-primary shadow-primary/30 flex w-full items-center justify-between rounded-2xl px-4 py-3.5 text-white shadow-xl transition-transform active:scale-98"
       >
         <div className="flex items-center gap-3">
-          <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white font-bold text-xs text-primary">
+          <span className="text-primary flex h-7 w-7 items-center justify-center rounded-full bg-white text-xs font-bold">
             {derived.totalItemCount}
           </span>
-          <span className="font-bold text-base">{formatVnd(derived.subtotal)}</span>
+          <span className="text-base font-bold">{formatVnd(derived.subtotal)}</span>
         </div>
-        <span className="flex items-center gap-1 font-semibold text-sm">
+        <span className="flex items-center gap-1 text-sm font-semibold">
           <span>Xem giỏ hàng</span>
           <span>→</span>
         </span>

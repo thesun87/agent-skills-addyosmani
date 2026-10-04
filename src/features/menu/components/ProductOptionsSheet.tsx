@@ -118,11 +118,11 @@ export function ProductOptionsSheet({
       <form onSubmit={handleSubmit} className="flex flex-col">
         <div className="space-y-6 p-4 sm:p-6">
           {/* Header Preview */}
-          <div className="flex items-start justify-between border-b border-border/60 pb-4">
+          <div className="border-border/60 flex items-start justify-between border-b pb-4">
             <div>
-              <p className="font-bold text-lg text-primary">{formatVnd(product.basePrice)}</p>
+              <p className="text-primary text-lg font-bold">{formatVnd(product.basePrice)}</p>
               {product.description ? (
-                <p className="mt-1 text-sm text-text-muted">{product.description}</p>
+                <p className="text-text-muted mt-1 text-sm">{product.description}</p>
               ) : null}
             </div>
           </div>
@@ -134,12 +134,10 @@ export function ProductOptionsSheet({
             return (
               <div key={group.id} className="space-y-2.5">
                 <div className="flex items-center justify-between">
-                  <span className="font-semibold text-sm text-text">{group.name}</span>
+                  <span className="text-text text-sm font-semibold">{group.name}</span>
                   <span
                     className={`rounded-full px-2 py-0.5 text-[11px] font-medium ${
-                      group.isRequired
-                        ? "bg-primary/10 text-primary"
-                        : "bg-surface text-text-muted"
+                      group.isRequired ? "bg-primary/10 text-primary" : "bg-surface text-text-muted"
                     }`}
                   >
                     {group.isRequired ? "Bắt buộc" : `Tối đa ${group.maxSelect}`}
@@ -157,16 +155,14 @@ export function ProductOptionsSheet({
                         onClick={() => handleSelectOption(group.id, option.id, group.maxSelect)}
                         className={`flex items-center gap-1.5 rounded-xl border px-3 py-2 text-xs transition-all ${
                           isSelected
-                            ? "border-primary bg-primary/8 font-semibold text-primary shadow-xs"
+                            ? "border-primary bg-primary/8 text-primary font-semibold shadow-xs"
                             : "border-border/80 bg-surface text-text hover:border-text/30"
                         }`}
                         aria-pressed={isSelected}
                       >
                         <span>{option.name}</span>
                         {option.priceDelta > 0 ? (
-                          <span
-                            className={isSelected ? "text-primary" : "text-text-muted"}
-                          >
+                          <span className={isSelected ? "text-primary" : "text-text-muted"}>
                             (+{formatVnd(option.priceDelta)})
                           </span>
                         ) : null}
@@ -180,7 +176,7 @@ export function ProductOptionsSheet({
 
           {/* Special instructions */}
           <div className="space-y-1.5">
-            <label htmlFor="product-note" className="font-semibold text-sm text-text">
+            <label htmlFor="product-note" className="text-text text-sm font-semibold">
               Ghi chú cho quán (tuỳ chọn)
             </label>
             <input
@@ -190,29 +186,29 @@ export function ProductOptionsSheet({
               onChange={(e) => setNote(e.target.value)}
               placeholder="Ví dụ: Đậm vị cà phê, ít ngọt..."
               maxLength={200}
-              className="w-full rounded-xl border border-border/80 bg-surface px-3 py-2 text-sm text-text placeholder:text-text-muted/60 focus:border-primary focus:bg-white focus:outline-hidden"
+              className="border-border/80 bg-surface text-text placeholder:text-text-muted/60 focus:border-primary w-full rounded-xl border px-3 py-2 text-sm focus:bg-white focus:outline-hidden"
             />
           </div>
         </div>
 
         {/* Footer Actions */}
-        <div className="sticky bottom-0 flex items-center gap-3 border-t border-border/80 bg-surface-raised p-4 sm:p-6">
-          <div className="flex h-11 items-center rounded-full border border-border/80 bg-surface px-1">
+        <div className="border-border/80 bg-surface-raised sticky bottom-0 flex items-center gap-3 border-t p-4 sm:p-6">
+          <div className="border-border/80 bg-surface flex h-11 items-center rounded-full border px-1">
             <button
               type="button"
               onClick={() => handleQuantityChange(-1)}
               disabled={quantity <= 1}
-              className="flex h-9 w-9 items-center justify-center rounded-full text-base font-bold text-text hover:bg-black/5 disabled:opacity-30"
+              className="text-text flex h-9 w-9 items-center justify-center rounded-full text-base font-bold hover:bg-black/5 disabled:opacity-30"
               aria-label="Giảm số lượng"
             >
               −
             </button>
-            <span className="w-8 text-center text-sm font-bold text-text">{quantity}</span>
+            <span className="text-text w-8 text-center text-sm font-bold">{quantity}</span>
             <button
               type="button"
               onClick={() => handleQuantityChange(1)}
               disabled={quantity >= 50}
-              className="flex h-9 w-9 items-center justify-center rounded-full text-base font-bold text-text hover:bg-black/5 disabled:opacity-30"
+              className="text-text flex h-9 w-9 items-center justify-center rounded-full text-base font-bold hover:bg-black/5 disabled:opacity-30"
               aria-label="Tăng số lượng"
             >
               +
@@ -222,7 +218,7 @@ export function ProductOptionsSheet({
           <button
             type="submit"
             disabled={!areRequiredGroupsSatisfied}
-            className="flex h-11 flex-1 items-center justify-between rounded-full bg-primary px-5 font-bold text-sm text-white shadow-xs transition-all hover:bg-primary-hover active:scale-98 disabled:cursor-not-allowed disabled:bg-border disabled:text-text-muted"
+            className="bg-primary hover:bg-primary-hover disabled:bg-border disabled:text-text-muted flex h-11 flex-1 items-center justify-between rounded-full px-5 text-sm font-bold text-white shadow-xs transition-all active:scale-98 disabled:cursor-not-allowed"
           >
             <span>Thêm vào giỏ</span>
             <span>{formatVnd(lineTotal)}</span>

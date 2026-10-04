@@ -2,11 +2,7 @@ import React from "react";
 import { getVisibleMenu } from "@/features/menu/queries";
 import { ShopCartWrapper } from "@/features/cart/ShopCartWrapper";
 
-export default async function ShopLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default async function ShopLayout({ children }: { children: React.ReactNode }) {
   const categories = await getVisibleMenu();
   const allProducts = categories.flatMap((c) => c.products);
 

@@ -5,8 +5,14 @@ export const shopSettingsSchema = z.object({
   shopName: z.string().min(1).default("Tuấn Linh Coffee"),
   address: z.string().min(1).default("123 Đường Cà Phê, Quận 1, TP. HCM"),
   phone: z.string().min(1).default("0987654321"),
-  openTime: z.string().regex(/^\d{2}:\d{2}$/).default("07:00"),
-  closeTime: z.string().regex(/^\d{2}:\d{2}$/).default("22:00"),
+  openTime: z
+    .string()
+    .regex(/^\d{2}:\d{2}$/)
+    .default("07:00"),
+  closeTime: z
+    .string()
+    .regex(/^\d{2}:\d{2}$/)
+    .default("22:00"),
   deliveryRadiusKm: z.number().int().positive().default(5),
   shippingFee: z.number().int().nonnegative().default(15000),
   freeShippingThreshold: z.number().int().nonnegative().default(150000),

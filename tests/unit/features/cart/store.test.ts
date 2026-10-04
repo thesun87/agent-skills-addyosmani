@@ -36,9 +36,7 @@ describe("Cart Reducer & Logic (C3, AD7)", () => {
           name: "Topping",
           isRequired: false,
           maxSelect: 2,
-          options: [
-            { id: "opt-flan", name: "Bánh Flan", priceDelta: 10000 },
-          ],
+          options: [{ id: "opt-flan", name: "Bánh Flan", priceDelta: 10000 }],
         },
       ],
     },
@@ -212,10 +210,7 @@ describe("Cart Reducer & Logic (C3, AD7)", () => {
     });
 
     it("handles invalid schema items in localStorage", () => {
-      localStorage.setItem(
-        CART_STORAGE_KEY,
-        JSON.stringify([{ invalid: "data" }]),
-      );
+      localStorage.setItem(CART_STORAGE_KEY, JSON.stringify([{ invalid: "data" }]));
       const loaded = loadCartFromStorage();
       expect(loaded).toEqual([]);
     });

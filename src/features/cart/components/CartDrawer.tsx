@@ -69,24 +69,24 @@ export function CartDrawer({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex justify-end bg-black/60 backdrop-blur-xs transition-opacity animate-in fade-in"
+      className="animate-in fade-in fixed inset-0 z-50 flex justify-end bg-black/60 backdrop-blur-xs transition-opacity"
       onClick={onClose}
       aria-modal="true"
       role="dialog"
       aria-labelledby={titleId}
     >
       <div
-        className="flex h-full w-full max-w-md flex-col bg-surface-raised shadow-2xl transition-transform animate-in slide-in-from-right duration-250"
+        className="bg-surface-raised animate-in slide-in-from-right flex h-full w-full max-w-md flex-col shadow-2xl transition-transform duration-250"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-border/80 px-5 py-4">
+        <div className="border-border/80 flex items-center justify-between border-b px-5 py-4">
           <div className="flex items-center gap-2">
-            <h2 id={titleId} className="font-display text-lg font-bold text-text">
+            <h2 id={titleId} className="font-display text-text text-lg font-bold">
               Giỏ hàng của bạn
             </h2>
             {derived.totalItemCount > 0 && (
-              <span className="flex h-5 items-center justify-center rounded-full bg-primary/10 px-2 text-xs font-bold text-primary">
+              <span className="bg-primary/10 text-primary flex h-5 items-center justify-center rounded-full px-2 text-xs font-bold">
                 {derived.totalItemCount}
               </span>
             )}
@@ -94,7 +94,7 @@ export function CartDrawer({
           <button
             type="button"
             onClick={onClose}
-            className="flex h-8 w-8 items-center justify-center rounded-full text-text-muted hover:bg-black/5 hover:text-text transition-colors"
+            className="text-text-muted hover:text-text flex h-8 w-8 items-center justify-center rounded-full transition-colors hover:bg-black/5"
             aria-label="Đóng giỏ hàng"
           >
             ✕
@@ -103,24 +103,24 @@ export function CartDrawer({
 
         {/* Free Shipping Meter */}
         {derived.lines.length > 0 && (
-          <div className="border-b border-border/70 bg-[#f7eedf] px-5 py-3 text-xs">
+          <div className="border-border/70 border-b bg-[#f7eedf] px-5 py-3 text-xs">
             {derived.amountNeededForFreeShipping === 0 ? (
-              <div className="flex items-center gap-1.5 font-bold text-support">
+              <div className="text-support flex items-center gap-1.5 font-bold">
                 <span>🎉</span>
                 <span>Bạn đã được MIỄN PHÍ giao hàng!</span>
               </div>
             ) : (
               <div className="text-text">
                 Thêm{" "}
-                <span className="font-bold text-primary">
+                <span className="text-primary font-bold">
                   {formatVnd(derived.amountNeededForFreeShipping)}
                 </span>{" "}
-                để được <span className="font-bold text-support">Miễn phí giao hàng</span>
+                để được <span className="text-support font-bold">Miễn phí giao hàng</span>
               </div>
             )}
             <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-[#e5d7c3]">
               <div
-                className="h-full rounded-full bg-support transition-all duration-300"
+                className="bg-support h-full rounded-full transition-all duration-300"
                 style={{ width: `${derived.progressToFreeShipping}%` }}
               />
             </div>
@@ -131,17 +131,17 @@ export function CartDrawer({
         <div className="flex-1 overflow-y-auto px-5 py-4">
           {derived.lines.length === 0 ? (
             <div className="flex h-full flex-col items-center justify-center py-16 text-center">
-              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-surface text-3xl">
+              <div className="bg-surface flex h-16 w-16 items-center justify-center rounded-full text-3xl">
                 🛒
               </div>
-              <p className="mt-4 font-bold text-base text-text">Giỏ hàng đang trống</p>
-              <p className="mt-1 text-sm text-text-muted max-w-xs">
+              <p className="text-text mt-4 text-base font-bold">Giỏ hàng đang trống</p>
+              <p className="text-text-muted mt-1 max-w-xs text-sm">
                 Hãy chọn những món đồ uống và bánh thơm ngon từ thực đơn nhé!
               </p>
               <button
                 type="button"
                 onClick={onClose}
-                className="mt-6 rounded-full bg-primary px-6 py-2.5 text-sm font-bold text-white shadow-xs hover:bg-primary-hover transition-colors"
+                className="bg-primary hover:bg-primary-hover mt-6 rounded-full px-6 py-2.5 text-sm font-bold text-white shadow-xs transition-colors"
               >
                 Xem thực đơn
               </button>
@@ -151,12 +151,12 @@ export function CartDrawer({
               {derived.lines.map((line) => (
                 <div
                   key={line.id}
-                  className={`flex gap-3.5 border-b border-border/70 pb-4 ${
+                  className={`border-border/70 flex gap-3.5 border-b pb-4 ${
                     !line.isAvailable ? "opacity-60" : ""
                   }`}
                 >
                   {/* Thumbnail */}
-                  <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-xl bg-surface border border-border/60 overflow-hidden">
+                  <div className="bg-surface border-border/60 flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-xl border">
                     {line.productImage ? (
                       // eslint-disable-next-line @next/next/no-img-element
                       <img
@@ -173,13 +173,13 @@ export function CartDrawer({
                   <div className="flex flex-1 flex-col justify-between">
                     <div>
                       <div className="flex items-start justify-between gap-2">
-                        <h3 className="text-sm font-bold text-text leading-snug">
+                        <h3 className="text-text text-sm leading-snug font-bold">
                           {line.productName}
                         </h3>
                         <button
                           type="button"
                           onClick={() => removeItem(line.id)}
-                          className="text-xs text-text-muted hover:text-danger p-0.5"
+                          className="text-text-muted hover:text-danger p-0.5 text-xs"
                           aria-label={`Xoá ${line.productName}`}
                         >
                           ✕
@@ -188,21 +188,21 @@ export function CartDrawer({
 
                       {/* Selected options string */}
                       {line.selectedOptions.length > 0 && (
-                        <p className="mt-0.5 text-xs text-text-muted leading-relaxed">
+                        <p className="text-text-muted mt-0.5 text-xs leading-relaxed">
                           {line.selectedOptions.map((opt) => opt.name).join(", ")}
                         </p>
                       )}
 
                       {/* Note */}
                       {line.note && (
-                        <p className="mt-0.5 text-xs italic text-text-muted">
+                        <p className="text-text-muted mt-0.5 text-xs italic">
                           Ghi chú: {line.note}
                         </p>
                       )}
 
                       {/* Unavailable warning */}
                       {!line.isAvailable && (
-                        <p className="mt-1 text-xs font-semibold text-danger">
+                        <p className="text-danger mt-1 text-xs font-semibold">
                           ⚠️ {line.unavailableReason ?? "Món tạm hết hàng"}
                         </p>
                       )}
@@ -211,34 +211,34 @@ export function CartDrawer({
                     {/* Stepper & Price */}
                     <div className="mt-2.5 flex items-center justify-between">
                       {line.isAvailable ? (
-                        <div className="flex h-7 items-center rounded-full border border-border/80 bg-surface px-1">
+                        <div className="border-border/80 bg-surface flex h-7 items-center rounded-full border px-1">
                           <button
                             type="button"
                             onClick={() => updateQuantity(line.id, line.quantity - 1)}
-                            className="flex h-5 w-5 items-center justify-center text-xs font-bold text-text hover:bg-black/5 rounded-full"
+                            className="text-text flex h-5 w-5 items-center justify-center rounded-full text-xs font-bold hover:bg-black/5"
                             aria-label="Giảm số lượng"
                           >
                             −
                           </button>
-                          <span className="w-6 text-center text-xs font-bold text-text">
+                          <span className="text-text w-6 text-center text-xs font-bold">
                             {line.quantity}
                           </span>
                           <button
                             type="button"
                             onClick={() => updateQuantity(line.id, line.quantity + 1)}
-                            className="flex h-5 w-5 items-center justify-center text-xs font-bold text-text hover:bg-black/5 rounded-full"
+                            className="text-text flex h-5 w-5 items-center justify-center rounded-full text-xs font-bold hover:bg-black/5"
                             aria-label="Tăng số lượng"
                           >
                             +
                           </button>
                         </div>
                       ) : (
-                        <span className="rounded-md bg-danger/10 px-2 py-0.5 text-xs font-bold text-danger">
+                        <span className="bg-danger/10 text-danger rounded-md px-2 py-0.5 text-xs font-bold">
                           Không tính vào đơn
                         </span>
                       )}
 
-                      <span className="font-bold text-sm text-primary">
+                      <span className="text-primary text-sm font-bold">
                         {line.isAvailable ? formatVnd(line.lineTotal) : "0đ"}
                       </span>
                     </div>
@@ -251,17 +251,17 @@ export function CartDrawer({
 
         {/* Footer */}
         {derived.lines.length > 0 && (
-          <div className="border-t border-border/80 bg-surface p-5">
+          <div className="border-border/80 bg-surface border-t p-5">
             <div className="space-y-1.5 text-sm">
-              <div className="flex justify-between text-text-muted">
+              <div className="text-text-muted flex justify-between">
                 <span>Tạm tính ({derived.totalItemCount} món)</span>
-                <span className="font-semibold text-text">{formatVnd(derived.subtotal)}</span>
+                <span className="text-text font-semibold">{formatVnd(derived.subtotal)}</span>
               </div>
-              <div className="flex justify-between text-xs text-text-muted">
+              <div className="text-text-muted flex justify-between text-xs">
                 <span>Phí giao hàng</span>
                 <span>Tính tại bước thanh toán</span>
               </div>
-              <div className="flex justify-between border-t border-border/60 pt-2 font-bold text-base text-text">
+              <div className="border-border/60 text-text flex justify-between border-t pt-2 text-base font-bold">
                 <span>Tổng tiền</span>
                 <span className="text-primary">{formatVnd(derived.subtotal)}</span>
               </div>
@@ -270,10 +270,8 @@ export function CartDrawer({
             <Link
               href="/thanh-toan"
               onClick={onClose}
-              className={`mt-4 flex h-11 w-full items-center justify-center rounded-full bg-primary font-bold text-sm text-white shadow-xs transition-all hover:bg-primary-hover active:scale-98 ${
-                derived.availableLines.length === 0
-                  ? "pointer-events-none opacity-50"
-                  : ""
+              className={`bg-primary hover:bg-primary-hover mt-4 flex h-11 w-full items-center justify-center rounded-full text-sm font-bold text-white shadow-xs transition-all active:scale-98 ${
+                derived.availableLines.length === 0 ? "pointer-events-none opacity-50" : ""
               }`}
             >
               Tiến hành thanh toán

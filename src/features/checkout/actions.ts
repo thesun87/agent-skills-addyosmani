@@ -6,6 +6,7 @@ import { calculateTotals, type PricedLine } from "@/lib/pricing";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { generateOrderCode } from "@/features/orders/order-code";
 import { getShopSettings, isShopOpen } from "@/features/settings/queries";
+import { setOrderAccessCookie } from "@/features/orders/auth";
 import { placeOrderSchema } from "./schema";
 
 class BusinessError extends Error {
@@ -14,8 +15,31 @@ class BusinessError extends Error {
     message: string,
   ) {
     super(message);
-    this.name = "BusinessError";
   }
+}
+
+function parsePickupAt(value: string | undefined): Date | null {
+  if (!value) return null;
+  if (value === "earliest") {
+    return new Date(Date.now() + 15 * 60 * 1000);
+  }
+  if (/^\d{1,2}:\d{2}$/.test(value)) {
+    const [hours, minutes] = value.split(":").map(Number);
+    const now = new Date();
+    const utcNow = now.getTime();
+    const vnOffsetMs = 7 * 60 * 60 * 1000;
+    const vnDate = new Date(utcNow + vnOffsetMs);
+    const year = vnDate.getUTCFullYear();
+    const month = vnDate.getUTCMonth();
+    const date = vnDate.getUTCDate();
+    const pickupMs = Date.UTC(year, month, date, hours - 7, minutes);
+    return new Date(pickupMs);
+  }
+  const d = new Date(value);
+  if (!isNaN(d.getTime())) {
+    return d;
+  }
+  return new Date(Date.now() + 15 * 60 * 1000);
 }
 
 /**
@@ -42,20 +66,13 @@ export async function placeOrder(
   // 2. Validate input schema with Zod
   const parsed = placeOrderSchema.safeParse(input);
   if (!parsed.success) {
-    return err(
-      "INVALID_INPUT",
-      "Thông tin đặt hàng không hợp lệ",
-      parsed.error.flatten(),
-    );
+    return err("INVALID_INPUT", "Thông tin đặt hàng không hợp lệ", parsed.error.flatten());
   }
 
   // 3. Check shop opening hours
   const settings = await getShopSettings();
   if (!isShopOpen(settings)) {
-    return err(
-      "SHOP_CLOSED",
-      `Quán đang đóng cửa, mở lại lúc ${settings.openTime}`,
-    );
+    return err("SHOP_CLOSED", `Quán đang đóng cửa, mở lại lúc ${settings.openTime}`);
   }
 
   // 4. Check Postgres sliding-window rate limit (5 orders / 10 mins per IP, AD4)
@@ -136,11 +153,7 @@ export async function placeOrder(
       }
 
       // Re-derive totals from DB
-      const totals = calculateTotals(
-        pricedLines,
-        parsed.data.fulfillment,
-        settings,
-      );
+      const totals = calculateTotals(pricedLines, parsed.data.fulfillment, settings);
 
       // Generate unique code (loop up to 5 times in case of collision)
       let code = generateOrderCode();
@@ -162,7 +175,8 @@ export async function placeOrder(
           customerName: parsed.data.customerName,
           customerPhone: parsed.data.customerPhone,
           deliveryAddress: parsed.data.deliveryAddress,
-          pickupAt: parsed.data.pickupAt ? new Date(parsed.data.pickupAt) : null,
+          pickupAt:
+            parsed.data.fulfillment === "PICKUP" ? parsePickupAt(parsed.data.pickupAt) : null,
           note: parsed.data.note,
           subtotal: totals.subtotal,
           shippingFee: totals.shippingFee,
@@ -179,6 +193,8 @@ export async function placeOrder(
           },
         },
       });
+
+      await setOrderAccessCookie(order.code, parsed.data.customerPhone);
 
       return ok({ code: order.code });
     });

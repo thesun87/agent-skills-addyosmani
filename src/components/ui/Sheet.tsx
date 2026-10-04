@@ -77,14 +77,14 @@ export function Sheet({ isOpen, onClose, title, children }: SheetProps) {
       <div
         ref={sheetRef}
         tabIndex={-1}
-        className="flex max-h-[90dvh] w-full max-w-lg flex-col overflow-hidden rounded-t-2xl bg-surface-raised shadow-xl outline-hidden transition-all sm:rounded-2xl"
+        className="bg-surface-raised flex max-h-[90dvh] w-full max-w-lg flex-col overflow-hidden rounded-t-2xl shadow-xl outline-hidden transition-all sm:rounded-2xl"
       >
-        <div className="flex items-center justify-between border-b border-border/80 px-4 py-3.5 sm:px-6">
-          <h2 className="font-semibold text-lg text-text">{title}</h2>
+        <div className="border-border/80 flex items-center justify-between border-b px-4 py-3.5 sm:px-6">
+          <h2 className="text-text text-lg font-semibold">{title}</h2>
           <button
             type="button"
             onClick={onClose}
-            className="flex h-8 w-8 items-center justify-center rounded-full text-text-muted transition-colors hover:bg-surface hover:text-text"
+            className="text-text-muted hover:bg-surface hover:text-text flex h-8 w-8 items-center justify-center rounded-full transition-colors"
             aria-label="Đóng bảng tuỳ chọn"
           >
             ✕

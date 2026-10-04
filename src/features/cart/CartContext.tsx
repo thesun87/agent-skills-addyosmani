@@ -8,12 +8,7 @@ import React, {
   useState,
   useSyncExternalStore,
 } from "react";
-import {
-  cartReducer,
-  loadCartFromStorage,
-  saveCartToStorage,
-  type CartItem,
-} from "./store";
+import { cartReducer, loadCartFromStorage, saveCartToStorage, type CartItem } from "./store";
 
 export interface CartContextValue {
   items: CartItem[];
@@ -82,15 +77,9 @@ export interface CartProviderProps {
   initialIsOpen?: boolean;
 }
 
-export function CartProvider({
-  children,
-  initialItems,
-  initialIsOpen = false,
-}: CartProviderProps) {
+export function CartProvider({ children, initialItems, initialIsOpen = false }: CartProviderProps) {
   const [isDrawerOpen, setIsDrawerOpen] = useState(initialIsOpen);
-  const [overrideItems, setOverrideItems] = useState<CartItem[] | null>(
-    initialItems ?? null,
-  );
+  const [overrideItems, setOverrideItems] = useState<CartItem[] | null>(initialItems ?? null);
 
   const syncedItems = useSyncExternalStore(
     subscribeToStorage,
@@ -101,12 +90,7 @@ export function CartProvider({
   const items = overrideItems !== null ? overrideItems : syncedItems;
 
   const addItem = useCallback(
-    (item: {
-      productId: string;
-      optionIds: string[];
-      quantity: number;
-      note?: string;
-    }) => {
+    (item: { productId: string; optionIds: string[]; quantity: number; note?: string }) => {
       if (overrideItems !== null) {
         const next = cartReducer({ items: overrideItems }, { type: "ADD_ITEM", item });
         setOverrideItems(next.items);
@@ -130,10 +114,7 @@ export function CartProvider({
         setOverrideItems(next.items);
       } else {
         const current = getClientSnapshot();
-        const next = cartReducer(
-          { items: current },
-          { type: "UPDATE_QUANTITY", id, quantity },
-        );
+        const next = cartReducer({ items: current }, { type: "UPDATE_QUANTITY", id, quantity });
         notifyCartChange(next.items);
       }
     },
@@ -143,17 +124,11 @@ export function CartProvider({
   const removeItem = useCallback(
     (id: string) => {
       if (overrideItems !== null) {
-        const next = cartReducer(
-          { items: overrideItems },
-          { type: "REMOVE_ITEM", id },
-        );
+        const next = cartReducer({ items: overrideItems }, { type: "REMOVE_ITEM", id });
         setOverrideItems(next.items);
       } else {
         const current = getClientSnapshot();
-        const next = cartReducer(
-          { items: current },
-          { type: "REMOVE_ITEM", id },
-        );
+        const next = cartReducer({ items: current }, { type: "REMOVE_ITEM", id });
         notifyCartChange(next.items);
       }
     },
