@@ -11,7 +11,7 @@ export interface CreateProductInput {
   description?: string;
   sortOrder?: number;
   isAvailable?: boolean;
-  imageUrl?: string | null;
+  imageKey?: string | null;
   optionGroupIds?: string[];
 }
 
@@ -22,7 +22,7 @@ export interface UpdateProductInput {
   description?: string;
   sortOrder?: number;
   isAvailable?: boolean;
-  imageUrl?: string | null;
+  imageKey?: string | null;
   optionGroupIds?: string[];
 }
 
@@ -108,7 +108,7 @@ export async function createProductAction(
       categoryId: input.categoryId,
       basePrice: input.basePrice,
       description: input.description?.trim() || "",
-      imageUrl: input.imageUrl ?? null,
+      imageKey: input.imageKey ?? null,
       sortOrder,
       isAvailable: input.isAvailable ?? true,
       optionGroups: input.optionGroupIds && input.optionGroupIds.length > 0
@@ -160,7 +160,7 @@ export async function updateProductAction(
     categoryId?: string;
     basePrice?: number;
     description?: string;
-    imageUrl?: string | null;
+    imageKey?: string | null;
     sortOrder?: number;
     isAvailable?: boolean;
     optionGroups?: {
@@ -197,8 +197,8 @@ export async function updateProductAction(
     updateData.description = input.description.trim();
   }
 
-  if (input.imageUrl !== undefined) {
-    updateData.imageUrl = input.imageUrl;
+  if (input.imageKey !== undefined) {
+    updateData.imageKey = input.imageKey;
   }
 
   if (input.sortOrder !== undefined) {

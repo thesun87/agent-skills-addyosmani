@@ -363,19 +363,19 @@
 
 ---
 
-### - [ ] T15: Upload ảnh món qua S3 (Supabase Storage) (A3)
+### - [x] T15: Upload ảnh món qua S3 (Supabase Storage) (A3)
 
 **Description:** Bucket public `product-images` (khai báo trong `supabase/config.toml`). `src/lib/storage.ts` dùng `@aws-sdk/client-s3` (endpoint, region, access key, bucket, `STORAGE_PUBLIC_BASE_URL` từ env) và chỉ export `uploadImage`, `deleteImage`, `publicUrl`. Migration đổi `Product.imageUrl` → `imageKey`. Server action nhận file, kiểm loại (jpeg/png/webp) và kích thước (≤ 2MB), đặt key ngẫu nhiên `products/<id>.<ext>`, upload, lưu key; xoá object cũ khi thay ảnh. `next/image` cấu hình host từ `STORAGE_PUBLIC_BASE_URL`.
 
 **Acceptance criteria:**
-- [ ] File sai loại/quá lớn bị từ chối với thông báo tiếng Việt
-- [ ] DB chỉ lưu object key; S3 access/secret key không xuất hiện trong bundle client (kiểm `pnpm build` output)
-- [ ] Không file nào ngoài `src/lib/storage.ts` import `@aws-sdk/*`
-- [ ] Ảnh mới hiển thị trên menu khách
+- [x] File sai loại/quá lớn bị từ chối với thông báo tiếng Việt
+- [x] DB chỉ lưu object key; S3 access/secret key không xuất hiện trong bundle client (kiểm `pnpm build` output)
+- [x] Không file nào ngoài `src/lib/storage.ts` import `@aws-sdk/*`
+- [x] Ảnh mới hiển thị trên menu khách
 
 **Verification:**
-- [ ] `pnpm test tests/integration/admin-product-image`
-- [ ] Manual: upload ảnh, xem trên menu
+- [x] `pnpm test tests/integration/admin-product-image`
+- [x] Manual: upload ảnh, xem trên menu
 
 **Dependencies:** T14
 **Files likely touched:** `supabase/config.toml`, `prisma/schema.prisma` (+migration), `src/lib/storage.ts`, `src/features/menu/admin-actions/product-image.ts`, `next.config.ts`

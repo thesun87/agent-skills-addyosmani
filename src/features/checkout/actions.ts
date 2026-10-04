@@ -8,6 +8,7 @@ import { generateOrderCode } from "@/features/orders/order-code";
 import { getShopSettings, isShopOpen } from "@/features/settings/queries";
 import { setOrderAccessCookie } from "@/features/orders/auth";
 import { placeOrderSchema } from "./schema";
+import { publicUrl } from "@/lib/storage";
 
 class BusinessError extends Error {
   constructor(
@@ -143,7 +144,7 @@ export async function placeOrder(
         preparedItems.push({
           productId: product.id,
           productName: product.name,
-          productImage: product.imageUrl,
+          productImage: publicUrl(product.imageKey),
           unitPrice,
           quantity: item.quantity,
           lineTotal,

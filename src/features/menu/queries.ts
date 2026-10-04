@@ -1,7 +1,8 @@
 import { db } from "@/lib/db";
+import { publicUrl } from "@/lib/storage";
 
 export async function getVisibleMenu() {
-  return db.category.findMany({
+  const categories = await db.category.findMany({
     where: { isVisible: true },
     orderBy: { sortOrder: "asc" },
     include: {
@@ -21,6 +22,14 @@ export async function getVisibleMenu() {
       },
     },
   });
+
+  return categories.map((cat) => ({
+    ...cat,
+    products: cat.products.map((p) => ({
+      ...p,
+      imageUrl: publicUrl(p.imageKey),
+    })),
+  }));
 }
 
 export type MenuCategory = Awaited<ReturnType<typeof getVisibleMenu>>[number];

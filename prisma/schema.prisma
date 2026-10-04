@@ -28,7 +28,7 @@ model Product {
   name         String
   description  String        @default("")
   basePrice    Int
-  imageUrl     String?
+  imageKey     String?
   sortOrder    Int           @default(0)
   isAvailable  Boolean       @default(true)
   /// Archived products are hidden instead of hard-deleted once they appear in orders.

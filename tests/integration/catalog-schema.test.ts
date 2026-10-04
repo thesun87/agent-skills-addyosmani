@@ -41,7 +41,7 @@ describe("catalog schema", () => {
       name: "Cà phê sữa đá",
       basePrice: 29_000,
       description: "",
-      imageUrl: null,
+      imageKey: null,
       isAvailable: true,
       isArchived: false,
     });
