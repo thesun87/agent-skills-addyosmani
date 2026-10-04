@@ -55,18 +55,18 @@ T1 Scaffold ──► T2 Supabase+Prisma ──► T3 Pure libs
 **Checkpoint 1** — build/lint/typecheck/test xanh; `supabase start` + `db:migrate` chạy được trên máy Windows.
 
 ### Phase 2 — Luồng khách hàng
-- [ ] T3b: Prototype UI khách hàng (HTML click-through, mobile-first) — **chủ quán duyệt trước khi code T4** (M)
-- [ ] T4: Menu theo danh mục từ DB (C1) (M)
-- [ ] T5: Chọn tuỳ chọn món (C2) (M)
-- [ ] T6: Giỏ hàng localStorage (C3) (M)
-- [ ] T7: Server action `placeOrder` — đơn, cài đặt quán, rate limit (C5, C7, C9-API) (M) ⚠️ rủi ro cao
-- [ ] T8: Trang checkout (C4, C5, C6, C9-UI) (M)
-- [ ] T9: Trang xác nhận + theo dõi đơn + VietQR (C6, C8) (M)
+- [x] T3b: Prototype UI khách hàng (HTML click-through, mobile-first) — **chủ quán duyệt trước khi code T4** (M)
+- [x] T4: Menu theo danh mục từ DB (C1) (M)
+- [x] T5: Chọn tuỳ chọn món (C2) (M)
+- [x] T6: Giỏ hàng localStorage (C3) (M)
+- [x] T7: Server action `placeOrder` — đơn, cài đặt quán, rate limit (C5, C7, C9-API) (M) ⚠️ rủi ro cao
+- [x] T8: Trang checkout (C4, C5, C6, C9-UI) (M)
+- [x] T9: Trang xác nhận + theo dõi đơn + VietQR (C6, C8) (M)
 
 **Checkpoint 2** — E2E #1 (giao hàng COD) và #2 (pickup + QR) xanh; **demo cho chủ quán**.
 
 ### Phase 3 — Admin xử lý đơn
-- [ ] T9b: Prototype UI admin (danh sách + chi tiết đơn) — **chủ quán duyệt trước khi code T11** (S)
+- [x] T9b: Prototype UI admin (danh sách + chi tiết đơn) — **chủ quán duyệt trước khi code T11** (S)
 - [ ] T10: Đăng nhập admin + khoá sau 5 lần sai (A1) (M)
 - [ ] T11: Danh sách đơn + polling + âm báo (A4) (M)
 - [ ] T12: Chuyển trạng thái, huỷ có lý do, xác nhận đã nhận tiền (A5, A6) (M)

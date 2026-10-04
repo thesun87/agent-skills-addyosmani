@@ -1,0 +1,2828 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tuấn Linh Coffee — Prototype Quản Trị & Xử Lý Đơn (T9b)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Lora:ital,wght@0,600;0,700;1,600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --color-primary: #b8322a;
+        --color-primary-hover: #962720;
+        --color-accent: #e8892b;
+        --color-accent-light: #fef3e7;
+        --color-support: #4e7a47;
+        --color-support-light: #eef6ec;
+        --color-surface: #fbf5ec;
+        --color-surface-raised: #fffdf9;
+        --color-surface-card: #ffffff;
+        --color-text: #3a2620;
+        --color-text-muted: #7a5e52;
+        --color-border: #e8ded2;
+        --color-border-light: #f2ebe3;
+        --color-danger: #c0392b;
+        --color-danger-bg: #fdf2f2;
+        --color-info: #2980b9;
+        --color-info-bg: #ebf5fb;
+        --color-dark-nav: #231814;
+        --color-dark-nav-hover: #352520;
+        --shadow-sm: 0 1px 3px rgba(58, 38, 32, 0.05);
+        --shadow-md: 0 4px 12px rgba(58, 38, 32, 0.08);
+        --shadow-lg: 0 12px 28px rgba(58, 38, 32, 0.12);
+        --radius-sm: 6px;
+        --radius-md: 10px;
+        --radius-lg: 16px;
+        --radius-full: 9999px;
+        --font-sans: "Be Vietnam Pro", system-ui, -apple-system, sans-serif;
+        --font-display: "Lora", Georgia, serif;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      body {
+        background-color: #1a120f;
+        color: var(--color-text);
+        font-family: var(--font-sans);
+        line-height: 1.5;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* ================= TOP PROTOTYPE CONTROL BAR ================= */
+      .proto-bar {
+        background: #120b09;
+        color: #f5ebe1;
+        padding: 10px 16px;
+        font-size: 13px;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        border-bottom: 1px solid #33211b;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+      }
+
+      .proto-title {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .proto-badge {
+        background: var(--color-accent);
+        color: #231814;
+        padding: 3px 8px;
+        border-radius: var(--radius-full);
+        font-weight: 700;
+        font-size: 11px;
+        letter-spacing: 0.5px;
+      }
+
+      .proto-controls {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+
+      .proto-btn {
+        background: #281a15;
+        border: 1px solid #4a3229;
+        color: #f7ede2;
+        padding: 6px 12px;
+        border-radius: 6px;
+        font-size: 12px;
+        cursor: pointer;
+        font-family: inherit;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-weight: 500;
+        transition: all 0.2s ease;
+      }
+
+      .proto-btn:hover {
+        background: #3d2821;
+        border-color: #694639;
+      }
+
+      .proto-btn.active {
+        background: var(--color-primary);
+        border-color: var(--color-primary);
+        color: white;
+        font-weight: 600;
+      }
+
+      .proto-btn.simulate {
+        background: #2d4529;
+        border-color: #4a7543;
+        color: #bbf7d0;
+      }
+
+      .proto-btn.simulate:hover {
+        background: #3b5a36;
+      }
+
+      /* ================= CANVAS & VIEWPORT FRAME ================= */
+      .proto-canvas {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 18px 12px;
+        background: #1a120f;
+        overflow-x: auto;
+      }
+
+      .admin-viewport {
+        background: var(--color-surface);
+        width: 100%;
+        max-width: 1280px; /* Default Desktop/Laptop */
+        min-height: 820px;
+        border-radius: 14px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 0 1px #3d2b24;
+        display: flex;
+        overflow: hidden;
+        transition: max-width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        position: relative;
+      }
+
+      .admin-viewport.tablet-mode {
+        max-width: 768px; /* Tablet quầy bar */
+      }
+
+      .admin-viewport.fullscreen-mode {
+        max-width: 100%;
+        border-radius: 0;
+        min-height: calc(100vh - 50px);
+      }
+
+      /* ================= ADMIN APP LAYOUT ================= */
+      /* Sidebar */
+      .admin-sidebar {
+        width: 230px;
+        background: var(--color-dark-nav);
+        color: #f7ede2;
+        display: flex;
+        flex-direction: column;
+        flex-shrink: 0;
+        border-right: 1px solid #3d2b24;
+        transition: width 0.2s;
+      }
+
+      .tablet-mode .admin-sidebar {
+        width: 76px;
+      }
+
+      .brand-box {
+        padding: 16px 14px;
+        border-bottom: 1px solid #33221b;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .brand-logo-icon {
+        width: 40px;
+        height: 40px;
+        flex-shrink: 0;
+      }
+
+      .brand-texts {
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+
+      .tablet-mode .brand-texts {
+        display: none;
+      }
+
+      .brand-title {
+        font-family: var(--font-display);
+        font-size: 15px;
+        font-weight: 700;
+        color: #fff;
+        line-height: 1.2;
+        white-space: nowrap;
+      }
+
+      .brand-sub {
+        font-size: 10px;
+        color: var(--color-accent);
+        font-weight: 600;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+      }
+
+      .nav-menu {
+        list-style: none;
+        padding: 14px 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        flex: 1;
+      }
+
+      .nav-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 14px;
+        border-radius: var(--radius-md);
+        color: #d8c8bf;
+        text-decoration: none;
+        font-size: 13.5px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.15s ease;
+        position: relative;
+      }
+
+      .tablet-mode .nav-item {
+        padding: 12px;
+        justify-content: center;
+      }
+
+      .nav-item:hover {
+        background: var(--color-dark-nav-hover);
+        color: #fff;
+      }
+
+      .nav-item.active {
+        background: var(--color-primary);
+        color: #fff;
+        font-weight: 600;
+      }
+
+      .nav-icon {
+        font-size: 17px;
+        width: 22px;
+        text-align: center;
+        flex-shrink: 0;
+      }
+
+      .nav-label {
+        flex: 1;
+        white-space: nowrap;
+      }
+
+      .tablet-mode .nav-label {
+        display: none;
+      }
+
+      .nav-badge {
+        background: var(--color-accent);
+        color: #231814;
+        font-size: 11px;
+        font-weight: 700;
+        padding: 2px 7px;
+        border-radius: var(--radius-full);
+      }
+
+      .tablet-mode .nav-badge {
+        position: absolute;
+        top: 6px;
+        right: 8px;
+        padding: 2px 5px;
+        font-size: 10px;
+      }
+
+      .user-footer {
+        padding: 14px;
+        border-top: 1px solid #33221b;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 12px;
+      }
+
+      .tablet-mode .user-footer {
+        padding: 10px;
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .user-avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: var(--color-accent);
+        color: #231814;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 13px;
+        flex-shrink: 0;
+      }
+
+      .user-info {
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+
+      .tablet-mode .user-info {
+        display: none;
+      }
+
+      .user-name {
+        color: #fff;
+        font-weight: 600;
+        white-space: nowrap;
+      }
+
+      .user-role {
+        color: #a89489;
+        font-size: 11px;
+      }
+
+      /* Main Content Area */
+      .admin-main {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        background: var(--color-surface);
+      }
+
+      /* Top Header */
+      .main-header {
+        background: var(--color-surface-raised);
+        border-bottom: 1px solid var(--color-border);
+        padding: 12px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+
+      .header-title-box {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .page-title {
+        font-family: var(--font-display);
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--color-text);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .page-subtitle {
+        font-size: 12px;
+        color: var(--color-text-muted);
+      }
+
+      .header-actions {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      /* Sound Button */
+      .sound-toggle-btn {
+        background: #fbf5ec;
+        border: 1.5px solid var(--color-border);
+        color: var(--color-text);
+        padding: 7px 14px;
+        border-radius: var(--radius-md);
+        font-size: 12.5px;
+        font-weight: 600;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.2s ease;
+      }
+
+      .sound-toggle-btn:hover {
+        background: #f2e6d6;
+      }
+
+      .sound-toggle-btn.sound-on {
+        background: #eef6ec;
+        border-color: #8ed085;
+        color: var(--color-support);
+      }
+
+      .sound-toggle-btn.pulsing {
+        animation: pulseAlert 1.5s infinite;
+      }
+
+      @keyframes pulseAlert {
+        0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(184, 50, 42, 0.4); }
+        50% { transform: scale(1.03); box-shadow: 0 0 0 8px rgba(184, 50, 42, 0); }
+      }
+
+      .polling-indicator {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 11.5px;
+        color: var(--color-text-muted);
+        background: var(--color-surface);
+        padding: 4px 10px;
+        border-radius: var(--radius-full);
+        border: 1px solid var(--color-border);
+      }
+
+      .polling-dot {
+        width: 7px;
+        height: 7px;
+        background: var(--color-support);
+        border-radius: 50%;
+        animation: blink 2s infinite ease-in-out;
+      }
+
+      @keyframes blink {
+        0%, 100% { opacity: 0.3; }
+        50% { opacity: 1; }
+      }
+
+      /* ================= MASTER-DETAIL VIEW (ORDERS) ================= */
+      .orders-workspace {
+        flex: 1;
+        display: flex;
+        overflow: hidden;
+      }
+
+      /* Left Pane: Filters & Order Cards */
+      .orders-master {
+        width: 410px;
+        border-right: 1px solid var(--color-border);
+        background: var(--color-surface-raised);
+        display: flex;
+        flex-direction: column;
+        flex-shrink: 0;
+      }
+
+      .tablet-mode .orders-master {
+        width: 330px;
+      }
+
+      .orders-filter-bar {
+        padding: 12px 14px;
+        border-bottom: 1px solid var(--color-border);
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        background: #fffdf9;
+      }
+
+      .search-box {
+        position: relative;
+        width: 100%;
+      }
+
+      .search-input {
+        width: 100%;
+        padding: 8px 12px 8px 34px;
+        border-radius: var(--radius-md);
+        border: 1px solid var(--color-border);
+        background: var(--color-surface);
+        font-size: 12.5px;
+        font-family: inherit;
+        color: var(--color-text);
+        outline: none;
+      }
+
+      .search-input:focus {
+        border-color: var(--color-primary);
+        background: #fff;
+      }
+
+      .search-icon {
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 14px;
+        color: var(--color-text-muted);
+      }
+
+      /* Filter Chips */
+      .filter-chips-row {
+        display: flex;
+        gap: 6px;
+        overflow-x: auto;
+        padding-bottom: 2px;
+      }
+
+      .filter-chips-row::-webkit-scrollbar {
+        display: none;
+      }
+
+      .filter-chip {
+        padding: 5px 10px;
+        border-radius: var(--radius-full);
+        border: 1px solid var(--color-border);
+        background: var(--color-surface);
+        font-size: 11.5px;
+        font-weight: 500;
+        color: var(--color-text);
+        cursor: pointer;
+        white-space: nowrap;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        transition: all 0.15s;
+      }
+
+      .filter-chip:hover {
+        background: #f4e9dc;
+      }
+
+      .filter-chip.active {
+        background: var(--color-text);
+        color: #fff;
+        border-color: var(--color-text);
+      }
+
+      .filter-chip.pending-chip {
+        border-color: #f1b378;
+        background: var(--color-accent-light);
+        color: #8c4c0a;
+        font-weight: 600;
+      }
+
+      .filter-chip.pending-chip.active {
+        background: var(--color-accent);
+        color: #231814;
+        border-color: var(--color-accent);
+      }
+
+      .chip-count {
+        background: rgba(0, 0, 0, 0.1);
+        padding: 1px 5px;
+        border-radius: 99px;
+        font-size: 10px;
+      }
+
+      .filter-chip.active .chip-count {
+        background: rgba(255, 255, 255, 0.25);
+      }
+
+      /* Secondary Filter: Delivery/Pickup */
+      .filter-sub-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 11.5px;
+        color: var(--color-text-muted);
+      }
+
+      .type-select {
+        padding: 4px 8px;
+        border-radius: 6px;
+        border: 1px solid var(--color-border);
+        background: var(--color-surface);
+        font-size: 11.5px;
+        font-family: inherit;
+        color: var(--color-text);
+        cursor: pointer;
+      }
+
+      /* Order Cards List */
+      .order-cards-list {
+        flex: 1;
+        overflow-y: auto;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .order-card {
+        background: var(--color-surface-card);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-md);
+        padding: 12px 14px;
+        cursor: pointer;
+        transition: all 0.18s ease;
+        position: relative;
+        box-shadow: var(--shadow-sm);
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+      }
+
+      .order-card:hover {
+        border-color: #c9b4a4;
+        box-shadow: var(--shadow-md);
+        transform: translateY(-1px);
+      }
+
+      .order-card.selected {
+        border-color: var(--color-primary);
+        background: #fffcf9;
+        box-shadow: 0 0 0 2px var(--color-primary), var(--shadow-md);
+      }
+
+      .order-card.is-pending {
+        border-left: 5px solid var(--color-accent);
+        background: #fffdfa;
+      }
+
+      .card-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+      }
+
+      .order-code {
+        font-weight: 700;
+        font-size: 14px;
+        color: var(--color-text);
+      }
+
+      .order-time {
+        font-size: 11px;
+        color: var(--color-text-muted);
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+      }
+
+      .card-badges {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        flex-wrap: wrap;
+      }
+
+      /* Badges */
+      .status-badge {
+        font-size: 11px;
+        font-weight: 600;
+        padding: 2.5px 8px;
+        border-radius: var(--radius-full);
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+      }
+
+      .badge-pending {
+        background: #fef3c7;
+        color: #92400e;
+        border: 1px solid #fde68a;
+      }
+
+      .badge-confirmed {
+        background: #e0f2fe;
+        color: #075985;
+        border: 1px solid #bae6fd;
+      }
+
+      .badge-preparing {
+        background: #f3e8ff;
+        color: #6b21a8;
+        border: 1px solid #e9d5ff;
+      }
+
+      .badge-delivering {
+        background: #ffedd5;
+        color: #9a3412;
+        border: 1px solid #fed7aa;
+      }
+
+      .badge-ready {
+        background: #ecfdf5;
+        color: #065f46;
+        border: 1px solid #a7f3d0;
+      }
+
+      .badge-completed {
+        background: #f1f5f9;
+        color: #334155;
+        border: 1px solid #e2e8f0;
+      }
+
+      .badge-cancelled {
+        background: #fee2e2;
+        color: #991b1b;
+        border: 1px solid #fecaca;
+      }
+
+      .type-pill {
+        font-size: 10.5px;
+        padding: 2px 7px;
+        border-radius: 4px;
+        font-weight: 600;
+      }
+
+      .type-delivery {
+        background: #eef2ff;
+        color: #3730a3;
+      }
+
+      .type-pickup {
+        background: #fdf4ff;
+        color: #86198f;
+      }
+
+      .pay-pill {
+        font-size: 10.5px;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-weight: 600;
+      }
+
+      .pay-unpaid {
+        background: #fef2f2;
+        color: var(--color-danger);
+      }
+
+      .pay-paid {
+        background: #ecfdf5;
+        color: var(--color-support);
+      }
+
+      .card-customer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 12px;
+        color: var(--color-text);
+      }
+
+      .card-name {
+        font-weight: 600;
+      }
+
+      .card-total {
+        font-weight: 700;
+        color: var(--color-primary);
+        font-size: 13.5px;
+      }
+
+      .card-summary {
+        font-size: 11.5px;
+        color: var(--color-text-muted);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      /* Right Pane: Order Details */
+      .orders-detail {
+        flex: 1;
+        overflow-y: auto;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        background: var(--color-surface);
+      }
+
+      .tablet-mode .orders-detail {
+        padding: 14px;
+        gap: 12px;
+      }
+
+      .detail-card {
+        background: var(--color-surface-card);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-md);
+        padding: 18px;
+        box-shadow: var(--shadow-sm);
+      }
+
+      .tablet-mode .detail-card {
+        padding: 14px;
+      }
+
+      /* Detail Top Header */
+      .detail-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 12px;
+        border-bottom: 1px solid var(--color-border-light);
+        padding-bottom: 14px;
+      }
+
+      .detail-title-group {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .detail-code {
+        font-family: var(--font-display);
+        font-size: 22px;
+        font-weight: 700;
+        color: var(--color-text);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .detail-meta-text {
+        font-size: 12px;
+        color: var(--color-text-muted);
+      }
+
+      .detail-actions-top {
+        display: flex;
+        gap: 8px;
+      }
+
+      .btn-ghost {
+        background: var(--color-surface);
+        border: 1px solid var(--color-border);
+        color: var(--color-text);
+        padding: 6px 12px;
+        border-radius: var(--radius-sm);
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .btn-ghost:hover {
+        background: #f4e9dc;
+      }
+
+      /* Customer info grid */
+      .info-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 14px;
+        margin-top: 14px;
+      }
+
+      .info-item {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+      }
+
+      .info-label {
+        font-size: 11px;
+        font-weight: 600;
+        color: var(--color-text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .info-value {
+        font-size: 13.5px;
+        font-weight: 600;
+        color: var(--color-text);
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .call-link {
+        color: var(--color-info);
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 12px;
+      }
+
+      .call-link:hover {
+        text-decoration: underline;
+      }
+
+      /* Items Table */
+      .items-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+        font-size: 13px;
+      }
+
+      .items-table th {
+        text-align: left;
+        padding: 8px 10px;
+        border-bottom: 2px solid var(--color-border);
+        font-size: 11px;
+        font-weight: 600;
+        color: var(--color-text-muted);
+        text-transform: uppercase;
+      }
+
+      .items-table td {
+        padding: 12px 10px;
+        border-bottom: 1px solid var(--color-border-light);
+        vertical-align: top;
+      }
+
+      .item-qty-badge {
+        background: #f4e9dc;
+        color: var(--color-text);
+        font-weight: 700;
+        font-size: 12px;
+        padding: 2px 7px;
+        border-radius: 4px;
+        display: inline-block;
+      }
+
+      .item-details {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+      }
+
+      .item-title {
+        font-weight: 600;
+        font-size: 13.5px;
+        color: var(--color-text);
+      }
+
+      .item-options {
+        font-size: 12px;
+        color: var(--color-text-muted);
+        line-height: 1.4;
+      }
+
+      .item-note {
+        font-size: 11.5px;
+        color: #92400e;
+        background: #fffbeb;
+        padding: 3px 8px;
+        border-radius: 4px;
+        display: inline-block;
+        margin-top: 3px;
+        border-left: 2px solid #f59e0b;
+      }
+
+      .text-right {
+        text-align: right;
+      }
+
+      /* Price Calculation Summary */
+      .price-summary-box {
+        background: var(--color-surface);
+        border-radius: var(--radius-sm);
+        padding: 12px 14px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        font-size: 13px;
+        margin-top: 14px;
+        border: 1px dashed var(--color-border);
+      }
+
+      .price-row {
+        display: flex;
+        justify-content: space-between;
+        color: var(--color-text-muted);
+      }
+
+      .price-row.total-row {
+        border-top: 1px solid var(--color-border);
+        padding-top: 8px;
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--color-text);
+      }
+
+      .price-row.total-row .total-amount {
+        color: var(--color-primary);
+        font-size: 18px;
+      }
+
+      /* Payment Reconciliation Card */
+      .payment-card {
+        border-left: 4px solid var(--color-accent);
+        background: #fffdf9;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .payment-card.is-paid {
+        border-left-color: var(--color-support);
+        background: #fafdf9;
+      }
+
+      .payment-card-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .payment-status-title {
+        font-size: 14px;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .btn-mark-paid {
+        background: var(--color-support);
+        color: white;
+        border: none;
+        padding: 9px 18px;
+        border-radius: var(--radius-md);
+        font-size: 13.5px;
+        font-weight: 700;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        box-shadow: 0 2px 6px rgba(78, 122, 71, 0.3);
+        transition: all 0.2s;
+      }
+
+      .btn-mark-paid:hover {
+        background: #41673b;
+        transform: translateY(-1px);
+      }
+
+      .qr-reconcile-info {
+        font-size: 12px;
+        color: var(--color-text-muted);
+        background: #fff;
+        padding: 10px;
+        border-radius: 6px;
+        border: 1px solid var(--color-border-light);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      /* State Machine Big Action Controls */
+      .action-dock {
+        background: var(--color-surface-raised);
+        border: 2px solid var(--color-border);
+        border-radius: var(--radius-lg);
+        padding: 16px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        flex-wrap: wrap;
+        box-shadow: var(--shadow-md);
+        position: sticky;
+        bottom: 0;
+        z-index: 50;
+      }
+
+      .tablet-mode .action-dock {
+        padding: 12px 14px;
+      }
+
+      .action-info {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+      }
+
+      .action-hint {
+        font-size: 11.5px;
+        color: var(--color-text-muted);
+        font-weight: 500;
+      }
+
+      .action-buttons-group {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+
+      /* Large Touch Friendly Action Buttons */
+      .btn-state-action {
+        min-height: 48px;
+        padding: 10px 24px;
+        border-radius: var(--radius-md);
+        font-size: 15px;
+        font-weight: 700;
+        cursor: pointer;
+        border: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        transition: all 0.18s ease;
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .btn-state-action:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
+      }
+
+      .btn-state-action:active {
+        transform: translateY(1px);
+      }
+
+      .btn-primary-action {
+        background: var(--color-primary);
+        color: white;
+      }
+
+      .btn-primary-action:hover {
+        background: var(--color-primary-hover);
+      }
+
+      .btn-success-action {
+        background: var(--color-support);
+        color: white;
+      }
+
+      .btn-success-action:hover {
+        background: #3f6539;
+      }
+
+      .btn-cancel-action {
+        background: transparent;
+        color: var(--color-danger);
+        border: 1.5px solid #fca5a5;
+        padding: 8px 16px;
+        min-height: 44px;
+        font-size: 13.5px;
+        font-weight: 600;
+        border-radius: var(--radius-md);
+        cursor: pointer;
+        transition: all 0.18s;
+      }
+
+      .btn-cancel-action:hover {
+        background: var(--color-danger-bg);
+        border-color: var(--color-danger);
+      }
+
+      /* Audit Timeline Log */
+      .history-timeline {
+        margin-top: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        position: relative;
+        padding-left: 20px;
+      }
+
+      .history-timeline::before {
+        content: "";
+        position: absolute;
+        left: 6px;
+        top: 6px;
+        bottom: 6px;
+        width: 2px;
+        background: var(--color-border);
+      }
+
+      .history-item {
+        position: relative;
+        font-size: 12px;
+        color: var(--color-text);
+        display: flex;
+        flex-direction: column;
+        gap: 1px;
+      }
+
+      .history-dot {
+        position: absolute;
+        left: -19px;
+        top: 3px;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: var(--color-border);
+        border: 2px solid #fff;
+      }
+
+      .history-item.latest .history-dot {
+        background: var(--color-primary);
+        box-shadow: 0 0 0 3px rgba(184, 50, 42, 0.2);
+      }
+
+      .history-meta {
+        font-size: 11px;
+        color: var(--color-text-muted);
+      }
+
+      /* ================= MODAL: HUỶ ĐƠN HÀNG ================= */
+      .modal-backdrop {
+        position: fixed;
+        inset: 0;
+        background: rgba(26, 18, 15, 0.65);
+        backdrop-filter: blur(3px);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 2000;
+        padding: 16px;
+      }
+
+      .modal-backdrop.open {
+        display: flex;
+      }
+
+      .modal-box {
+        background: #fff;
+        border-radius: var(--radius-lg);
+        width: 100%;
+        max-width: 460px;
+        box-shadow: var(--shadow-lg);
+        border: 1px solid var(--color-border);
+        overflow: hidden;
+        animation: modalIn 0.2s ease-out;
+      }
+
+      @keyframes modalIn {
+        from { transform: scale(0.95); opacity: 0; }
+        to { transform: scale(1); opacity: 1; }
+      }
+
+      .modal-header {
+        padding: 16px 20px;
+        background: #fdf2f2;
+        border-bottom: 1px solid #fee2e2;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .modal-title {
+        font-family: var(--font-display);
+        font-size: 17px;
+        font-weight: 700;
+        color: var(--color-danger);
+      }
+
+      .modal-close {
+        background: none;
+        border: none;
+        font-size: 20px;
+        color: var(--color-text-muted);
+        cursor: pointer;
+      }
+
+      .modal-body {
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        font-size: 13px;
+      }
+
+      .reason-chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .reason-chip {
+        padding: 6px 12px;
+        border-radius: var(--radius-full);
+        border: 1px solid var(--color-border);
+        background: var(--color-surface);
+        font-size: 12px;
+        cursor: pointer;
+        transition: all 0.15s;
+      }
+
+      .reason-chip:hover {
+        background: #f0e4d7;
+      }
+
+      .reason-chip.active {
+        background: #fee2e2;
+        border-color: #fca5a5;
+        color: var(--color-danger);
+        font-weight: 600;
+      }
+
+      .reason-textarea {
+        width: 100%;
+        min-height: 80px;
+        padding: 10px;
+        border-radius: var(--radius-sm);
+        border: 1px solid var(--color-border);
+        font-family: inherit;
+        font-size: 13px;
+        resize: vertical;
+        outline: none;
+      }
+
+      .reason-textarea:focus {
+        border-color: var(--color-danger);
+      }
+
+      .modal-footer {
+        padding: 14px 20px;
+        background: var(--color-surface);
+        border-top: 1px solid var(--color-border);
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+      }
+
+      /* ================= OTHER SECTIONS PREVIEW (T13, T14, T16) ================= */
+      .section-view {
+        display: none;
+        flex: 1;
+        overflow-y: auto;
+        padding: 24px;
+        background: var(--color-surface);
+      }
+
+      .section-view.active {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+      }
+
+      /* Toast Notification */
+      .toast-box {
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        background: #231814;
+        color: white;
+        padding: 12px 20px;
+        border-radius: var(--radius-md);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 13.5px;
+        z-index: 3000;
+        transform: translateY(120%);
+        transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        border-left: 5px solid var(--color-accent);
+      }
+
+      .toast-box.show {
+        transform: translateY(0);
+      }
+
+      .toast-box.success {
+        border-left-color: var(--color-support);
+      }
+
+      .toast-box.danger {
+        border-left-color: var(--color-danger);
+      }
+
+      /* Product Out of stock toggle switch (Preview T14) */
+      .switch {
+        position: relative;
+        display: inline-block;
+        width: 44px;
+        height: 24px;
+      }
+
+      .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+
+      .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #d1d5db;
+        transition: 0.2s;
+        border-radius: 24px;
+      }
+
+      .slider:before {
+        position: absolute;
+        content: "";
+        height: 18px;
+        width: 18px;
+        left: 3px;
+        bottom: 3px;
+        background-color: white;
+        transition: 0.2s;
+        border-radius: 50%;
+      }
+
+      input:checked + .slider {
+        background-color: var(--color-support);
+      }
+
+      input:checked + .slider:before {
+        transform: translateX(20px);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Top Prototype Control Bar -->
+    <div class="proto-bar">
+      <div class="proto-title">
+        <span class="proto-badge">T9b Prototype</span>
+        <strong style="color: #fff">Tuấn Linh Coffee — Giao Diện Quản Trị & Xử Lý Đơn</strong>
+      </div>
+
+      <div class="proto-controls">
+        <!-- Viewport Mode Switcher -->
+        <button class="proto-btn" id="btn-view-tablet" onclick="setViewMode('tablet')">
+          📱 Tablet Quầy (768px)
+        </button>
+        <button class="proto-btn active" id="btn-view-desktop" onclick="setViewMode('desktop')">
+          💻 Laptop (1280px)
+        </button>
+        <button class="proto-btn" id="btn-view-full" onclick="setViewMode('full')">
+          🖥️ Toàn màn hình
+        </button>
+
+        <!-- Simulation Tools -->
+        <button class="proto-btn simulate" onclick="simulateNewIncomingOrder()">
+          🔔 Giả lập đơn khách mới
+        </button>
+        <button class="proto-btn" onclick="resetPrototypeData()">
+          🔄 Reset dữ liệu mẫu
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Prototype Canvas -->
+    <div class="proto-canvas">
+      <div class="admin-viewport" id="admin-viewport">
+        <!-- Sidebar Navigation -->
+        <aside class="admin-sidebar">
+          <div class="brand-box">
+            <!-- Brand Logo SVG -->
+            <svg class="brand-logo-icon" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="90" cy="90" r="86" fill="#B8322A" />
+              <circle cx="90" cy="90" r="76" fill="none" stroke="#FBF5EC" stroke-width="2" opacity="0.6" />
+              <!-- Flame -->
+              <path
+                d="M90 22 C 104 40, 112 52, 108 68 C 106 78, 98 84, 90 86 C 80 84, 72 76, 73 65 C 74 56, 80 52, 82 44 C 86 52, 88 58, 86 64 C 92 58, 96 48, 90 22 Z"
+                fill="#E8892B"
+              />
+              <path d="M90 52 C 97 62, 98 72, 90 80 C 84 76, 83 68, 90 52 Z" fill="#FBF5EC" opacity="0.85" />
+              <!-- Cup -->
+              <path d="M52 92 H128 L120 140 C 118 150, 110 156, 100 156 H80 C 70 156, 62 150, 60 140 Z" fill="#FBF5EC" />
+              <path d="M127 102 C 146 102, 146 130, 122 130" fill="none" stroke="#FBF5EC" stroke-width="7" stroke-linecap="round" />
+              <rect x="46" y="86" width="88" height="9" rx="4.5" fill="#FBF5EC" />
+              <!-- Wood leaf (Moc sinh Hoa) -->
+              <path d="M36 128 C 34 108, 48 96, 64 98 C 64 116, 52 128, 36 128 Z" fill="#4E7A47" />
+            </svg>
+            <div class="brand-texts">
+              <span class="brand-title">TUẤN LINH</span>
+              <span class="brand-sub">Admin Console</span>
+            </div>
+          </div>
+
+          <ul class="nav-menu">
+            <li class="nav-item active" id="nav-orders" onclick="switchNavSection('orders')">
+              <span class="nav-icon">📦</span>
+              <span class="nav-label">Đơn hàng</span>
+              <span class="nav-badge" id="sidebar-pending-badge">2 mới</span>
+            </li>
+            <li class="nav-item" id="nav-menu" onclick="switchNavSection('menu')">
+              <span class="nav-icon">📋</span>
+              <span class="nav-label">Thực đơn</span>
+            </li>
+            <li class="nav-item" id="nav-categories" onclick="switchNavSection('categories')">
+              <span class="nav-icon">🗂️</span>
+              <span class="nav-label">Danh mục</span>
+            </li>
+            <li class="nav-item" id="nav-settings" onclick="switchNavSection('settings')">
+              <span class="nav-icon">⚙️</span>
+              <span class="nav-label">Cài đặt quán</span>
+            </li>
+          </ul>
+
+          <div class="user-footer">
+            <div class="user-avatar">TL</div>
+            <div class="user-info">
+              <span class="user-name">Thu Ngân Quầy</span>
+              <span class="user-role">🟢 Đang trực</span>
+            </div>
+          </div>
+        </aside>
+
+        <!-- Main Body -->
+        <main class="admin-main">
+          <!-- Top Header -->
+          <header class="main-header">
+            <div class="header-title-box">
+              <h1 class="page-title" id="page-heading">
+                <span>Quản lý đơn hàng</span>
+              </h1>
+              <span class="page-subtitle" id="page-subheading">
+                Hôm nay: <strong id="current-date-text">04/10/2026</strong> · Giờ mở cửa: 07:00 – 22:00
+              </span>
+            </div>
+
+            <div class="header-actions">
+              <!-- Audio alert button (A4) -->
+              <button
+                class="sound-toggle-btn"
+                id="btn-sound-toggle"
+                onclick="toggleSoundAlert()"
+                title="Bật âm báo đơn mới để nghe chuông khi khách đặt"
+              >
+                <span id="sound-icon">🔇</span>
+                <span id="sound-label">Bật âm báo</span>
+              </button>
+
+              <!-- Polling indicator (5s) -->
+              <div class="polling-indicator">
+                <span class="polling-dot"></span>
+                <span>Tự làm mới: <strong>5s</strong></span>
+              </div>
+            </div>
+          </header>
+
+          <!-- SECTION 1: ORDERS WORKSPACE (MASTER - DETAIL) -->
+          <div class="orders-workspace" id="section-orders">
+            <!-- Left Pane: Filters & Order Cards -->
+            <div class="orders-master">
+              <div class="orders-filter-bar">
+                <div class="search-box">
+                  <span class="search-icon">🔍</span>
+                  <input
+                    type="text"
+                    class="search-input"
+                    id="search-input"
+                    placeholder="Tìm theo mã đơn hoặc SĐT khách..."
+                    oninput="handleSearchOrders(this.value)"
+                  />
+                </div>
+
+                <!-- Status Filter Chips -->
+                <div class="filter-chips-row">
+                  <button class="filter-chip active" id="filter-all" onclick="setFilterStatus('ALL')">
+                    Tất cả <span class="chip-count" id="count-all">5</span>
+                  </button>
+                  <button
+                    class="filter-chip pending-chip"
+                    id="filter-pending"
+                    onclick="setFilterStatus('PENDING')"
+                  >
+                    🟡 Mới <span class="chip-count" id="count-pending">2</span>
+                  </button>
+                  <button class="filter-chip" id="filter-preparing" onclick="setFilterStatus('PREPARING')">
+                    Đang pha <span class="chip-count" id="count-preparing">1</span>
+                  </button>
+                  <button class="filter-chip" id="filter-delivering" onclick="setFilterStatus('DELIVERING')">
+                    Đang giao <span class="chip-count" id="count-delivering">1</span>
+                  </button>
+                  <button class="filter-chip" id="filter-completed" onclick="setFilterStatus('COMPLETED')">
+                    Xong <span class="chip-count" id="count-completed">1</span>
+                  </button>
+                </div>
+
+                <!-- Secondary Filter: Type -->
+                <div class="filter-sub-row">
+                  <span>Hình thức nhận:</span>
+                  <select class="type-select" id="filter-type-select" onchange="setFilterType(this.value)">
+                    <option value="ALL">Tất cả hình thức</option>
+                    <option value="DELIVERY">🛵 Giao tận nơi</option>
+                    <option value="PICKUP">🛍️ Lấy tại quán</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Order Cards List -->
+              <div class="order-cards-list" id="order-cards-container">
+                <!-- Dynamically populated by JS -->
+              </div>
+            </div>
+
+            <!-- Right Pane: Order Details & Controls -->
+            <div class="orders-detail" id="order-detail-pane">
+              <!-- Dynamically populated by JS -->
+            </div>
+          </div>
+
+          <!-- SECTION 2: MENU & PRODUCTS PREVIEW (T14 Preview) -->
+          <div class="section-view" id="section-menu">
+            <div class="detail-card">
+              <div class="detail-header">
+                <div>
+                  <h2 style="font-family: var(--font-display); font-size: 18px">
+                    Quản lý thực đơn (Mô phỏng tính năng T14)
+                  </h2>
+                  <p class="detail-meta-text">Bật/tắt trạng thái Hết hàng một chạm cho barista tại quầy</p>
+                </div>
+                <button class="btn-ghost" onclick="showToast('Tính năng thêm món mới sẽ hoàn thiện ở task T14')">
+                  + Thêm món mới
+                </button>
+              </div>
+
+              <table class="items-table" style="margin-top: 16px">
+                <thead>
+                  <tr>
+                    <th>Món</th>
+                    <th>Danh mục</th>
+                    <th>Giá bán</th>
+                    <th>Trạng thái tại quầy</th>
+                    <th class="text-right">Hành động</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <strong style="font-size: 14px">Cà phê muối</strong>
+                      <div class="item-options">Best-seller · Đậm đà kem béo mặn</div>
+                    </td>
+                    <td><span class="type-pill type-delivery">Cà phê Việt</span></td>
+                    <td><strong>29.000đ</strong></td>
+                    <td>
+                      <label class="switch">
+                        <input type="checkbox" checked onchange="toggleProductStock(this, 'Cà phê muối')" />
+                        <span class="slider"></span>
+                      </label>
+                      <span style="font-size: 12px; margin-left: 8px; font-weight: 600; color: var(--color-support)">
+                        Còn hàng
+                      </span>
+                    </td>
+                    <td class="text-right">
+                      <button class="btn-ghost" onclick="showToast('Sửa món Cà phê muối')">Sửa</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <strong style="font-size: 14px">Trà đào cam sả</strong>
+                      <div class="item-options">Đào giòn miếng · Cam tươi thanh mát</div>
+                    </td>
+                    <td><span class="type-pill type-delivery">Trà tươi & Trái cây</span></td>
+                    <td><strong>35.000đ</strong></td>
+                    <td>
+                      <label class="switch">
+                        <input type="checkbox" checked onchange="toggleProductStock(this, 'Trà đào cam sả')" />
+                        <span class="slider"></span>
+                      </label>
+                      <span style="font-size: 12px; margin-left: 8px; font-weight: 600; color: var(--color-support)">
+                        Còn hàng
+                      </span>
+                    </td>
+                    <td class="text-right">
+                      <button class="btn-ghost" onclick="showToast('Sửa món Trà đào cam sả')">Sửa</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <strong style="font-size: 14px">Croissant bơ Pháp</strong>
+                      <div class="item-options">Bánh nướng nóng giòn mỗi sáng</div>
+                    </td>
+                    <td><span class="type-pill type-pickup">Bánh ngọt</span></td>
+                    <td><strong>32.000đ</strong></td>
+                    <td>
+                      <label class="switch">
+                        <input type="checkbox" onchange="toggleProductStock(this, 'Croissant bơ Pháp')" />
+                        <span class="slider"></span>
+                      </label>
+                      <span style="font-size: 12px; margin-left: 8px; font-weight: 600; color: var(--color-danger)">
+                        Hết hàng
+                      </span>
+                    </td>
+                    <td class="text-right">
+                      <button class="btn-ghost" onclick="showToast('Sửa món Croissant')">Sửa</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- SECTION 3: CATEGORIES PREVIEW (T13 Preview) -->
+          <div class="section-view" id="section-categories">
+            <div class="detail-card">
+              <div class="detail-header">
+                <div>
+                  <h2 style="font-family: var(--font-display); font-size: 18px">
+                    Quản lý danh mục món (Mô phỏng tính năng T13)
+                  </h2>
+                  <p class="detail-meta-text">Sắp xếp thứ tự hiển thị và quản lý ẩn/hiện danh mục trên trang khách</p>
+                </div>
+                <button class="btn-ghost" onclick="showToast('Thêm danh mục mới sẽ hoàn thiện ở task T13')">
+                  + Thêm danh mục
+                </button>
+              </div>
+
+              <table class="items-table" style="margin-top: 16px">
+                <thead>
+                  <tr>
+                    <th style="width: 60px">Thứ tự</th>
+                    <th>Tên danh mục</th>
+                    <th>Số món</th>
+                    <th>Hiển thị</th>
+                    <th class="text-right">Đổi thứ tự</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>#1</strong></td>
+                    <td><strong>Cà phê Việt</strong></td>
+                    <td>6 món</td>
+                    <td><span class="status-badge badge-ready">Hiển thị</span></td>
+                    <td class="text-right">
+                      <button class="btn-ghost" onclick="showToast('Đã di chuyển danh mục')">⬇️</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><strong>#2</strong></td>
+                    <td><strong>Trà tươi & Trái cây</strong></td>
+                    <td>5 món</td>
+                    <td><span class="status-badge badge-ready">Hiển thị</span></td>
+                    <td class="text-right">
+                      <button class="btn-ghost" onclick="showToast('Đã di chuyển danh mục')">⬆️</button>
+                      <button class="btn-ghost" onclick="showToast('Đã di chuyển danh mục')">⬇️</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><strong>#3</strong></td>
+                    <td><strong>Bánh ngọt ăn kèm</strong></td>
+                    <td>3 món</td>
+                    <td><span class="status-badge badge-ready">Hiển thị</span></td>
+                    <td class="text-right">
+                      <button class="btn-ghost" onclick="showToast('Đã di chuyển danh mục')">⬆️</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- SECTION 4: SETTINGS PREVIEW (T16 Preview) -->
+          <div class="section-view" id="section-settings">
+            <div class="detail-card">
+              <h2 style="font-family: var(--font-display); font-size: 18px; margin-bottom: 12px">
+                Cài đặt quán & Giao nhận (Mô phỏng tính năng T16)
+              </h2>
+              <div class="info-grid">
+                <div class="info-item">
+                  <span class="info-label">Giờ mở cửa</span>
+                  <span class="info-value">07:00 – 22:00 (Hàng ngày)</span>
+                </div>
+                <div class="info-item">
+                  <span class="info-label">Phí giao hàng cố định</span>
+                  <span class="info-value">15.000đ</span>
+                </div>
+                <div class="info-item">
+                  <span class="info-label">Ngưỡng miễn phí ship</span>
+                  <span class="info-value">≥ 150.000đ</span>
+                </div>
+                <div class="info-item">
+                  <span class="info-label">Bán kính phục vụ hiển thị</span>
+                  <span class="info-value">5 km</span>
+                </div>
+                <div class="info-item">
+                  <span class="info-label">Tài khoản VietQR đối soát</span>
+                  <span class="info-value">VCB - 9988776655 (NGUYEN TUAN LINH)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <!-- Modal: Huỷ đơn hàng (A5) -->
+    <div class="modal-backdrop" id="cancel-order-modal">
+      <div class="modal-box">
+        <div class="modal-header">
+          <span class="modal-title">⚠️ Xác nhận huỷ đơn hàng</span>
+          <button class="modal-close" onclick="closeCancelModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p>
+            Vui lòng chọn hoặc nhập <strong>lý do huỷ đơn</strong> để lưu vào lịch sử đối soát của hệ thống:
+          </p>
+
+          <div class="reason-chips">
+            <button class="reason-chip active" onclick="selectCancelReason(this, 'Hết nguyên liệu pha chế')">
+              Hết nguyên liệu
+            </button>
+            <button class="reason-chip" onclick="selectCancelReason(this, 'Khách gọi yêu cầu huỷ đơn')">
+              Khách xin huỷ
+            </button>
+            <button class="reason-chip" onclick="selectCancelReason(this, 'Không liên lạc được số điện thoại khách')">
+              Không nghe máy
+            </button>
+            <button class="reason-chip" onclick="selectCancelReason(this, 'Quán quá tải giờ cao điểm')">
+              Quán quá tải
+            </button>
+            <button class="reason-chip" onclick="selectCancelReason(this, 'Khác')">
+              Lý do khác...
+            </button>
+          </div>
+
+          <textarea
+            class="reason-textarea"
+            id="cancel-reason-input"
+            placeholder="Ghi chú chi tiết lý do huỷ..."
+          >Hết nguyên liệu pha chế</textarea>
+        </div>
+        <div class="modal-footer">
+          <button class="btn-ghost" onclick="closeCancelModal()">Quay lại</button>
+          <button
+            class="btn-state-action"
+            style="background: var(--color-danger); color: white; min-height: 38px; padding: 6px 16px; font-size: 13.5px"
+            onclick="confirmCancelCurrentOrder()"
+          >
+            Huỷ đơn ngay
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast-box" id="toast">
+      <span id="toast-icon">ℹ️</span>
+      <span id="toast-message">Thông báo hệ thống</span>
+    </div>
+
+    <!-- ================= PROTOTYPE LOGIC JAVASCRIPT ================= -->
+    <script>
+      // Initial mock orders dataset representing realistic orders
+      const INITIAL_ORDERS = [
+        {
+          id: "ord-1",
+          code: "CF-261004-9412",
+          createdAt: "10:28:15",
+          timeAgo: "2 phút trước",
+          customerName: "Anh Hoàng Nam",
+          phone: "0912 345 678",
+          fulfillmentType: "DELIVERY", // DELIVERY or PICKUP
+          deliveryAddress: "Phòng 802, Toà nhà Green Park, 280 Lê Thánh Tông (Khoảng 2.1km)",
+          pickupTime: null,
+          paymentMethod: "VIETQR", // VIETQR or COD
+          paymentStatus: "UNPAID", // UNPAID or PAID
+          paidAt: null,
+          paidBy: null,
+          status: "PENDING", // PENDING -> CONFIRMED -> PREPARING -> DELIVERING -> COMPLETED (or CANCELLED)
+          items: [
+            {
+              id: "item-1",
+              name: "Cà phê muối",
+              qty: 2,
+              price: 29000,
+              optionsText: "Size L (+6.000đ), Đường: 50%, Đá: 70%, Topping: Thạch cà phê (+8.000đ)",
+              lineTotal: 86000,
+              note: "Giao trước 11h giúp mình nhé quán ơi",
+            },
+            {
+              id: "item-2",
+              name: "Trà đào cam sả",
+              qty: 1,
+              price: 35000,
+              optionsText: "Size M, Đường: 70%, Đá: Vừa (100%)",
+              lineTotal: 35000,
+              note: null,
+            },
+          ],
+          subtotal: 121000,
+          shippingFee: 15000,
+          total: 136000,
+          history: [
+            { time: "10:28:15", text: "Khách hàng đặt đơn thành công từ Website", author: "Hệ thống" },
+          ],
+        },
+        {
+          id: "ord-2",
+          code: "CF-261004-8831",
+          createdAt: "10:24:00",
+          timeAgo: "6 phút trước",
+          customerName: "Chị Mai Linh",
+          phone: "0987 654 321",
+          fulfillmentType: "PICKUP",
+          deliveryAddress: null,
+          pickupTime: "10:45 (còn 15 phút)",
+          paymentMethod: "COD",
+          paymentStatus: "UNPAID",
+          paidAt: null,
+          paidBy: null,
+          status: "PENDING",
+          items: [
+            {
+              id: "item-3",
+              name: "Bạc xỉu 3 tầng",
+              qty: 1,
+              price: 29000,
+              optionsText: "Size L (+6.000đ), Đá riêng (+0đ)",
+              lineTotal: 35000,
+              note: "Mình tự mang bình cá nhân đựng nhé",
+            },
+            {
+              id: "item-4",
+              name: "Croissant bơ Pháp",
+              qty: 1,
+              price: 32000,
+              optionsText: "Nướng nóng giòn",
+              lineTotal: 32000,
+              note: null,
+            },
+          ],
+          subtotal: 67000,
+          shippingFee: 0,
+          total: 67000,
+          history: [
+            { time: "10:24:00", text: "Khách hàng đặt lấy tại quán lúc 10:45", author: "Hệ thống" },
+          ],
+        },
+        {
+          id: "ord-3",
+          code: "CF-261004-7712",
+          createdAt: "10:15:30",
+          timeAgo: "15 phút trước",
+          customerName: "Nguyễn Hải Đăng",
+          phone: "0903 112 233",
+          fulfillmentType: "PICKUP",
+          deliveryAddress: null,
+          pickupTime: "10:30 (Đến giờ lấy)",
+          paymentMethod: "VIETQR",
+          paymentStatus: "PAID",
+          paidAt: "10:17:40",
+          paidBy: "Thu Ngân Quầy",
+          status: "PREPARING",
+          items: [
+            {
+              id: "item-5",
+              name: "Cà phê đen đá",
+              qty: 2,
+              price: 22000,
+              optionsText: "Size M, Đường: Không đường (0%), Đá: Nhiều",
+              lineTotal: 44000,
+              note: null,
+            },
+          ],
+          subtotal: 44000,
+          shippingFee: 0,
+          total: 44000,
+          history: [
+            { time: "10:15:30", text: "Khách đặt đơn lấy tại quán", author: "Hệ thống" },
+            { time: "10:16:10", text: "Đã tiếp nhận đơn hàng", author: "Thu Ngân Quầy" },
+            { time: "10:17:40", text: "Đối soát thành công VietQR (44.000đ)", author: "Thu Ngân Quầy" },
+            { time: "10:18:00", text: "Chuyển trạng thái: Đang pha chế", author: "Thu Ngân Quầy" },
+          ],
+        },
+        {
+          id: "ord-4",
+          code: "CF-261004-6109",
+          createdAt: "10:02:10",
+          timeAgo: "28 phút trước",
+          customerName: "Trần Bảo Ngọc",
+          phone: "0934 999 888",
+          fulfillmentType: "DELIVERY",
+          deliveryAddress: "Tầng 3, Tech Hub, 15 Nguyễn Trãi (Cách 3.4km)",
+          paymentMethod: "VIETQR",
+          paymentStatus: "PAID",
+          paidAt: "10:04:15",
+          paidBy: "Thu Ngân Quầy",
+          status: "DELIVERING",
+          items: [
+            {
+              id: "item-6",
+              name: "Trà sữa Ô Long nướng",
+              qty: 3,
+              price: 38000,
+              optionsText: "Size L (+6.000đ), Đường: 50%, Đá: 50%, Topping: Trân châu hoàng kim (+8.000đ)",
+              lineTotal: 156000,
+              note: "Để riêng trân châu vào ly nhỏ nếu được ạ",
+            },
+          ],
+          subtotal: 156000,
+          shippingFee: 0, // Free ship over 150k
+          total: 156000,
+          history: [
+            { time: "10:02:10", text: "Khách đặt đơn giao hàng (Miễn phí ship ≥ 150k)", author: "Hệ thống" },
+            { time: "10:03:00", text: "Đã tiếp nhận đơn", author: "Thu Ngân Quầy" },
+            { time: "10:04:15", text: "Đối soát VietQR thành công", author: "Thu Ngân Quầy" },
+            { time: "10:06:00", text: "Bắt đầu pha chế", author: "Thu Ngân Quầy" },
+            { time: "10:20:00", text: "Bắt đầu giao hàng (Shipper: Chú Hùng)", author: "Thu Ngân Quầy" },
+          ],
+        },
+        {
+          id: "ord-5",
+          code: "CF-261004-5001",
+          createdAt: "09:30:00",
+          timeAgo: "1 giờ trước",
+          customerName: "Lê Quốc Trung",
+          phone: "0945 123 789",
+          fulfillmentType: "PICKUP",
+          deliveryAddress: null,
+          pickupTime: "09:50",
+          paymentMethod: "COD",
+          paymentStatus: "PAID",
+          paidAt: "09:52:10",
+          paidBy: "Thu Ngân Quầy",
+          status: "COMPLETED",
+          items: [
+            {
+              id: "item-7",
+              name: "Cà phê sữa đá",
+              qty: 1,
+              price: 25000,
+              optionsText: "Size M, Đường: 100%, Đá: 100%",
+              lineTotal: 25000,
+              note: null,
+            },
+          ],
+          subtotal: 25000,
+          shippingFee: 0,
+          total: 25000,
+          history: [
+            { time: "09:30:00", text: "Đơn hàng được tạo", author: "Hệ thống" },
+            { time: "09:31:00", text: "Tiếp nhận đơn", author: "Thu Ngân Quầy" },
+            { time: "09:33:00", text: "Bắt đầu pha chế", author: "Thu Ngân Quầy" },
+            { time: "09:48:00", text: "Món đã sẵn sàng tại quầy", author: "Thu Ngân Quầy" },
+            { time: "09:52:10", text: "Khách đã lấy món và trả tiền mặt", author: "Thu Ngân Quầy" },
+          ],
+        },
+      ];
+
+      let orders = JSON.parse(JSON.stringify(INITIAL_ORDERS));
+      let selectedOrderId = "ord-1";
+      let currentFilterStatus = "ALL";
+      let currentFilterType = "ALL";
+      let searchQuery = "";
+      let isSoundEnabled = false;
+
+      // Audio Synthesis for New Order Sound Alert (A4)
+      function playAudioAlert() {
+        if (!isSoundEnabled) return;
+        try {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          if (!AudioContext) return;
+          const ctx = new AudioContext();
+          const now = ctx.currentTime;
+
+          // Gentle pleasant two-tone coffee shop chime (Ding - Dong)
+          const osc1 = ctx.createOscillator();
+          const gain1 = ctx.createGain();
+          osc1.type = "sine";
+          osc1.frequency.setValueAtTime(587.33, now); // D5
+          gain1.gain.setValueAtTime(0.3, now);
+          gain1.gain.exponentialRampToValueAtTime(0.001, now + 0.6);
+          osc1.connect(gain1);
+          gain1.connect(ctx.destination);
+          osc1.start(now);
+          osc1.stop(now + 0.6);
+
+          const osc2 = ctx.createOscillator();
+          const gain2 = ctx.createGain();
+          osc2.type = "sine";
+          osc2.frequency.setValueAtTime(880, now + 0.15); // A5
+          gain2.gain.setValueAtTime(0.35, now + 0.15);
+          gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.9);
+          osc2.connect(gain2);
+          gain2.connect(ctx.destination);
+          osc2.start(now + 0.15);
+          osc2.stop(now + 0.9);
+        } catch (err) {
+          console.warn("AudioContext playback blocked:", err);
+        }
+      }
+
+      function toggleSoundAlert() {
+        isSoundEnabled = !isSoundEnabled;
+        const btn = document.getElementById("btn-sound-toggle");
+        const icon = document.getElementById("sound-icon");
+        const label = document.getElementById("sound-label");
+
+        if (isSoundEnabled) {
+          btn.classList.add("sound-on");
+          icon.textContent = "🔊";
+          label.textContent = "Âm báo: BẬT";
+          showToast("Đã bật âm báo! Quán sẽ phát chuông khi có đơn mới đến.", "success");
+          playAudioAlert(); // test sound once
+        } else {
+          btn.classList.remove("sound-on");
+          icon.textContent = "🔇";
+          label.textContent = "Bật âm báo";
+          showToast("Đã tắt âm báo đơn mới.");
+        }
+      }
+
+      // Viewport Switcher
+      function setViewMode(mode) {
+        const vp = document.getElementById("admin-viewport");
+        document.getElementById("btn-view-tablet").classList.toggle("active", mode === "tablet");
+        document.getElementById("btn-view-desktop").classList.toggle("active", mode === "desktop");
+        document.getElementById("btn-view-full").classList.toggle("active", mode === "full");
+
+        vp.className = "admin-viewport";
+        if (mode === "tablet") vp.classList.add("tablet-mode");
+        if (mode === "full") vp.classList.add("fullscreen-mode");
+      }
+
+      // Navigation switching (Orders, Menu, Categories, Settings)
+      function switchNavSection(section) {
+        ["orders", "menu", "categories", "settings"].forEach((s) => {
+          const navEl = document.getElementById(`nav-${s}`);
+          if (navEl) navEl.classList.toggle("active", s === section);
+
+          const secEl = document.getElementById(`section-${s}`);
+          if (secEl) {
+            secEl.style.display = s === section ? (s === "orders" ? "flex" : "flex") : "none";
+            secEl.classList.toggle("active", s === section);
+          }
+        });
+
+        const titleEl = document.getElementById("page-heading");
+        const titles = {
+          orders: "Quản lý đơn hàng",
+          menu: "Quản lý thực đơn",
+          categories: "Quản lý danh mục",
+          settings: "Cài đặt quán & Giao nhận",
+        };
+        titleEl.innerHTML = `<span>${titles[section]}</span>`;
+      }
+
+      // Filtering orders
+      function setFilterStatus(status) {
+        currentFilterStatus = status;
+        document.querySelectorAll(".filter-chip").forEach((chip) => chip.classList.remove("active"));
+        const chipMap = {
+          ALL: "filter-all",
+          PENDING: "filter-pending",
+          PREPARING: "filter-preparing",
+          DELIVERING: "filter-delivering",
+          COMPLETED: "filter-completed",
+        };
+        if (chipMap[status]) {
+          document.getElementById(chipMap[status]).classList.add("active");
+        }
+        renderOrderCards();
+      }
+
+      function setFilterType(type) {
+        currentFilterType = type;
+        renderOrderCards();
+      }
+
+      function handleSearchOrders(val) {
+        searchQuery = val.trim().toLowerCase();
+        renderOrderCards();
+      }
+
+      function getFilteredOrders() {
+        return orders.filter((o) => {
+          if (currentFilterStatus !== "ALL" && o.status !== currentFilterStatus) return false;
+          if (currentFilterType !== "ALL" && o.fulfillmentType !== currentFilterType) return false;
+          if (searchQuery) {
+            const matchCode = o.code.toLowerCase().includes(searchQuery);
+            const matchPhone = o.phone.toLowerCase().includes(searchQuery);
+            const matchName = o.customerName.toLowerCase().includes(searchQuery);
+            if (!matchCode && !matchPhone && !matchName) return false;
+          }
+          return true;
+        });
+      }
+
+      function updateCounts() {
+        const counts = {
+          all: orders.length,
+          pending: orders.filter((o) => o.status === "PENDING").length,
+          preparing: orders.filter((o) => o.status === "PREPARING").length,
+          delivering: orders.filter((o) => o.status === "DELIVERING").length,
+          completed: orders.filter((o) => o.status === "COMPLETED").length,
+        };
+
+        document.getElementById("count-all").textContent = counts.all;
+        document.getElementById("count-pending").textContent = counts.pending;
+        document.getElementById("count-preparing").textContent = counts.preparing;
+        document.getElementById("count-delivering").textContent = counts.delivering;
+        document.getElementById("count-completed").textContent = counts.completed;
+
+        const sidebarBadge = document.getElementById("sidebar-pending-badge");
+        if (counts.pending > 0) {
+          sidebarBadge.textContent = `${counts.pending} mới`;
+          sidebarBadge.style.display = "inline-block";
+        } else {
+          sidebarBadge.style.display = "none";
+        }
+      }
+
+      // Render Left Pane Order Cards
+      function renderOrderCards() {
+        const listContainer = document.getElementById("order-cards-container");
+        const filtered = getFilteredOrders();
+        updateCounts();
+
+        if (filtered.length === 0) {
+          listContainer.innerHTML = `
+            <div style="text-align: center; padding: 40px 10px; color: var(--color-text-muted);">
+              <span style="font-size: 32px; display: block; margin-bottom: 8px;">📭</span>
+              <p style="font-size: 13.5px; font-weight: 600;">Không có đơn hàng nào khớp bộ lọc</p>
+              <p style="font-size: 11.5px; margin-top: 4px;">Thử chọn trạng thái "Tất cả" hoặc xoá từ khoá tìm kiếm</p>
+            </div>
+          `;
+          return;
+        }
+
+        // If selected order is not in filtered list, select first item
+        if (!filtered.some((o) => o.id === selectedOrderId)) {
+          selectedOrderId = filtered[0].id;
+        }
+
+        listContainer.innerHTML = filtered
+          .map((order) => {
+            const isSelected = order.id === selectedOrderId;
+            const isPending = order.status === "PENDING";
+            const itemsBrief = order.items.map((i) => `${i.qty}x ${i.name}`).join(", ");
+
+            return `
+            <div
+              class="order-card ${isSelected ? "selected" : ""} ${isPending ? "is-pending" : ""}"
+              onclick="selectOrder('${order.id}')"
+            >
+              <div class="card-header">
+                <span class="order-code">${order.code}</span>
+                <span class="order-time">🕒 ${order.timeAgo}</span>
+              </div>
+
+              <div class="card-badges">
+                ${getStatusBadgeHtml(order.status)}
+                ${
+                  order.fulfillmentType === "DELIVERY"
+                    ? `<span class="type-pill type-delivery">🛵 Giao hàng</span>`
+                    : `<span class="type-pill type-pickup">🛍️ Lấy: ${order.pickupTime?.split(" ")[0] || "Quầy"}</span>`
+                }
+                ${
+                  order.paymentMethod === "VIETQR"
+                    ? order.paymentStatus === "PAID"
+                      ? `<span class="pay-pill pay-paid">QR Đã trả ✓</span>`
+                      : `<span class="pay-pill pay-unpaid">QR Chưa trả ⚠️</span>`
+                    : `<span class="pay-pill" style="background:#f3f4f6; color:#4b5563">Tiền mặt</span>`
+                }
+              </div>
+
+              <div class="card-customer">
+                <span class="card-name">${order.customerName}</span>
+                <span class="card-total">${formatMoney(order.total)}</span>
+              </div>
+
+              <div class="card-summary" title="${itemsBrief}">${itemsBrief}</div>
+            </div>
+          `;
+          })
+          .join("");
+
+        renderOrderDetail();
+      }
+
+      function selectOrder(orderId) {
+        selectedOrderId = orderId;
+        renderOrderCards();
+      }
+
+      function getStatusBadgeHtml(status) {
+        const map = {
+          PENDING: `<span class="status-badge badge-pending">🟡 Chờ xác nhận</span>`,
+          CONFIRMED: `<span class="status-badge badge-confirmed">🔵 Đã tiếp nhận</span>`,
+          PREPARING: `<span class="status-badge badge-preparing">🟣 Đang pha chế</span>`,
+          DELIVERING: `<span class="status-badge badge-delivering">🚚 Đang giao hàng</span>`,
+          READY_FOR_PICKUP: `<span class="status-badge badge-ready">🛍️ Chờ khách lấy</span>`,
+          COMPLETED: `<span class="status-badge badge-completed">🟢 Hoàn thành</span>`,
+          CANCELLED: `<span class="status-badge badge-cancelled">🔴 Đã huỷ</span>`,
+        };
+        return map[status] || status;
+      }
+
+      // Render Right Pane: Order Detail View
+      function renderOrderDetail() {
+        const pane = document.getElementById("order-detail-pane");
+        const order = orders.find((o) => o.id === selectedOrderId);
+
+        if (!order) {
+          pane.innerHTML = `
+            <div style="text-align: center; margin: auto; color: var(--color-text-muted);">
+              <span style="font-size: 40px; display: block; margin-bottom: 10px;">📋</span>
+              <p style="font-size: 15px; font-weight: 600;">Vui lòng chọn một đơn hàng để xem chi tiết</p>
+            </div>
+          `;
+          return;
+        }
+
+        const isPickup = order.fulfillmentType === "PICKUP";
+        const isDelivery = order.fulfillmentType === "DELIVERY";
+        const isVietQr = order.paymentMethod === "VIETQR";
+        const isPaid = order.paymentStatus === "PAID";
+
+        pane.innerHTML = `
+          <!-- Top Info Card -->
+          <div class="detail-card">
+            <div class="detail-header">
+              <div class="detail-title-group">
+                <div class="detail-code">
+                  <span>${order.code}</span>
+                  ${getStatusBadgeHtml(order.status)}
+                </div>
+                <span class="detail-meta-text">
+                  Đặt lúc: <strong>${order.createdAt}</strong> (${order.timeAgo}) · Hình thức: 
+                  <strong>${isDelivery ? "🛵 Giao tận nơi" : "🛍️ Đặt trước lấy tại quán"}</strong>
+                </span>
+              </div>
+
+              <div class="detail-actions-top">
+                <button class="btn-ghost" onclick="printReceipt('${order.code}')">
+                  🖨️ In phiếu pha chế
+                </button>
+              </div>
+            </div>
+
+            <!-- Customer & Delivery Info Grid -->
+            <div class="info-grid">
+              <div class="info-item">
+                <span class="info-label">Khách hàng</span>
+                <span class="info-value">
+                  ${order.customerName}
+                </span>
+              </div>
+
+              <div class="info-item">
+                <span class="info-label">Số điện thoại</span>
+                <span class="info-value">
+                  ${order.phone}
+                  <a href="tel:${order.phone.replace(/\s+/g, "")}" class="call-link">📞 Gọi</a>
+                </span>
+              </div>
+
+              ${
+                isDelivery
+                  ? `
+                <div class="info-item" style="grid-column: 1 / -1;">
+                  <span class="info-label">Địa chỉ nhận hàng</span>
+                  <span class="info-value" style="font-weight: 500;">
+                    📍 ${order.deliveryAddress}
+                  </span>
+                </div>
+              `
+                  : `
+                <div class="info-item">
+                  <span class="info-label">Giờ hẹn lấy món</span>
+                  <span class="info-value" style="color: #86198f;">
+                    ⏰ ${order.pickupTime}
+                  </span>
+                </div>
+              `
+              }
+            </div>
+          </div>
+
+          <!-- Items Table Card -->
+          <div class="detail-card">
+            <h3 style="font-size: 14px; font-weight: 700; margin-bottom: 6px; color: var(--color-text);">
+              Món đã đặt (${order.items.reduce((s, i) => s + i.qty, 0)} món)
+            </h3>
+
+            <table class="items-table">
+              <thead>
+                <tr>
+                  <th style="width: 50px">SL</th>
+                  <th>Tên món & Tuỳ chọn</th>
+                  <th class="text-right">Đơn giá</th>
+                  <th class="text-right">Thành tiền</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${order.items
+                  .map(
+                    (item) => `
+                  <tr>
+                    <td>
+                      <span class="item-qty-badge">${item.qty}x</span>
+                    </td>
+                    <td>
+                      <div class="item-details">
+                        <span class="item-title">${item.name}</span>
+                        <span class="item-options">${item.optionsText}</span>
+                        ${item.note ? `<span class="item-note">💬 ${item.note}</span>` : ""}
+                      </div>
+                    </td>
+                    <td class="text-right" style="color: var(--color-text-muted);">${formatMoney(item.price)}</td>
+                    <td class="text-right"><strong>${formatMoney(item.lineTotal)}</strong></td>
+                  </tr>
+                `
+                  )
+                  .join("")}
+              </tbody>
+            </table>
+
+            <!-- Price Breakdown Summary -->
+            <div class="price-summary-box">
+              <div class="price-row">
+                <span>Tạm tính tiền món:</span>
+                <span>${formatMoney(order.subtotal)}</span>
+              </div>
+              <div class="price-row">
+                <span>Phí giao hàng:</span>
+                <span>${order.shippingFee === 0 ? "0đ (Miễn phí)" : formatMoney(order.shippingFee)}</span>
+              </div>
+              <div class="price-row total-row">
+                <span>Tổng tiền thanh toán:</span>
+                <span class="total-amount">${formatMoney(order.total)}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Payment Reconciliation Card (A6) -->
+          <div class="detail-card payment-card ${isPaid ? "is-paid" : ""}">
+            <div class="payment-card-header">
+              <div class="payment-status-title">
+                <span>💳 Thanh toán:</span>
+                ${
+                  isPaid
+                    ? `<span style="color: var(--color-support); font-weight: 700;">✓ ĐÃ THANH TOÁN (${formatMoney(order.total)})</span>`
+                    : `<span style="color: var(--color-danger); font-weight: 700;">⚠️ CHƯA THANH TOÁN (${formatMoney(order.total)})</span>`
+                }
+              </div>
+
+              ${
+                !isPaid
+                  ? `
+                <button class="btn-mark-paid" onclick="markOrderAsPaid('${order.id}')">
+                  ✓ Xác nhận đã nhận tiền (PAID)
+                </button>
+              `
+                  : `
+                <span style="font-size: 12px; color: var(--color-support); font-weight: 600;">
+                  Đã đối soát lúc ${order.paidAt} bởi ${order.paidBy}
+                </span>
+              `
+              }
+            </div>
+
+            <div class="qr-reconcile-info">
+              <span>Hình thức: <strong>${isVietQr ? "Chuyển khoản VietQR" : "Tiền mặt (COD/Quầy)"}</strong></span>
+              ${
+                isVietQr
+                  ? `
+                <span>Nội dung chuyển khoản cần khớp: <code style="background:#f3f4f6; padding:2px 6px; border-radius:4px; font-weight:700;">${order.code}</code></span>
+                <span>Số tiền: <strong>${formatMoney(order.total)}</strong></span>
+              `
+                  : `<span>Thu ngân thu đúng số tiền khi giao món cho khách.</span>`
+              }
+            </div>
+          </div>
+
+          <!-- Audit Timeline History -->
+          <div class="detail-card">
+            <h4 style="font-size: 13px; font-weight: 700; margin-bottom: 8px;">Nhật ký xử lý đơn</h4>
+            <div class="history-timeline">
+              ${order.history
+                .map(
+                  (h, idx) => `
+                <div class="history-item ${idx === order.history.length - 1 ? "latest" : ""}">
+                  <span class="history-dot"></span>
+                  <strong>${h.text}</strong>
+                  <span class="history-meta">${h.time} · Thực hiện bởi: ${h.author}</span>
+                </div>
+              `
+                )
+                .join("")}
+            </div>
+          </div>
+
+          <!-- Bottom Action Dock (State Machine Controls - A5) -->
+          <div class="action-dock">
+            <div class="action-info">
+              <span class="action-hint">Trạng thái hiện tại:</span>
+              <strong style="font-size: 15px; color: var(--color-text);">
+                ${getStatusName(order.status)}
+              </strong>
+            </div>
+
+            <div class="action-buttons-group">
+              ${renderStateMachineButtons(order)}
+            </div>
+          </div>
+        `;
+      }
+
+      function getStatusName(status) {
+        const names = {
+          PENDING: "Chờ quán tiếp nhận",
+          CONFIRMED: "Đã tiếp nhận (Chờ pha chế)",
+          PREPARING: "Đang pha chế đồ uống",
+          DELIVERING: "Đang trên đường giao cho khách",
+          READY_FOR_PICKUP: "Đã pha xong (Sẵn sàng tại quầy)",
+          COMPLETED: "Đơn hàng đã hoàn thành thành công",
+          CANCELLED: "Đơn hàng đã huỷ",
+        };
+        return names[status] || status;
+      }
+
+      // State Machine Transition Buttons (Strictly according to SPEC)
+      function renderStateMachineButtons(order) {
+        const status = order.status;
+        const isDelivery = order.fulfillmentType === "DELIVERY";
+
+        if (status === "PENDING") {
+          return `
+            <button class="btn-cancel-action" onclick="openCancelModal('${order.id}')">
+              ✕ Huỷ đơn
+            </button>
+            <button class="btn-state-action btn-primary-action" onclick="transitionOrderState('${order.id}', 'CONFIRMED')">
+              ✓ Tiếp nhận đơn hàng
+            </button>
+          `;
+        }
+
+        if (status === "CONFIRMED") {
+          return `
+            <button class="btn-cancel-action" onclick="openCancelModal('${order.id}')">
+              ✕ Huỷ đơn
+            </button>
+            <button class="btn-state-action btn-primary-action" onclick="transitionOrderState('${order.id}', 'PREPARING')">
+              ☕ Bắt đầu pha chế
+            </button>
+          `;
+        }
+
+        if (status === "PREPARING") {
+          if (isDelivery) {
+            return `
+              <button class="btn-cancel-action" onclick="openCancelModal('${order.id}')">
+                ✕ Huỷ đơn
+              </button>
+              <button class="btn-state-action btn-primary-action" onclick="transitionOrderState('${order.id}', 'DELIVERING')">
+                🛵 Giao cho Shipper đi giao
+              </button>
+            `;
+          } else {
+            return `
+              <button class="btn-cancel-action" onclick="openCancelModal('${order.id}')">
+                ✕ Huỷ đơn
+              </button>
+              <button class="btn-state-action btn-success-action" onclick="transitionOrderState('${order.id}', 'READY_FOR_PICKUP')">
+                🛍️ Đã xong — Sẵn sàng cho khách lấy
+              </button>
+            `;
+          }
+        }
+
+        if (status === "DELIVERING") {
+          return `
+            <button class="btn-state-action btn-success-action" onclick="transitionOrderState('${order.id}', 'COMPLETED')">
+              🎉 Shipper báo giao thành công — Hoàn tất
+            </button>
+          `;
+        }
+
+        if (status === "READY_FOR_PICKUP") {
+          return `
+            <button class="btn-state-action btn-success-action" onclick="transitionOrderState('${order.id}', 'COMPLETED')">
+              🎉 Khách đã nhận món tại quầy — Hoàn tất
+            </button>
+          `;
+        }
+
+        if (status === "COMPLETED") {
+          return `
+            <span style="color: var(--color-support); font-weight: 700; font-size: 14px;">
+              ✓ Đơn hàng đã hoàn thành trọn vẹn
+            </span>
+          `;
+        }
+
+        if (status === "CANCELLED") {
+          return `
+            <span style="color: var(--color-danger); font-weight: 700; font-size: 14px;">
+              🔴 Đơn hàng đã đóng (Đã huỷ)
+            </span>
+          `;
+        }
+
+        return "";
+      }
+
+      // Execute State Transition
+      function transitionOrderState(orderId, nextState) {
+        const order = orders.find((o) => o.id === orderId);
+        if (!order) return;
+
+        const now = new Date();
+        const timeStr = `${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}:${String(now.getSeconds()).padStart(2, "0")}`;
+
+        const transitionTexts = {
+          CONFIRMED: "Tiếp nhận đơn hàng thành công",
+          PREPARING: "Bắt đầu pha chế món",
+          DELIVERING: "Bàn giao cho shipper đi giao",
+          READY_FOR_PICKUP: "Đã pha xong, sẵn sàng tại quầy đón khách",
+          COMPLETED: "Đã giao thành công cho khách hàng — Hoàn tất",
+        };
+
+        order.status = nextState;
+        order.history.push({
+          time: timeStr,
+          text: transitionTexts[nextState] || `Chuyển trạng thái sang ${nextState}`,
+          author: "Thu Ngân Quầy",
+        });
+
+        showToast(`Đã chuyển đơn ${order.code} sang: ${getStatusName(nextState)}`, "success");
+        renderOrderCards();
+      }
+
+      // Payment Reconciliation Action (A6)
+      function markOrderAsPaid(orderId) {
+        const order = orders.find((o) => o.id === orderId);
+        if (!order) return;
+
+        const now = new Date();
+        const timeStr = `${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}:${String(now.getSeconds()).padStart(2, "0")}`;
+
+        order.paymentStatus = "PAID";
+        order.paidAt = timeStr;
+        order.paidBy = "Thu Ngân Quầy";
+        order.history.push({
+          time: timeStr,
+          text: `Xác nhận đã nhận đủ tiền ${formatMoney(order.total)} (VietQR)`,
+          author: "Thu Ngân Quầy",
+        });
+
+        showToast(`Đã xác nhận thanh toán thành công cho đơn ${order.code}!`, "success");
+        renderOrderCards();
+      }
+
+      // Cancel Order Modal Handlers (A5)
+      let cancelTargetOrderId = null;
+      let selectedReasonText = "Hết nguyên liệu pha chế";
+
+      function openCancelModal(orderId) {
+        cancelTargetOrderId = orderId;
+        const modal = document.getElementById("cancel-order-modal");
+        modal.classList.add("open");
+      }
+
+      function closeCancelModal() {
+        const modal = document.getElementById("cancel-order-modal");
+        modal.classList.remove("open");
+        cancelTargetOrderId = null;
+      }
+
+      function selectCancelReason(btn, reason) {
+        document.querySelectorAll(".reason-chip").forEach((c) => c.classList.remove("active"));
+        btn.classList.add("active");
+        selectedReasonText = reason;
+        document.getElementById("cancel-reason-input").value = reason;
+      }
+
+      function confirmCancelCurrentOrder() {
+        const reason = document.getElementById("cancel-reason-input").value.trim();
+        if (!reason) {
+          alert("Bắt buộc phải nhập lý do huỷ đơn theo quy định của hệ thống.");
+          return;
+        }
+
+        const order = orders.find((o) => o.id === cancelTargetOrderId);
+        if (order) {
+          const now = new Date();
+          const timeStr = `${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}:${String(now.getSeconds()).padStart(2, "0")}`;
+
+          order.status = "CANCELLED";
+          order.history.push({
+            time: timeStr,
+            text: `Huỷ đơn. Lý do: ${reason}`,
+            author: "Thu Ngân Quầy",
+          });
+
+          showToast(`Đã huỷ đơn hàng ${order.code}.`, "danger");
+          closeCancelModal();
+          renderOrderCards();
+        }
+      }
+
+      // Simulation: Customer places new order online (A4 audio & list update)
+      function simulateNewIncomingOrder() {
+        const now = new Date();
+        const timeStr = `${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}:${String(now.getSeconds()).padStart(2, "0")}`;
+        const randomNum = Math.floor(1000 + Math.random() * 9000);
+        const newCode = `CF-261004-${randomNum}`;
+
+        const newOrder = {
+          id: `ord-sim-${Date.now()}`,
+          code: newCode,
+          createdAt: timeStr,
+          timeAgo: "Vừa xong",
+          customerName: "Khách Đặt Online",
+          phone: "0968 888 999",
+          fulfillmentType: Math.random() > 0.5 ? "DELIVERY" : "PICKUP",
+          deliveryAddress: "158 Hoàng Hoa Thám (Khoảng 1.8km)",
+          pickupTime: "11:15",
+          paymentMethod: "VIETQR",
+          paymentStatus: "UNPAID",
+          paidAt: null,
+          paidBy: null,
+          status: "PENDING",
+          items: [
+            {
+              id: "item-sim-1",
+              name: "Cà phê muối",
+              qty: 2,
+              price: 29000,
+              optionsText: "Size L (+6.000đ), Đường 50%, Đá vừa",
+              lineTotal: 70000,
+              note: "Giao nhanh giúp mình với ạ",
+            },
+          ],
+          subtotal: 70000,
+          shippingFee: 15000,
+          total: 85000,
+          history: [{ time: timeStr, text: "Khách đặt đơn online qua Website", author: "Hệ thống" }],
+        };
+
+        orders.unshift(newOrder);
+        selectedOrderId = newOrder.id;
+
+        // Play audio alert
+        playAudioAlert();
+
+        showToast(`🔔 CÓ ĐƠN HÀNG MỚI: ${newOrder.code} (${formatMoney(newOrder.total)})!`, "success");
+        renderOrderCards();
+      }
+
+      function resetPrototypeData() {
+        orders = JSON.parse(JSON.stringify(INITIAL_ORDERS));
+        selectedOrderId = "ord-1";
+        currentFilterStatus = "ALL";
+        currentFilterType = "ALL";
+        searchQuery = "";
+        document.getElementById("search-input").value = "";
+        setFilterStatus("ALL");
+        showToast("Đã khôi phục dữ liệu đơn hàng ban đầu.");
+      }
+
+      function printReceipt(orderCode) {
+        showToast(`Đã gửi lệnh in phiếu pha chế cho đơn ${orderCode} tới máy in nhiệt quầy bar!`);
+      }
+
+      function toggleProductStock(checkbox, productName) {
+        const isAvailable = checkbox.checked;
+        const statusSpan = checkbox.parentElement.nextElementSibling;
+        if (isAvailable) {
+          statusSpan.textContent = "Còn hàng";
+          statusSpan.style.color = "var(--color-support)";
+          showToast(`Món "${productName}" đã được mở bán lại.`);
+        } else {
+          statusSpan.textContent = "Hết hàng";
+          statusSpan.style.color = "var(--color-danger)";
+          showToast(`Món "${productName}" đã đánh dấu HẾT HÀNG. Menu khách sẽ tự động cập nhật!`, "danger");
+        }
+      }
+
+      // Helpers
+      function formatMoney(amount) {
+        return new Intl.NumberFormat("vi-VN").format(amount) + "đ";
+      }
+
+      let toastTimer = null;
+      function showToast(message, type = "normal") {
+        const toast = document.getElementById("toast");
+        const msg = document.getElementById("toast-message");
+        const icon = document.getElementById("toast-icon");
+
+        msg.textContent = message;
+        toast.className = "toast-box";
+        if (type === "success") {
+          toast.classList.add("success");
+          icon.textContent = "✅";
+        } else if (type === "danger") {
+          toast.classList.add("danger");
+          icon.textContent = "⚠️";
+        } else {
+          icon.textContent = "ℹ️";
+        }
+
+        toast.classList.add("show");
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => {
+          toast.classList.remove("show");
+        }, 3500);
+      }
+
+      // Initialize
+      window.addEventListener("DOMContentLoaded", () => {
+        renderOrderCards();
+      });
+    </script>
+  </body>
+</html>

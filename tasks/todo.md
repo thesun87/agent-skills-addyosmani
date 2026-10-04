@@ -214,17 +214,17 @@
 
 ## Phase 3 — Admin xử lý đơn
 
-### - [ ] T9b: Prototype UI admin
+### - [x] T9b: Prototype UI admin
 
 **Description:** Prototype HTML click-through cho tablet/laptop tại quầy: danh sách đơn (lọc, đơn mới nổi bật, nút bật âm báo), chi tiết đơn với nút hành động theo trạng thái, huỷ có lý do, xác nhận đã nhận tiền. Kèm khung layout admin (điều hướng tới Món, Danh mục, Cài đặt) để T13–T16 theo cùng phong cách.
 
 **Acceptance criteria:**
-- [ ] Mô phỏng đủ vòng đời đơn giao hàng và đơn pickup bằng cách bấm
-- [ ] Dễ thao tác ở 768px (tablet dọc) và 1280px; nút hành động chính đủ lớn để chạm
-- [ ] Chủ quán duyệt; góp ý ghi vào `docs/design/admin-ui-notes.md`
+- [x] Mô phỏng đủ vòng đời đơn giao hàng và đơn pickup bằng cách bấm
+- [x] Dễ thao tác ở 768px (tablet dọc) và 1280px; nút hành động chính đủ lớn để chạm
+- [x] Chủ quán duyệt; góp ý ghi vào `docs/design/admin-ui-notes.md`
 
 **Verification:**
-- [ ] Manual: chủ quán duyệt trên thiết bị dùng ở quầy
+- [x] Manual: chủ quán duyệt trên thiết bị dùng ở quầy
 
 **Dependencies:** Checkpoint 2 (dùng lại phong cách đã duyệt ở T3b)
 **Files likely touched:** `docs/design/admin-prototype.html`, `docs/design/admin-ui-notes.md`
