@@ -3,6 +3,7 @@
 import { useState } from "react";
 import type { MenuCategory, MenuProduct } from "../queries";
 import type { CartLineInput } from "@/features/cart/schema";
+import { useCart } from "@/features/cart/CartContext";
 import { CategoryNav } from "./CategoryNav";
 import { ProductCard } from "./ProductCard";
 import { ProductOptionsSheet } from "./ProductOptionsSheet";
@@ -17,13 +18,24 @@ export function MenuCatalog({ categories, onSelectProduct, onAddToCart }: MenuCa
   const [activeCategoryId, setActiveCategoryId] = useState<string>(categories[0]?.id ?? "");
   const [selectedProduct, setSelectedProduct] = useState<MenuProduct | null>(null);
 
+  const { addItem } = useCart();
+
   const handleCardClick = (product: MenuProduct) => {
     setSelectedProduct(product);
     onSelectProduct?.(product);
   };
 
   const handleAddToCart = (line: CartLineInput) => {
-    onAddToCart?.(line);
+    if (onAddToCart) {
+      onAddToCart(line);
+    } else {
+      addItem({
+        productId: line.productId,
+        optionIds: line.optionIds,
+        quantity: line.quantity,
+        note: line.note,
+      });
+    }
     setSelectedProduct(null);
   };
 

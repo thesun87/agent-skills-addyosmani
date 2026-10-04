@@ -130,18 +130,18 @@
 
 ---
 
-### - [ ] T6: Giỏ hàng localStorage (C3)
+### - [x] T6: Giỏ hàng localStorage (C3)
 
 **Description:** Cart store (reducer thuần + hook) lưu `{productId, optionIds, quantity, note}` vào localStorage (bọc try/catch). Gộp dòng trùng món + trùng tuỳ chọn. Icon giỏ có badge số lượng; trang `/gio-hang` sửa số lượng/xoá, hiển thị tạm tính từ giá menu hiện tại; dòng có món đã hết hàng/biến mất được đánh dấu và loại khỏi tổng.
 
 **Acceptance criteria:**
-- [ ] Reload trang giỏ còn nguyên; localStorage hỏng/không truy cập được → giỏ rỗng, không crash
-- [ ] Cùng món + cùng tuỳ chọn gộp thành 1 dòng; khác tuỳ chọn tách dòng
-- [ ] Tạm tính khớp `calculateTotals` dùng giá hiện tại, không dùng giá cũ lưu trong giỏ
+- [x] Reload trang giỏ còn nguyên; localStorage hỏng/không truy cập được → giỏ rỗng, không crash
+- [x] Cùng món + cùng tuỳ chọn gộp thành 1 dòng; khác tuỳ chọn tách dòng
+- [x] Tạm tính khớp `calculateTotals` dùng giá hiện tại, không dùng giá cũ lưu trong giỏ
 
 **Verification:**
-- [ ] `pnpm test tests/unit/features/cart`
-- [ ] Manual: thêm 3 món, reload, sửa số lượng
+- [x] `pnpm test tests/unit/features/cart`
+- [x] Manual: thêm 3 món, reload, sửa số lượng
 
 **Dependencies:** T5
 **Files likely touched:** `src/features/cart/{store.ts,use-cart.ts}`, `src/app/(shop)/gio-hang/page.tsx`, `src/features/cart/components/CartLine.tsx`, tests
