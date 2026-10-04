@@ -44,25 +44,26 @@
 * **Danh sách món:** Bảng quản lý hiển thị tên, danh mục, giá bán, số lượng nhóm tuỳ chọn áp dụng, công tắc gạt **Còn hàng / Hết hàng** một chạm.
 * **Modal Thêm / Sửa món:**
   * Tên món, danh mục (chọn từ danh mục hiện có), giá niêm yết VND, mô tả.
-  * Hiển thị danh sách các nhóm tuỳ chọn (Size, Đường, Đá, Topping) đang áp dụng cho món kèm nút dẫn tới trang Quản lý nhóm tuỳ chọn.
+  * **Nhóm tuỳ chọn áp dụng:** checklist tất cả nhóm trong thư viện dùng chung (Size, Đường, Đá, Topping…), mỗi dòng hiển thị quy tắc + tóm tắt option + số món khác đang dùng nhóm. Tick để gắn, bỏ tick để gỡ (chỉ gỡ liên kết, không xoá nhóm). Có link "Quản lý thư viện nhóm →" sang `/admin/tuy-chon`.
   * Trạng thái bán (Còn hàng / Tạm hết).
   * Nút **Lưu trữ món (Archive):** Áp dụng khi món đã từng phát sinh trong đơn hàng cũ, giúp ẩn khỏi menu khách mà không làm hỏng dữ liệu lịch sử đơn.
 
-### 2.4. Màn hình Quản lý Nhóm Tuỳ chọn (`/admin/tuy-chon` — OptionGroup & Option theo SPEC)
-* **Khái niệm theo kiến trúc dữ liệu:**
-  * `OptionGroup`: Nhóm tuỳ chọn (ví dụ: *Chọn Size*, *Mức ngọt*, *Lượng đá*, *Topping thêm*).
-    * `isRequired`: Bắt buộc khách phải chọn hay không (VD: Size là bắt buộc, Topping là tuỳ chọn).
-    * `maxSelect`: Số lượng chọn tối đa (1 = Đơn chọn / Radio, >1 = Đa chọn / Checkbox).
-    * `productIds`: Liên kết với món đồ uống cụ thể hoặc áp dụng cho toàn bộ đồ uống.
-  * `Option`: Từng tuỳ chọn cụ thể nằm trong nhóm (ví dụ: *Size L (+6.000đ)*, *Trân châu trắng (+8.000đ)*).
-    * `priceDelta`: Giá phụ thu thêm (0đ hoặc số nguyên dương VND).
-    * `isAvailable`: Công tắc bật/tắt **Còn hàng / Hết hàng** cho từng tuỳ chọn (Ví dụ: Quán tạm hết trân châu trắng thì tắt riêng trân châu mà không làm gián đoạn món Trà đào cam sả!).
+### 2.4. Màn hình Thư viện Nhóm Tuỳ chọn (`/admin/tuy-chon` — OptionGroup ↔ Product n:n, AD10)
+* **Mô hình dữ liệu (đồng bộ `prisma/schema.prisma`):**
+  * `OptionGroup(id, name, isRequired, maxSelect, sortOrder)` — nhóm **dùng chung**, không thuộc riêng món nào (VD: *Size*, *Đường*, *Đá*, *Topping*).
+    * `isRequired`: khách bắt buộc chọn hay không.
+    * `maxSelect`: 1 = đơn chọn (radio), >1 = đa chọn (checkbox).
+    * `products`: quan hệ **n:n** với `Product` — một nhóm gắn vào nhiều món, một món có nhiều nhóm.
+  * `Option(id, groupId, name, priceDelta, sortOrder)` — thuộc đúng 1 nhóm; `priceDelta` là số nguyên VND ≥ 0.
+  * Thứ tự hiển thị nhóm trong sheet của khách = `OptionGroup.sortOrder` (toàn cục, giống nhau ở mọi món).
 * **Chức năng trên giao diện:**
-  * Lọc nhóm tuỳ chọn theo món đồ uống áp dụng.
-  * Thẻ hiển thị từng nhóm với đầy đủ badge quy tắc (`Bắt buộc chọn`, `Đơn chọn / Đa chọn`) và danh sách các option con kèm giá phụ thu.
-  * Nút `➕ Thêm nhóm tuỳ chọn mới`: Mở modal cho phép đặt tên nhóm, chọn quy tắc, liên kết món và thêm động các dòng option con.
-  * Nút `✏️ Sửa nhóm` và `🗑️ Xoá nhóm`.
-  * Xoá từng tuỳ chọn con trực tiếp trong bảng.
+  * Lọc theo món: chọn một món → chỉ hiện các nhóm đang gắn vào món đó.
+  * Thẻ nhóm: badge quy tắc (`Bắt buộc` / `Không bắt buộc`, `Đơn chọn` / `Đa chọn ≤ n`), bảng option + giá phụ thu, và dòng **"Áp dụng cho N món"** với chip tên từng món (bấm ✕ trên chip để gỡ nhanh).
+  * Cảnh báo khi sửa: "Thay đổi sẽ áp dụng cho N món đang dùng nhóm này".
+  * Modal `➕ Thêm nhóm` / `✏️ Sửa nhóm`: tên, quy tắc, danh sách option động (tên + phụ thu), và **checklist món áp dụng** nhóm theo danh mục, có nút "Chọn tất cả đồ uống" / "Bỏ chọn".
+  * `🗑️ Xoá nhóm`: popup xác nhận liệt kê các món đang dùng; xoá nhóm sẽ xoá option và gỡ khỏi các món đó. Đơn cũ không đổi (snapshot).
+  * Gắn/gỡ từ màn hình nhóm và từ modal món là hai mặt của cùng một liên kết — luôn đồng bộ.
+* **Ngoài SPEC (chưa có trong schema, cần chủ quán duyệt trước khi code):** công tắc hết hàng cho từng option (`Option.isAvailable`). Prototype không hiển thị tính năng này; v1 chỉ có hết hàng theo món.
 
 ### 2.5. Màn hình Thêm & Chỉnh sửa Danh mục (`/admin/danh-muc` — A2)
 * **Danh sách danh mục:** Hiển thị thứ tự `#1, #2...`, tên danh mục, số lượng món đang có, trạng thái (Đang hiển thị / Đã ẩn).
@@ -138,8 +139,8 @@ Giao diện áp dụng nghiêm ngặt sơ đồ trạng thái đã chốt:
 |---|---|---|---|---|
 | 1 | Màn hình Đăng nhập (Login) | Rõ ràng, bảo mật, có cơ chế khoá sau 5 lần sai | | Đạt chuẩn |
 | 2 | Tính năng Đăng xuất (Logout) | Có nút ở sidebar + popup xác nhận tránh ấn nhầm | | Đạt chuẩn |
-| 3 | Màn hình Thêm & Sửa món | Đầy đủ giá, danh mục, mô tả, tuỳ chọn size/topping, lưu trữ | | Đạt chuẩn |
-| 4 | Quản lý nhóm tuỳ chọn (OptionGroup & Option) | Cấu hình quy tắc bắt buộc, đơn/đa chọn, giá phụ thu & tắt hết hàng cho từng option | | Đạt chuẩn |
+| 3 | Màn hình Thêm & Sửa món | Đầy đủ giá, danh mục, mô tả, checklist gắn nhóm tuỳ chọn dùng chung, lưu trữ | | Chờ duyệt lại (n:n) |
+| 4 | Thư viện nhóm tuỳ chọn (OptionGroup ↔ Product n:n) | Quy tắc bắt buộc, đơn/đa chọn, giá phụ thu; một nhóm gắn nhiều món, xem/gỡ món đang dùng | | Chờ duyệt lại (n:n) |
 | 5 | Màn hình Thêm & Sửa danh mục | Đầy đủ thứ tự hiển thị, nút tăng giảm thứ tự, chặn xoá khi còn món | | Đạt chuẩn |
 | 6 | Chỉnh sửa Cài đặt quán | Đầy đủ giờ mở cửa, phí ship, ngưỡng freeship, STK VietQR | | Đạt chuẩn |
 | 7 | Phân trang danh sách đơn hàng | Có thanh phân trang, chuyển trang mượt mà | | Đạt chuẩn |

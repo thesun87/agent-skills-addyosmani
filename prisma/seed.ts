@@ -1,22 +1,39 @@
 import { PrismaClient } from "@prisma/client";
-import { SEED_MENU, type SeedOptionGroup, type SeedProduct } from "./seed-data/menu";
+import { SEED_MENU, SEED_OPTION_GROUPS, type SeedProduct } from "./seed-data/menu";
 
 const db = new PrismaClient();
 
-function optionGroupsCreate(groups: readonly SeedOptionGroup[]) {
-  return groups.map((group, groupIndex) => ({
-    name: group.name,
-    isRequired: group.isRequired,
-    maxSelect: group.maxSelect,
-    sortOrder: groupIndex,
-    options: {
-      create: group.options.map((option, optionIndex) => ({
+async function seedSharedOptionGroups() {
+  for (const [groupIndex, group] of Object.values(SEED_OPTION_GROUPS).entries()) {
+    await db.optionGroup.upsert({
+      where: { id: group.id },
+      create: {
+        id: group.id,
+        name: group.name,
+        isRequired: group.isRequired,
+        maxSelect: group.maxSelect,
+        sortOrder: groupIndex,
+      },
+      update: {
+        name: group.name,
+        isRequired: group.isRequired,
+        maxSelect: group.maxSelect,
+        sortOrder: groupIndex,
+      },
+    });
+
+    // Re-sync options under this group
+    await db.option.deleteMany({ where: { groupId: group.id } });
+    await db.option.createMany({
+      data: group.options.map((option, optionIndex) => ({
+        groupId: group.id,
         name: option.name,
-        priceDelta: option.priceDelta ?? 0,
+        priceDelta:
+          "priceDelta" in option && typeof option.priceDelta === "number" ? option.priceDelta : 0,
         sortOrder: optionIndex,
       })),
-    },
-  }));
+    });
+  }
 }
 
 async function seedProduct(categoryId: string, product: SeedProduct, sortOrder: number) {
@@ -28,22 +45,27 @@ async function seedProduct(categoryId: string, product: SeedProduct, sortOrder: 
     sortOrder,
   };
 
-  // Option groups are not referenced by orders (orders keep a snapshot), so they are rebuilt on each run.
-  await db.$transaction([
-    db.product.upsert({
-      where: { id: product.id },
-      create: { id: product.id, ...fields },
-      update: fields,
-    }),
-    db.optionGroup.deleteMany({ where: { productId: product.id } }),
-    db.product.update({
-      where: { id: product.id },
-      data: { optionGroups: { create: optionGroupsCreate(product.optionGroups) } },
-    }),
-  ]);
+  await db.product.upsert({
+    where: { id: product.id },
+    create: {
+      id: product.id,
+      ...fields,
+      optionGroups: {
+        connect: product.optionGroups.map((g) => ({ id: g.id })),
+      },
+    },
+    update: {
+      ...fields,
+      optionGroups: {
+        set: product.optionGroups.map((g) => ({ id: g.id })),
+      },
+    },
+  });
 }
 
 async function main() {
+  await seedSharedOptionGroups();
+
   for (const [categoryIndex, category] of SEED_MENU.entries()) {
     const fields = { name: category.name, sortOrder: categoryIndex };
     await db.category.upsert({

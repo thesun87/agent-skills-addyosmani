@@ -2,6 +2,36 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { ProductOptionsSheet } from "@/features/menu/components/ProductOptionsSheet";
 
+const now = new Date();
+
+const makeOption = (id: string, groupId: string, name: string, priceDelta = 0, sortOrder = 0) => ({
+  id,
+  groupId,
+  name,
+  priceDelta,
+  sortOrder,
+  createdAt: now,
+  updatedAt: now,
+});
+
+const makeGroup = (
+  id: string,
+  name: string,
+  isRequired: boolean,
+  maxSelect: number,
+  sortOrder: number,
+  options: ReturnType<typeof makeOption>[],
+) => ({
+  id,
+  name,
+  isRequired,
+  maxSelect,
+  sortOrder,
+  createdAt: now,
+  updatedAt: now,
+  options,
+});
+
 const sampleProductWithOptions = {
   id: "prod-cf-sua",
   categoryId: "cat-1",
@@ -12,64 +42,22 @@ const sampleProductWithOptions = {
   isAvailable: true,
   isArchived: false,
   sortOrder: 0,
-  createdAt: new Date(),
-  updatedAt: new Date(),
+  createdAt: now,
+  updatedAt: now,
   optionGroups: [
-    {
-      id: "grp-size",
-      productId: "prod-cf-sua",
-      name: "Size",
-      isRequired: true,
-      maxSelect: 1,
-      sortOrder: 0,
-      options: [
-        { id: "opt-size-m", groupId: "grp-size", name: "Size M", priceDelta: 0, sortOrder: 0 },
-        { id: "opt-size-l", groupId: "grp-size", name: "Size L", priceDelta: 6_000, sortOrder: 1 },
-      ],
-    },
-    {
-      id: "grp-sugar",
-      productId: "prod-cf-sua",
-      name: "Đường",
-      isRequired: true,
-      maxSelect: 1,
-      sortOrder: 1,
-      options: [
-        { id: "opt-sugar-0", groupId: "grp-sugar", name: "0%", priceDelta: 0, sortOrder: 0 },
-        { id: "opt-sugar-70", groupId: "grp-sugar", name: "70%", priceDelta: 0, sortOrder: 1 },
-      ],
-    },
-    {
-      id: "grp-topping",
-      productId: "prod-cf-sua",
-      name: "Topping",
-      isRequired: false,
-      maxSelect: 2,
-      sortOrder: 2,
-      options: [
-        {
-          id: "opt-top-tran-chau",
-          groupId: "grp-topping",
-          name: "Trân châu",
-          priceDelta: 8_000,
-          sortOrder: 0,
-        },
-        {
-          id: "opt-top-thach",
-          groupId: "grp-topping",
-          name: "Thạch củ năng",
-          priceDelta: 8_000,
-          sortOrder: 1,
-        },
-        {
-          id: "opt-top-cheese",
-          groupId: "grp-topping",
-          name: "Kem cheese",
-          priceDelta: 8_000,
-          sortOrder: 2,
-        },
-      ],
-    },
+    makeGroup("grp-size", "Size", true, 1, 0, [
+      makeOption("opt-size-m", "grp-size", "Size M", 0, 0),
+      makeOption("opt-size-l", "grp-size", "Size L", 6_000, 1),
+    ]),
+    makeGroup("grp-sugar", "Đường", true, 1, 1, [
+      makeOption("opt-sugar-0", "grp-sugar", "0%", 0, 0),
+      makeOption("opt-sugar-70", "grp-sugar", "70%", 0, 1),
+    ]),
+    makeGroup("grp-topping", "Topping", false, 2, 2, [
+      makeOption("opt-top-tran-chau", "grp-topping", "Trân châu", 8_000, 0),
+      makeOption("opt-top-thach", "grp-topping", "Thạch củ năng", 8_000, 1),
+      makeOption("opt-top-cheese", "grp-topping", "Kem cheese", 8_000, 2),
+    ]),
   ],
 };
 
@@ -197,26 +185,12 @@ describe("ProductOptionsSheet", () => {
       isAvailable: true,
       isArchived: false,
       sortOrder: 1,
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      createdAt: now,
+      updatedAt: now,
       optionGroups: [
-        {
-          id: "grp-tra-size",
-          productId: "prod-tra-dao",
-          name: "Size",
-          isRequired: true,
-          maxSelect: 1,
-          sortOrder: 0,
-          options: [
-            {
-              id: "opt-tra-size-m",
-              groupId: "grp-tra-size",
-              name: "M",
-              priceDelta: 0,
-              sortOrder: 0,
-            },
-          ],
-        },
+        makeGroup("grp-tra-size", "Size", true, 1, 0, [
+          makeOption("opt-tra-size-m", "grp-tra-size", "M", 0, 0),
+        ]),
       ],
     };
 

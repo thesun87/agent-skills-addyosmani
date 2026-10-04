@@ -2,6 +2,7 @@
 
 export type SeedOption = Readonly<{ name: string; priceDelta?: number }>;
 export type SeedOptionGroup = Readonly<{
+  id: string;
   name: string;
   isRequired: boolean;
   maxSelect: number;
@@ -16,28 +17,35 @@ export type SeedProduct = Readonly<{
 }>;
 export type SeedCategory = Readonly<{ id: string; name: string; products: readonly SeedProduct[] }>;
 
-const SIZE: SeedOptionGroup = {
-  name: "Size",
-  isRequired: true,
-  maxSelect: 1,
-  options: [{ name: "M" }, { name: "L", priceDelta: 6_000 }],
-};
+export const SEED_OPTION_GROUPS = {
+  SIZE: {
+    id: "seed-optgrp-size",
+    name: "Size",
+    isRequired: true,
+    maxSelect: 1,
+    options: [{ name: "M" }, { name: "L", priceDelta: 6_000 }],
+  },
+  SUGAR: {
+    id: "seed-optgrp-sugar",
+    name: "Đường",
+    isRequired: true,
+    maxSelect: 1,
+    options: ["0%", "30%", "50%", "70%", "100%"].map((name) => ({ name })),
+  },
+  ICE: {
+    id: "seed-optgrp-ice",
+    name: "Đá",
+    isRequired: true,
+    maxSelect: 1,
+    options: ["Ít đá", "Đá vừa", "Nhiều đá", "Để riêng"].map((name) => ({ name })),
+  },
+} as const satisfies Record<string, SeedOptionGroup>;
 
-const SUGAR: SeedOptionGroup = {
-  name: "Đường",
-  isRequired: true,
-  maxSelect: 1,
-  options: ["0%", "30%", "50%", "70%", "100%"].map((name) => ({ name })),
-};
-
-const ICE: SeedOptionGroup = {
-  name: "Đá",
-  isRequired: true,
-  maxSelect: 1,
-  options: ["Ít đá", "Đá vừa", "Nhiều đá", "Để riêng"].map((name) => ({ name })),
-};
-
-const DRINK_OPTIONS = [SIZE, SUGAR, ICE] as const;
+const DRINK_OPTIONS = [
+  SEED_OPTION_GROUPS.SIZE,
+  SEED_OPTION_GROUPS.SUGAR,
+  SEED_OPTION_GROUPS.ICE,
+] as const;
 
 export const SEED_MENU: readonly SeedCategory[] = [
   {

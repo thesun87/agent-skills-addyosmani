@@ -155,7 +155,9 @@
         max-width: 1280px; /* Default Desktop/Laptop */
         min-height: 820px;
         border-radius: 14px;
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 0 1px #3d2b24;
+        box-shadow:
+          0 20px 60px rgba(0, 0, 0, 0.5),
+          0 0 0 1px #3d2b24;
         display: flex;
         overflow: hidden;
         transition: max-width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
@@ -662,8 +664,13 @@
       }
 
       @keyframes blink {
-        0%, 100% { opacity: 0.3; }
-        50% { opacity: 1; }
+        0%,
+        100% {
+          opacity: 0.3;
+        }
+        50% {
+          opacity: 1;
+        }
       }
 
       /* ================= MASTER-DETAIL VIEW (ORDERS) ================= */
@@ -838,7 +845,9 @@
       .order-card.selected {
         border-color: var(--color-primary);
         background: #fffcf9;
-        box-shadow: 0 0 0 2px var(--color-primary), var(--shadow-md);
+        box-shadow:
+          0 0 0 2px var(--color-primary),
+          var(--shadow-md);
       }
 
       .order-card.is-pending {
@@ -884,13 +893,41 @@
         gap: 4px;
       }
 
-      .badge-pending { background: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
-      .badge-confirmed { background: #e0f2fe; color: #075985; border: 1px solid #bae6fd; }
-      .badge-preparing { background: #f3e8ff; color: #6b21a8; border: 1px solid #e9d5ff; }
-      .badge-delivering { background: #ffedd5; color: #9a3412; border: 1px solid #fed7aa; }
-      .badge-ready { background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; }
-      .badge-completed { background: #f1f5f9; color: #334155; border: 1px solid #e2e8f0; }
-      .badge-cancelled { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
+      .badge-pending {
+        background: #fef3c7;
+        color: #92400e;
+        border: 1px solid #fde68a;
+      }
+      .badge-confirmed {
+        background: #e0f2fe;
+        color: #075985;
+        border: 1px solid #bae6fd;
+      }
+      .badge-preparing {
+        background: #f3e8ff;
+        color: #6b21a8;
+        border: 1px solid #e9d5ff;
+      }
+      .badge-delivering {
+        background: #ffedd5;
+        color: #9a3412;
+        border: 1px solid #fed7aa;
+      }
+      .badge-ready {
+        background: #ecfdf5;
+        color: #065f46;
+        border: 1px solid #a7f3d0;
+      }
+      .badge-completed {
+        background: #f1f5f9;
+        color: #334155;
+        border: 1px solid #e2e8f0;
+      }
+      .badge-cancelled {
+        background: #fee2e2;
+        color: #991b1b;
+        border: 1px solid #fecaca;
+      }
 
       .type-pill {
         font-size: 10.5px;
@@ -899,8 +936,14 @@
         font-weight: 600;
       }
 
-      .type-delivery { background: #eef2ff; color: #3730a3; }
-      .type-pickup { background: #fdf4ff; color: #86198f; }
+      .type-delivery {
+        background: #eef2ff;
+        color: #3730a3;
+      }
+      .type-pickup {
+        background: #fdf4ff;
+        color: #86198f;
+      }
 
       .pay-pill {
         font-size: 10.5px;
@@ -909,8 +952,14 @@
         font-weight: 600;
       }
 
-      .pay-unpaid { background: #fef2f2; color: var(--color-danger); }
-      .pay-paid { background: #ecfdf5; color: var(--color-support); }
+      .pay-unpaid {
+        background: #fef2f2;
+        color: var(--color-danger);
+      }
+      .pay-paid {
+        background: #ecfdf5;
+        color: var(--color-support);
+      }
 
       .card-customer {
         display: flex;
@@ -920,8 +969,14 @@
         color: var(--color-text);
       }
 
-      .card-name { font-weight: 600; }
-      .card-total { font-weight: 700; color: var(--color-primary); font-size: 13.5px; }
+      .card-name {
+        font-weight: 600;
+      }
+      .card-total {
+        font-weight: 700;
+        color: var(--color-primary);
+        font-size: 13.5px;
+      }
 
       .card-summary {
         font-size: 11.5px;
@@ -943,8 +998,14 @@
         color: var(--color-text-muted);
       }
 
-      .pagination-info { font-size: 11.5px; }
-      .pagination-buttons { display: flex; align-items: center; gap: 4px; }
+      .pagination-info {
+        font-size: 11.5px;
+      }
+      .pagination-buttons {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
 
       .page-btn {
         background: var(--color-surface);
@@ -959,9 +1020,18 @@
         text-align: center;
       }
 
-      .page-btn:hover:not(:disabled) { background: #f2e4d4; }
-      .page-btn.active { background: var(--color-primary); border-color: var(--color-primary); color: white; }
-      .page-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+      .page-btn:hover:not(:disabled) {
+        background: #f2e4d4;
+      }
+      .page-btn.active {
+        background: var(--color-primary);
+        border-color: var(--color-primary);
+        color: white;
+      }
+      .page-btn:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+      }
 
       /* Right Pane: Order Details */
       .orders-detail {
@@ -974,7 +1044,10 @@
         background: var(--color-surface);
       }
 
-      .tablet-mode .orders-detail { padding: 14px; gap: 12px; }
+      .tablet-mode .orders-detail {
+        padding: 14px;
+        gap: 12px;
+      }
 
       .detail-card {
         background: var(--color-surface-card);
@@ -984,7 +1057,9 @@
         box-shadow: var(--shadow-sm);
       }
 
-      .tablet-mode .detail-card { padding: 14px; }
+      .tablet-mode .detail-card {
+        padding: 14px;
+      }
 
       .detail-header {
         display: flex;
@@ -995,7 +1070,11 @@
         padding-bottom: 14px;
       }
 
-      .detail-title-group { display: flex; flex-direction: column; gap: 4px; }
+      .detail-title-group {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
 
       .detail-code {
         font-family: var(--font-display);
@@ -1007,8 +1086,14 @@
         gap: 10px;
       }
 
-      .detail-meta-text { font-size: 12px; color: var(--color-text-muted); }
-      .detail-actions-top { display: flex; gap: 8px; }
+      .detail-meta-text {
+        font-size: 12px;
+        color: var(--color-text-muted);
+      }
+      .detail-actions-top {
+        display: flex;
+        gap: 8px;
+      }
 
       .btn-ghost {
         background: var(--color-surface);
@@ -1024,7 +1109,9 @@
         gap: 6px;
       }
 
-      .btn-ghost:hover { background: #f4e9dc; }
+      .btn-ghost:hover {
+        background: #f4e9dc;
+      }
 
       .btn-primary-sm {
         background: var(--color-primary);
@@ -1040,7 +1127,9 @@
         gap: 6px;
       }
 
-      .btn-primary-sm:hover { background: var(--color-primary-hover); }
+      .btn-primary-sm:hover {
+        background: var(--color-primary-hover);
+      }
 
       .info-grid {
         display: grid;
@@ -1049,23 +1138,97 @@
         margin-top: 14px;
       }
 
-      .info-item { display: flex; flex-direction: column; gap: 2px; }
-      .info-label { font-size: 11px; font-weight: 600; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
-      .info-value { font-size: 13.5px; font-weight: 600; color: var(--color-text); display: flex; align-items: center; gap: 6px; }
+      .info-item {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+      }
+      .info-label {
+        font-size: 11px;
+        font-weight: 600;
+        color: var(--color-text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+      .info-value {
+        font-size: 13.5px;
+        font-weight: 600;
+        color: var(--color-text);
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
 
-      .call-link { color: var(--color-info); text-decoration: none; display: inline-flex; align-items: center; gap: 4px; font-size: 12px; }
-      .call-link:hover { text-decoration: underline; }
+      .call-link {
+        color: var(--color-info);
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 12px;
+      }
+      .call-link:hover {
+        text-decoration: underline;
+      }
 
-      .items-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 13px; }
-      .items-table th { text-align: left; padding: 8px 10px; border-bottom: 2px solid var(--color-border); font-size: 11px; font-weight: 600; color: var(--color-text-muted); text-transform: uppercase; }
-      .items-table td { padding: 12px 10px; border-bottom: 1px solid var(--color-border-light); vertical-align: middle; }
+      .items-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+        font-size: 13px;
+      }
+      .items-table th {
+        text-align: left;
+        padding: 8px 10px;
+        border-bottom: 2px solid var(--color-border);
+        font-size: 11px;
+        font-weight: 600;
+        color: var(--color-text-muted);
+        text-transform: uppercase;
+      }
+      .items-table td {
+        padding: 12px 10px;
+        border-bottom: 1px solid var(--color-border-light);
+        vertical-align: middle;
+      }
 
-      .item-qty-badge { background: #f4e9dc; color: var(--color-text); font-weight: 700; font-size: 12px; padding: 2px 7px; border-radius: 4px; display: inline-block; }
-      .item-details { display: flex; flex-direction: column; gap: 3px; }
-      .item-title { font-weight: 600; font-size: 13.5px; color: var(--color-text); }
-      .item-options { font-size: 12px; color: var(--color-text-muted); line-height: 1.4; }
-      .item-note { font-size: 11.5px; color: #92400e; background: #fffbeb; padding: 3px 8px; border-radius: 4px; display: inline-block; margin-top: 3px; border-left: 2px solid #f59e0b; }
-      .text-right { text-align: right; }
+      .item-qty-badge {
+        background: #f4e9dc;
+        color: var(--color-text);
+        font-weight: 700;
+        font-size: 12px;
+        padding: 2px 7px;
+        border-radius: 4px;
+        display: inline-block;
+      }
+      .item-details {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+      }
+      .item-title {
+        font-weight: 600;
+        font-size: 13.5px;
+        color: var(--color-text);
+      }
+      .item-options {
+        font-size: 12px;
+        color: var(--color-text-muted);
+        line-height: 1.4;
+      }
+      .item-note {
+        font-size: 11.5px;
+        color: #92400e;
+        background: #fffbeb;
+        padding: 3px 8px;
+        border-radius: 4px;
+        display: inline-block;
+        margin-top: 3px;
+        border-left: 2px solid #f59e0b;
+      }
+      .text-right {
+        text-align: right;
+      }
 
       .price-summary-box {
         background: var(--color-surface);
@@ -1079,14 +1242,46 @@
         border: 1px dashed var(--color-border);
       }
 
-      .price-row { display: flex; justify-content: space-between; color: var(--color-text-muted); }
-      .price-row.total-row { border-top: 1px solid var(--color-border); padding-top: 8px; font-size: 16px; font-weight: 700; color: var(--color-text); }
-      .price-row.total-row .total-amount { color: var(--color-primary); font-size: 18px; }
+      .price-row {
+        display: flex;
+        justify-content: space-between;
+        color: var(--color-text-muted);
+      }
+      .price-row.total-row {
+        border-top: 1px solid var(--color-border);
+        padding-top: 8px;
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--color-text);
+      }
+      .price-row.total-row .total-amount {
+        color: var(--color-primary);
+        font-size: 18px;
+      }
 
-      .payment-card { border-left: 4px solid var(--color-accent); background: #fffdf9; display: flex; flex-direction: column; gap: 10px; }
-      .payment-card.is-paid { border-left-color: var(--color-support); background: #fafdf9; }
-      .payment-card-header { display: flex; align-items: center; justify-content: space-between; }
-      .payment-status-title { font-size: 14px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+      .payment-card {
+        border-left: 4px solid var(--color-accent);
+        background: #fffdf9;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .payment-card.is-paid {
+        border-left-color: var(--color-support);
+        background: #fafdf9;
+      }
+      .payment-card-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .payment-status-title {
+        font-size: 14px;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
 
       .btn-mark-paid {
         background: var(--color-support);
@@ -1104,7 +1299,10 @@
         transition: all 0.2s;
       }
 
-      .btn-mark-paid:hover { background: #41673b; transform: translateY(-1px); }
+      .btn-mark-paid:hover {
+        background: #41673b;
+        transform: translateY(-1px);
+      }
 
       .qr-reconcile-info {
         font-size: 12px;
@@ -1136,10 +1334,25 @@
         z-index: 50;
       }
 
-      .tablet-mode .action-dock { padding: 12px 14px; }
-      .action-info { display: flex; flex-direction: column; gap: 2px; }
-      .action-hint { font-size: 11.5px; color: var(--color-text-muted); font-weight: 500; }
-      .action-buttons-group { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+      .tablet-mode .action-dock {
+        padding: 12px 14px;
+      }
+      .action-info {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+      }
+      .action-hint {
+        font-size: 11.5px;
+        color: var(--color-text-muted);
+        font-weight: 500;
+      }
+      .action-buttons-group {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
 
       .btn-state-action {
         min-height: 48px;
@@ -1157,12 +1370,27 @@
         box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
       }
 
-      .btn-state-action:hover { transform: translateY(-1px); box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15); }
-      .btn-state-action:active { transform: translateY(1px); }
-      .btn-primary-action { background: var(--color-primary); color: white; }
-      .btn-primary-action:hover { background: var(--color-primary-hover); }
-      .btn-success-action { background: var(--color-support); color: white; }
-      .btn-success-action:hover { background: #3f6539; }
+      .btn-state-action:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
+      }
+      .btn-state-action:active {
+        transform: translateY(1px);
+      }
+      .btn-primary-action {
+        background: var(--color-primary);
+        color: white;
+      }
+      .btn-primary-action:hover {
+        background: var(--color-primary-hover);
+      }
+      .btn-success-action {
+        background: var(--color-support);
+        color: white;
+      }
+      .btn-success-action:hover {
+        background: #3f6539;
+      }
 
       .btn-cancel-action {
         background: transparent;
@@ -1177,7 +1405,10 @@
         transition: all 0.18s;
       }
 
-      .btn-cancel-action:hover { background: var(--color-danger-bg); border-color: var(--color-danger); }
+      .btn-cancel-action:hover {
+        background: var(--color-danger-bg);
+        border-color: var(--color-danger);
+      }
 
       .history-timeline {
         margin-top: 10px;
@@ -1198,10 +1429,32 @@
         background: var(--color-border);
       }
 
-      .history-item { position: relative; font-size: 12px; color: var(--color-text); display: flex; flex-direction: column; gap: 1px; }
-      .history-dot { position: absolute; left: -19px; top: 3px; width: 10px; height: 10px; border-radius: 50%; background: var(--color-border); border: 2px solid #fff; }
-      .history-item.latest .history-dot { background: var(--color-primary); box-shadow: 0 0 0 3px rgba(184, 50, 42, 0.2); }
-      .history-meta { font-size: 11px; color: var(--color-text-muted); }
+      .history-item {
+        position: relative;
+        font-size: 12px;
+        color: var(--color-text);
+        display: flex;
+        flex-direction: column;
+        gap: 1px;
+      }
+      .history-dot {
+        position: absolute;
+        left: -19px;
+        top: 3px;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: var(--color-border);
+        border: 2px solid #fff;
+      }
+      .history-item.latest .history-dot {
+        background: var(--color-primary);
+        box-shadow: 0 0 0 3px rgba(184, 50, 42, 0.2);
+      }
+      .history-meta {
+        font-size: 11px;
+        color: var(--color-text-muted);
+      }
 
       /* ================= MODALS & DRAWERS ================= */
       .modal-backdrop {
@@ -1216,7 +1469,9 @@
         padding: 16px;
       }
 
-      .modal-backdrop.open { display: flex; }
+      .modal-backdrop.open {
+        display: flex;
+      }
 
       .modal-box {
         background: #fff;
@@ -1233,8 +1488,14 @@
       }
 
       @keyframes modalIn {
-        from { transform: scale(0.95); opacity: 0; }
-        to { transform: scale(1); opacity: 1; }
+        from {
+          transform: scale(0.95);
+          opacity: 0;
+        }
+        to {
+          transform: scale(1);
+          opacity: 1;
+        }
       }
 
       .modal-header {
@@ -1246,10 +1507,34 @@
         justify-content: space-between;
       }
 
-      .modal-title { font-family: var(--font-display); font-size: 17px; font-weight: 700; color: var(--color-text); }
-      .modal-close { background: none; border: none; font-size: 22px; color: var(--color-text-muted); cursor: pointer; }
-      .modal-body { padding: 20px; display: flex; flex-direction: column; gap: 16px; font-size: 13px; }
-      .modal-footer { padding: 14px 20px; background: var(--color-surface); border-top: 1px solid var(--color-border); display: flex; justify-content: flex-end; gap: 10px; }
+      .modal-title {
+        font-family: var(--font-display);
+        font-size: 17px;
+        font-weight: 700;
+        color: var(--color-text);
+      }
+      .modal-close {
+        background: none;
+        border: none;
+        font-size: 22px;
+        color: var(--color-text-muted);
+        cursor: pointer;
+      }
+      .modal-body {
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        font-size: 13px;
+      }
+      .modal-footer {
+        padding: 14px 20px;
+        background: var(--color-surface);
+        border-top: 1px solid var(--color-border);
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+      }
 
       /* Option Groups Card in Options Section */
       .opt-group-container {
@@ -1347,6 +1632,164 @@
         font-weight: 500;
       }
 
+      /* ===== Shared option groups (OptionGroup ↔ Product n:n) ===== */
+      .link-row {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 6px;
+        margin-top: 8px;
+      }
+      .link-row-label {
+        font-size: 11.5px;
+        color: var(--color-text-muted);
+        font-weight: 600;
+        margin-right: 2px;
+      }
+      .link-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: var(--color-surface);
+        border: 1px solid var(--color-border);
+        color: var(--color-text);
+        padding: 3px 4px 3px 10px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 600;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+      }
+      .link-chip:hover {
+        border-color: var(--color-primary);
+      }
+      .link-chip button {
+        border: none;
+        background: transparent;
+        color: var(--color-text-muted);
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 12px;
+        line-height: 1;
+      }
+      .link-chip button:hover {
+        background: var(--color-danger);
+        color: #fff;
+      }
+      .link-chip.is-empty {
+        padding: 3px 10px;
+        border-style: dashed;
+        color: var(--color-text-muted);
+        font-weight: 500;
+      }
+      .shared-count {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--color-primary);
+        background: #fdf0e6;
+        padding: 2px 8px;
+        border-radius: 999px;
+      }
+
+      .check-list {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        max-height: 260px;
+        overflow-y: auto;
+        padding-right: 2px;
+      }
+      .check-list-cat {
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        color: var(--color-text-muted);
+        margin-top: 6px;
+      }
+      .check-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        background: #fff;
+        border: 1px solid var(--color-border-light, var(--color-border));
+        border-radius: var(--radius-sm);
+        padding: 10px 12px;
+        cursor: pointer;
+        min-height: 48px;
+        transition:
+          border-color 0.15s,
+          box-shadow 0.15s;
+      }
+      .check-row:hover {
+        border-color: var(--color-primary);
+      }
+      .check-row:has(input:checked) {
+        border-color: var(--color-primary);
+        box-shadow: 0 0 0 1px var(--color-primary) inset;
+        background: #fffaf4;
+      }
+      .check-row input {
+        width: 18px;
+        height: 18px;
+        margin-top: 2px;
+        accent-color: var(--color-primary);
+        flex-shrink: 0;
+      }
+      .check-row-main {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        flex: 1;
+        min-width: 0;
+      }
+      .check-row-title {
+        font-size: 13px;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        flex-wrap: wrap;
+      }
+      .check-row-sub {
+        font-size: 11.5px;
+        color: var(--color-text-muted);
+      }
+
+      .impact-note {
+        display: flex;
+        gap: 8px;
+        align-items: flex-start;
+        background: #fff7e6;
+        border: 1px solid #f3d19c;
+        color: #7a4b12;
+        border-radius: var(--radius-sm);
+        padding: 8px 12px;
+        font-size: 12px;
+        line-height: 1.45;
+      }
+      .impact-note[hidden] {
+        display: none;
+      }
+
+      .library-hint {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        margin-top: 14px;
+        padding: 10px 14px;
+        border-radius: var(--radius-sm);
+        background: #f4efe7;
+        font-size: 12.5px;
+        color: var(--color-text);
+      }
+
       /* ================= SECTION VIEWS ================= */
       .section-view {
         display: none;
@@ -1356,16 +1799,58 @@
         background: var(--color-surface);
       }
 
-      .section-view.active { display: flex; flex-direction: column; gap: 18px; }
-      .settings-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 18px; }
+      .section-view.active {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+      }
+      .settings-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 18px;
+      }
 
       /* Switch */
-      .switch { position: relative; display: inline-block; width: 44px; height: 24px; vertical-align: middle; }
-      .switch input { opacity: 0; width: 0; height: 0; }
-      .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #cbd5e1; transition: 0.2s; border-radius: 24px; }
-      .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: 0.2s; border-radius: 50%; }
-      input:checked + .slider { background-color: var(--color-support); }
-      input:checked + .slider:before { transform: translateX(20px); }
+      .switch {
+        position: relative;
+        display: inline-block;
+        width: 44px;
+        height: 24px;
+        vertical-align: middle;
+      }
+      .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+      .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #cbd5e1;
+        transition: 0.2s;
+        border-radius: 24px;
+      }
+      .slider:before {
+        position: absolute;
+        content: "";
+        height: 18px;
+        width: 18px;
+        left: 3px;
+        bottom: 3px;
+        background-color: white;
+        transition: 0.2s;
+        border-radius: 50%;
+      }
+      input:checked + .slider {
+        background-color: var(--color-support);
+      }
+      input:checked + .slider:before {
+        transform: translateX(20px);
+      }
 
       /* Toast Notification */
       .toast-box {
@@ -1387,9 +1872,15 @@
         border-left: 5px solid var(--color-accent);
       }
 
-      .toast-box.show { transform: translateY(0); }
-      .toast-box.success { border-left-color: var(--color-support); }
-      .toast-box.danger { border-left-color: var(--color-danger); }
+      .toast-box.show {
+        transform: translateY(0);
+      }
+      .toast-box.success {
+        border-left-color: var(--color-support);
+      }
+      .toast-box.danger {
+        border-left-color: var(--color-danger);
+      }
     </style>
   </head>
   <body>
@@ -1413,21 +1904,13 @@
         </button>
 
         <!-- Quick Jump to all Key Screens -->
-        <button class="proto-btn" onclick="showLoginView()">
-          1. 🔑 Login
-        </button>
-        <button class="proto-btn" onclick="showDashboardView('orders')">
-          2. 📦 Đơn hàng
-        </button>
-        <button class="proto-btn" onclick="showDashboardView('menu')">
-          3. 📋 Thực đơn (Món)
-        </button>
+        <button class="proto-btn" onclick="showLoginView()">1. 🔑 Login</button>
+        <button class="proto-btn" onclick="showDashboardView('orders')">2. 📦 Đơn hàng</button>
+        <button class="proto-btn" onclick="showDashboardView('menu')">3. 📋 Thực đơn (Món)</button>
         <button class="proto-btn" onclick="showDashboardView('options')">
           4. 🎛️ Nhóm tuỳ chọn
         </button>
-        <button class="proto-btn" onclick="showDashboardView('categories')">
-          5. 📁 Danh mục
-        </button>
+        <button class="proto-btn" onclick="showDashboardView('categories')">5. 📁 Danh mục</button>
         <button class="proto-btn" onclick="showDashboardView('settings')">
           6. ⚙️ Cài đặt quán
         </button>
@@ -1449,18 +1932,44 @@
               <!-- Logo SVG -->
               <svg class="login-logo" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg">
                 <circle cx="90" cy="90" r="86" fill="#B8322A" />
-                <circle cx="90" cy="90" r="76" fill="none" stroke="#FBF5EC" stroke-width="2" opacity="0.6" />
-                <path d="M90 22 C 104 40, 112 52, 108 68 C 106 78, 98 84, 90 86 C 80 84, 72 76, 73 65 C 74 56, 80 52, 82 44 C 86 52, 88 58, 86 64 C 92 58, 96 48, 90 22 Z" fill="#E8892B" />
-                <path d="M52 92 H128 L120 140 C 118 150, 110 156, 100 156 H80 C 70 156, 62 150, 60 140 Z" fill="#FBF5EC" />
-                <path d="M127 102 C 146 102, 146 130, 122 130" fill="none" stroke="#FBF5EC" stroke-width="7" stroke-linecap="round" />
-                <path d="M36 128 C 34 108, 48 96, 64 98 C 64 116, 52 128, 36 128 Z" fill="#4E7A47" />
+                <circle
+                  cx="90"
+                  cy="90"
+                  r="76"
+                  fill="none"
+                  stroke="#FBF5EC"
+                  stroke-width="2"
+                  opacity="0.6"
+                />
+                <path
+                  d="M90 22 C 104 40, 112 52, 108 68 C 106 78, 98 84, 90 86 C 80 84, 72 76, 73 65 C 74 56, 80 52, 82 44 C 86 52, 88 58, 86 64 C 92 58, 96 48, 90 22 Z"
+                  fill="#E8892B"
+                />
+                <path
+                  d="M52 92 H128 L120 140 C 118 150, 110 156, 100 156 H80 C 70 156, 62 150, 60 140 Z"
+                  fill="#FBF5EC"
+                />
+                <path
+                  d="M127 102 C 146 102, 146 130, 122 130"
+                  fill="none"
+                  stroke="#FBF5EC"
+                  stroke-width="7"
+                  stroke-linecap="round"
+                />
+                <path
+                  d="M36 128 C 34 108, 48 96, 64 98 C 64 116, 52 128, 36 128 Z"
+                  fill="#4E7A47"
+                />
               </svg>
               <h2 class="login-title">Đăng Nhập Quản Trị</h2>
               <p class="login-desc">Hệ thống xử lý đơn & quản lý quầy bar Tuấn Linh Coffee</p>
             </div>
 
             <!-- Login form -->
-            <form onsubmit="handleLoginSubmit(event)" style="display: flex; flex-direction: column; gap: 14px">
+            <form
+              onsubmit="handleLoginSubmit(event)"
+              style="display: flex; flex-direction: column; gap: 14px"
+            >
               <div class="form-group">
                 <label class="form-label" for="login-email">Email đăng nhập</label>
                 <input
@@ -1486,14 +1995,21 @@
               <!-- Error alert (A1) -->
               <div class="login-error-alert" id="login-error-box">
                 <span>⚠️</span>
-                <span id="login-error-text">Email hoặc mật khẩu không chính xác. Còn lại 4 lần thử.</span>
+                <span id="login-error-text"
+                  >Email hoặc mật khẩu không chính xác. Còn lại 4 lần thử.</span
+                >
               </div>
 
               <!-- Lockout alert (A1: 5 failures -> 15 min lock) -->
               <div class="login-lockout-alert" id="login-lockout-box">
                 <strong>⛔ TÀI KHOẢN TẠM THỜI BỊ KHOÁ (15 PHÚT)</strong>
-                <span>Bạn đã nhập sai 5 lần liên tiếp. Để đảm bảo an toàn, hệ thống tạm khoá trong 15 phút.</span>
-                <span style="font-weight: 700; margin-top: 4px" id="lockout-countdown">Thời gian còn lại: 14:59</span>
+                <span
+                  >Bạn đã nhập sai 5 lần liên tiếp. Để đảm bảo an toàn, hệ thống tạm khoá trong 15
+                  phút.</span
+                >
+                <span style="font-weight: 700; margin-top: 4px" id="lockout-countdown"
+                  >Thời gian còn lại: 14:59</span
+                >
               </div>
 
               <button type="submit" class="login-btn" id="btn-submit-login">
@@ -1529,11 +2045,34 @@
             <div class="brand-box" onclick="switchNavSection('orders')">
               <svg class="brand-logo-icon" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg">
                 <circle cx="90" cy="90" r="86" fill="#B8322A" />
-                <circle cx="90" cy="90" r="76" fill="none" stroke="#FBF5EC" stroke-width="2" opacity="0.6" />
-                <path d="M90 22 C 104 40, 112 52, 108 68 C 106 78, 98 84, 90 86 C 80 84, 72 76, 73 65 C 74 56, 80 52, 82 44 C 86 52, 88 58, 86 64 C 92 58, 96 48, 90 22 Z" fill="#E8892B" />
-                <path d="M52 92 H128 L120 140 C 118 150, 110 156, 100 156 H80 C 70 156, 62 150, 60 140 Z" fill="#FBF5EC" />
-                <path d="M127 102 C 146 102, 146 130, 122 130" fill="none" stroke="#FBF5EC" stroke-width="7" stroke-linecap="round" />
-                <path d="M36 128 C 34 108, 48 96, 64 98 C 64 116, 52 128, 36 128 Z" fill="#4E7A47" />
+                <circle
+                  cx="90"
+                  cy="90"
+                  r="76"
+                  fill="none"
+                  stroke="#FBF5EC"
+                  stroke-width="2"
+                  opacity="0.6"
+                />
+                <path
+                  d="M90 22 C 104 40, 112 52, 108 68 C 106 78, 98 84, 90 86 C 80 84, 72 76, 73 65 C 74 56, 80 52, 82 44 C 86 52, 88 58, 86 64 C 92 58, 96 48, 90 22 Z"
+                  fill="#E8892B"
+                />
+                <path
+                  d="M52 92 H128 L120 140 C 118 150, 110 156, 100 156 H80 C 70 156, 62 150, 60 140 Z"
+                  fill="#FBF5EC"
+                />
+                <path
+                  d="M127 102 C 146 102, 146 130, 122 130"
+                  fill="none"
+                  stroke="#FBF5EC"
+                  stroke-width="7"
+                  stroke-linecap="round"
+                />
+                <path
+                  d="M36 128 C 34 108, 48 96, 64 98 C 64 116, 52 128, 36 128 Z"
+                  fill="#4E7A47"
+                />
               </svg>
               <div class="brand-texts">
                 <span class="brand-title">TUẤN LINH</span>
@@ -1577,7 +2116,11 @@
               </div>
 
               <!-- Logout Button -->
-              <button class="btn-logout-sidebar" onclick="openLogoutModal()" title="Đăng xuất ca làm việc">
+              <button
+                class="btn-logout-sidebar"
+                onclick="openLogoutModal()"
+                title="Đăng xuất ca làm việc"
+              >
                 🚪 <span>Đăng xuất</span>
               </button>
             </div>
@@ -1592,7 +2135,8 @@
                   <span>Quản lý đơn hàng</span>
                 </h1>
                 <span class="page-subtitle" id="page-subheading">
-                  Hôm nay: <strong id="current-date-text">04/10/2026</strong> · Giờ mở cửa: 07:00 – 22:00
+                  Hôm nay: <strong id="current-date-text">04/10/2026</strong> · Giờ mở cửa: 07:00 –
+                  22:00
                 </span>
               </div>
 
@@ -1634,7 +2178,11 @@
 
                   <!-- Status Filter Chips -->
                   <div class="filter-chips-row">
-                    <button class="filter-chip active" id="filter-all" onclick="setFilterStatus('ALL')">
+                    <button
+                      class="filter-chip active"
+                      id="filter-all"
+                      onclick="setFilterStatus('ALL')"
+                    >
                       Tất cả <span class="chip-count" id="count-all">8</span>
                     </button>
                     <button
@@ -1644,13 +2192,25 @@
                     >
                       🟡 Mới <span class="chip-count" id="count-pending">2</span>
                     </button>
-                    <button class="filter-chip" id="filter-preparing" onclick="setFilterStatus('PREPARING')">
+                    <button
+                      class="filter-chip"
+                      id="filter-preparing"
+                      onclick="setFilterStatus('PREPARING')"
+                    >
                       Đang pha <span class="chip-count" id="count-preparing">2</span>
                     </button>
-                    <button class="filter-chip" id="filter-delivering" onclick="setFilterStatus('DELIVERING')">
+                    <button
+                      class="filter-chip"
+                      id="filter-delivering"
+                      onclick="setFilterStatus('DELIVERING')"
+                    >
                       Đang giao <span class="chip-count" id="count-delivering">1</span>
                     </button>
-                    <button class="filter-chip" id="filter-completed" onclick="setFilterStatus('COMPLETED')">
+                    <button
+                      class="filter-chip"
+                      id="filter-completed"
+                      onclick="setFilterStatus('COMPLETED')"
+                    >
                       Xong <span class="chip-count" id="count-completed">3</span>
                     </button>
                   </div>
@@ -1658,7 +2218,11 @@
                   <!-- Secondary Filter: Type -->
                   <div class="filter-sub-row">
                     <span>Hình thức:</span>
-                    <select class="type-select" id="filter-type-select" onchange="setFilterType(this.value)">
+                    <select
+                      class="type-select"
+                      id="filter-type-select"
+                      onchange="setFilterType(this.value)"
+                    >
                       <option value="ALL">Tất cả hình thức</option>
                       <option value="DELIVERY">🛵 Giao tận nơi</option>
                       <option value="PICKUP">🛍️ Lấy tại quán</option>
@@ -1705,7 +2269,9 @@
                     <h2 style="font-family: var(--font-display); font-size: 18px">
                       Quản lý thực đơn đồ uống & bánh
                     </h2>
-                    <p class="detail-meta-text">Bật/tắt hết hàng một chạm và tuỳ chỉnh giá, tuỳ chọn món</p>
+                    <p class="detail-meta-text">
+                      Bật/tắt hết hàng một chạm và tuỳ chỉnh giá, tuỳ chọn món
+                    </p>
                   </div>
                   <button class="btn-primary-sm" onclick="openProductModal('create')">
                     ➕ Thêm món mới
@@ -1736,30 +2302,64 @@
                 <div class="detail-header">
                   <div>
                     <h2 style="font-family: var(--font-display); font-size: 18px">
-                      Quản lý nhóm tuỳ chọn (Size, Đường, Đá, Topping)
+                      Thư viện nhóm tuỳ chọn dùng chung
                     </h2>
                     <p class="detail-meta-text">
-                      Thiết lập các nhóm tuỳ chọn linh hoạt (OptionGroup) và tuỳ chọn kèm phụ thu (Option)
+                      Mỗi nhóm (Size, Đường, Đá, Topping…) được tạo một lần và gắn vào nhiều món
                     </p>
                   </div>
-                  <button class="btn-primary-sm" onclick="openOptionGroupModal('create')">
-                    ➕ Thêm nhóm tuỳ chọn mới
+                  <button
+                    class="btn-primary-sm"
+                    id="btn-create-opt-group"
+                    onclick="openOptionGroupModal('create')"
+                  >
+                    ➕ Thêm nhóm
                   </button>
                 </div>
 
+                <div class="library-hint">
+                  <span style="font-size: 18px">🔗</span>
+                  <span>
+                    Sửa tên, quy tắc hoặc giá phụ thu của một nhóm sẽ áp dụng ngay cho
+                    <strong>mọi món đang gắn nhóm đó</strong>. Gỡ một món khỏi nhóm không xoá nhóm.
+                    Đơn cũ giữ nguyên giá đã đặt.
+                  </span>
+                </div>
+
                 <!-- Product Filter for Option Groups -->
-                <div style="display: flex; align-items: center; gap: 10px; margin-top: 14px; background: var(--color-surface); padding: 10px 14px; border-radius: var(--radius-sm)">
-                  <span style="font-size: 12.5px; font-weight: 600">Lọc theo món áp dụng:</span>
-                  <select class="type-select" id="opt-group-filter-prod" onchange="filterOptionGroupsByProduct(this.value)">
-                    <option value="ALL">Tất cả món áp dụng</option>
-                    <option value="prod-1">Cà phê muối</option>
-                    <option value="prod-2">Trà đào cam sả</option>
-                    <option value="prod-3">Bạc xỉu 3 tầng</option>
+                <div
+                  style="
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    margin-top: 14px;
+                    background: var(--color-surface);
+                    padding: 10px 14px;
+                    border-radius: var(--radius-sm);
+                  "
+                >
+                  <label for="opt-group-filter-prod" style="font-size: 12.5px; font-weight: 600"
+                    >Lọc theo món:</label
+                  >
+                  <select
+                    class="type-select"
+                    id="opt-group-filter-prod"
+                    onchange="filterOptionGroupsByProduct(this.value)"
+                  >
+                    <!-- Populated by JS from productsList -->
                   </select>
+                  <span
+                    id="opt-group-filter-count"
+                    style="font-size: 12px; color: var(--color-text-muted)"
+                  ></span>
                 </div>
 
                 <!-- Option Groups Cards List -->
-                <div class="opt-group-container" id="opt-group-list-container" style="margin-top: 16px">
+                <div
+                  class="opt-group-container"
+                  id="opt-group-list-container"
+                  style="margin-top: 16px"
+                >
                   <!-- Dynamically populated by JS -->
                 </div>
               </div>
@@ -1773,7 +2373,9 @@
                     <h2 style="font-family: var(--font-display); font-size: 18px">
                       Quản lý danh mục món
                     </h2>
-                    <p class="detail-meta-text">Thêm danh mục, đổi thứ tự hiển thị và quản lý ẩn/hiện</p>
+                    <p class="detail-meta-text">
+                      Thêm danh mục, đổi thứ tự hiển thị và quản lý ẩn/hiện
+                    </p>
                   </div>
                   <button class="btn-primary-sm" onclick="openCategoryModal('create')">
                     ➕ Thêm danh mục
@@ -1799,43 +2401,90 @@
 
             <!-- ================= SECTION 5: SETTINGS ================= -->
             <div class="section-view" id="section-settings">
-              <form onsubmit="handleSaveSettings(event)" style="display: flex; flex-direction: column; gap: 18px">
+              <form
+                onsubmit="handleSaveSettings(event)"
+                style="display: flex; flex-direction: column; gap: 18px"
+              >
                 <div class="settings-grid">
                   <!-- Thông tin quán -->
                   <div class="detail-card">
-                    <h3 style="font-size: 15px; font-weight: 700; margin-bottom: 12px; color: var(--color-primary)">
+                    <h3
+                      style="
+                        font-size: 15px;
+                        font-weight: 700;
+                        margin-bottom: 12px;
+                        color: var(--color-primary);
+                      "
+                    >
                       ☕ Thông tin quán
                     </h3>
                     <div style="display: flex; flex-direction: column; gap: 12px">
                       <div class="form-group">
                         <label class="form-label">Tên quán hiển thị</label>
-                        <input type="text" class="form-input" id="setting-shop-name" value="Tuấn Linh Coffee" required />
+                        <input
+                          type="text"
+                          class="form-input"
+                          id="setting-shop-name"
+                          value="Tuấn Linh Coffee"
+                          required
+                        />
                       </div>
                       <div class="form-group">
                         <label class="form-label">Địa chỉ quán</label>
-                        <input type="text" class="form-input" id="setting-shop-address" value="Số 120 Hoàng Hoa Thám, Ba Đình, Hà Nội" required />
+                        <input
+                          type="text"
+                          class="form-input"
+                          id="setting-shop-address"
+                          value="Số 120 Hoàng Hoa Thám, Ba Đình, Hà Nội"
+                          required
+                        />
                       </div>
                       <div class="form-group">
                         <label class="form-label">Số điện thoại hotline quầy</label>
-                        <input type="text" class="form-input" id="setting-shop-phone" value="0912 345 678" required />
+                        <input
+                          type="text"
+                          class="form-input"
+                          id="setting-shop-phone"
+                          value="0912 345 678"
+                          required
+                        />
                       </div>
                     </div>
                   </div>
 
                   <!-- Giờ mở cửa & Vận hành -->
                   <div class="detail-card">
-                    <h3 style="font-size: 15px; font-weight: 700; margin-bottom: 12px; color: var(--color-accent)">
+                    <h3
+                      style="
+                        font-size: 15px;
+                        font-weight: 700;
+                        margin-bottom: 12px;
+                        color: var(--color-accent);
+                      "
+                    >
                       ⏰ Giờ hoạt động & Đơn hàng
                     </h3>
                     <div style="display: flex; flex-direction: column; gap: 12px">
                       <div style="display: flex; gap: 10px">
                         <div class="form-group" style="flex: 1">
                           <label class="form-label">Giờ mở cửa</label>
-                          <input type="time" class="form-input" id="setting-open-time" value="07:00" required />
+                          <input
+                            type="time"
+                            class="form-input"
+                            id="setting-open-time"
+                            value="07:00"
+                            required
+                          />
                         </div>
                         <div class="form-group" style="flex: 1">
                           <label class="form-label">Giờ đóng cửa</label>
-                          <input type="time" class="form-input" id="setting-close-time" value="22:00" required />
+                          <input
+                            type="time"
+                            class="form-input"
+                            id="setting-close-time"
+                            value="22:00"
+                            required
+                          />
                         </div>
                       </div>
                       <div class="form-group">
@@ -1846,7 +2495,12 @@
                         </select>
                       </div>
                       <div style="display: flex; align-items: center; gap: 8px; margin-top: 4px">
-                        <input type="checkbox" id="setting-auto-lock" checked style="width: 16px; height: 16px" />
+                        <input
+                          type="checkbox"
+                          id="setting-auto-lock"
+                          checked
+                          style="width: 16px; height: 16px"
+                        />
                         <label for="setting-auto-lock" style="font-size: 12.5px; font-weight: 500">
                           Tự động khoá nút đặt hàng ngoài giờ mở cửa (07:00 – 22:00)
                         </label>
@@ -1856,21 +2510,49 @@
 
                   <!-- Phí vận chuyển & Bán kính -->
                   <div class="detail-card">
-                    <h3 style="font-size: 15px; font-weight: 700; margin-bottom: 12px; color: var(--color-support)">
+                    <h3
+                      style="
+                        font-size: 15px;
+                        font-weight: 700;
+                        margin-bottom: 12px;
+                        color: var(--color-support);
+                      "
+                    >
                       🛵 Phí ship & Bán kính giao
                     </h3>
                     <div style="display: flex; flex-direction: column; gap: 12px">
                       <div class="form-group">
                         <label class="form-label">Phí ship cố định (VND)</label>
-                        <input type="number" class="form-input" id="setting-shipping-fee" value="15000" step="1000" required />
+                        <input
+                          type="number"
+                          class="form-input"
+                          id="setting-shipping-fee"
+                          value="15000"
+                          step="1000"
+                          required
+                        />
                       </div>
                       <div class="form-group">
                         <label class="form-label">Ngưỡng miễn phí giao hàng (Free ship ≥)</label>
-                        <input type="number" class="form-input" id="setting-free-ship-threshold" value="150000" step="10000" required />
+                        <input
+                          type="number"
+                          class="form-input"
+                          id="setting-free-ship-threshold"
+                          value="150000"
+                          step="10000"
+                          required
+                        />
                       </div>
                       <div class="form-group">
                         <label class="form-label">Bán kính phục vụ hiển thị (km)</label>
-                        <input type="number" class="form-input" id="setting-delivery-radius" value="5" step="0.5" required />
+                        <input
+                          type="number"
+                          class="form-input"
+                          id="setting-delivery-radius"
+                          value="5"
+                          step="0.5"
+                          required
+                        />
                         <span style="font-size: 11px; color: var(--color-text-muted)">
                           Chỉ dùng để hiển thị ghi chú, không chặn khách đặt hàng ngoài vùng.
                         </span>
@@ -1880,7 +2562,14 @@
 
                   <!-- Tài khoản nhận chuyển khoản VietQR -->
                   <div class="detail-card">
-                    <h3 style="font-size: 15px; font-weight: 700; margin-bottom: 12px; color: var(--color-info)">
+                    <h3
+                      style="
+                        font-size: 15px;
+                        font-weight: 700;
+                        margin-bottom: 12px;
+                        color: var(--color-info);
+                      "
+                    >
                       💳 Tài khoản VietQR đối soát
                     </h3>
                     <div style="display: flex; flex-direction: column; gap: 12px">
@@ -1896,22 +2585,46 @@
                       </div>
                       <div class="form-group">
                         <label class="form-label">Số tài khoản nhận tiền</label>
-                        <input type="text" class="form-input" id="setting-bank-account-no" value="9988776655" required />
+                        <input
+                          type="text"
+                          class="form-input"
+                          id="setting-bank-account-no"
+                          value="9988776655"
+                          required
+                        />
                       </div>
                       <div class="form-group">
                         <label class="form-label">Tên chủ tài khoản (In hoa không dấu)</label>
-                        <input type="text" class="form-input" id="setting-bank-account-name" value="NGUYEN TUAN LINH" required />
+                        <input
+                          type="text"
+                          class="form-input"
+                          id="setting-bank-account-name"
+                          value="NGUYEN TUAN LINH"
+                          required
+                        />
                       </div>
                     </div>
                   </div>
                 </div>
 
                 <!-- Save Settings Bar -->
-                <div class="detail-card" style="display: flex; justify-content: space-between; align-items: center; background: #fffdf9">
+                <div
+                  class="detail-card"
+                  style="
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    background: #fffdf9;
+                  "
+                >
                   <span style="font-size: 12.5px; color: var(--color-text-muted)">
                     ⚠️ Mọi thay đổi về phí ship và giờ mở cửa sẽ áp dụng tức thì trên trang khách.
                   </span>
-                  <button type="submit" class="btn-state-action btn-primary-action" style="min-height: 42px; font-size: 14px">
+                  <button
+                    type="submit"
+                    class="btn-state-action btn-primary-action"
+                    style="min-height: 42px; font-size: 14px"
+                  >
                     💾 Lưu Cài Đặt Quán
                   </button>
                 </div>
@@ -1936,7 +2649,13 @@
 
             <div class="form-group">
               <label class="form-label">Tên món đồ uống / thức ăn</label>
-              <input type="text" class="form-input" id="prod-name" placeholder="VD: Cà phê kem béo" required />
+              <input
+                type="text"
+                class="form-input"
+                id="prod-name"
+                placeholder="VD: Cà phê kem béo"
+                required
+              />
             </div>
 
             <div style="display: flex; gap: 10px">
@@ -1952,24 +2671,60 @@
 
               <div class="form-group" style="flex: 1">
                 <label class="form-label">Giá niêm yết (VND)</label>
-                <input type="number" class="form-input" id="prod-price" placeholder="VD: 35000" step="1000" required />
+                <input
+                  type="number"
+                  class="form-input"
+                  id="prod-price"
+                  placeholder="VD: 35000"
+                  step="1000"
+                  required
+                />
               </div>
             </div>
 
             <div class="form-group">
               <label class="form-label">Mô tả món</label>
-              <textarea class="form-input" id="prod-desc" rows="2" placeholder="Mô tả hương vị, nguyên liệu đặc trưng..."></textarea>
+              <textarea
+                class="form-input"
+                id="prod-desc"
+                rows="2"
+                placeholder="Mô tả hương vị, nguyên liệu đặc trưng..."
+              ></textarea>
             </div>
 
-            <!-- Options Groups assigned to this Product -->
+            <!-- Shared option groups attached to this product (n:n) -->
             <div class="options-builder-box">
-              <div style="display: flex; justify-content: space-between; align-items: center">
-                <strong style="font-size: 12.5px; color: var(--color-text)">Nhóm tuỳ chọn áp dụng:</strong>
-                <button type="button" class="btn-xs" onclick="switchNavSection('options'); closeProductModal();">
-                  ⚙️ Quản lý chi tiết
+              <div
+                style="display: flex; justify-content: space-between; align-items: center; gap: 8px"
+              >
+                <strong style="font-size: 12.5px; color: var(--color-text)">
+                  Nhóm tuỳ chọn áp dụng
+                  <span
+                    id="prod-groups-selected-count"
+                    class="shared-count"
+                    style="margin-left: 6px"
+                    >0 nhóm</span
+                  >
+                </strong>
+                <button
+                  type="button"
+                  class="btn-xs"
+                  onclick="
+                    closeProductModal();
+                    switchNavSection('options');
+                  "
+                >
+                  ⚙️ Quản lý thư viện nhóm →
                 </button>
               </div>
-              <div id="product-options-preview-container" style="display: flex; flex-direction: column; gap: 6px">
+              <span style="font-size: 11.5px; color: var(--color-text-muted)">
+                Tick để gắn nhóm dùng chung vào món. Bỏ tick chỉ gỡ khỏi món này, không xoá nhóm.
+              </span>
+              <div
+                class="check-list"
+                id="product-groups-checklist"
+                onchange="updateProductGroupsCount()"
+              >
                 <!-- Populated dynamically -->
               </div>
             </div>
@@ -1985,10 +2740,20 @@
 
           <div class="modal-footer">
             <button type="button" class="btn-ghost" onclick="closeProductModal()">Huỷ</button>
-            <button type="button" class="btn-cancel-action" id="btn-archive-prod" style="display: none" onclick="archiveCurrentProduct()">
+            <button
+              type="button"
+              class="btn-cancel-action"
+              id="btn-archive-prod"
+              style="display: none"
+              onclick="archiveCurrentProduct()"
+            >
               📦 Lưu trữ món
             </button>
-            <button type="submit" class="btn-primary-sm" style="padding: 8px 18px; font-size: 13.5px">
+            <button
+              type="submit"
+              class="btn-primary-sm"
+              style="padding: 8px 18px; font-size: 13.5px"
+            >
               Lưu món ăn
             </button>
           </div>
@@ -1998,7 +2763,7 @@
 
     <!-- ================= MODAL 2: THÊM & SỬA NHÓM TUỲ CHỌN (OPTION GROUP MODAL) ================= -->
     <div class="modal-backdrop" id="option-group-modal">
-      <div class="modal-box" style="max-width: 520px">
+      <div class="modal-box" style="max-width: 600px">
         <div class="modal-header">
           <span class="modal-title" id="opt-group-modal-title">Thêm nhóm tuỳ chọn mới</span>
           <button class="modal-close" onclick="closeOptionGroupModal()">&times;</button>
@@ -2010,7 +2775,13 @@
 
             <div class="form-group">
               <label class="form-label">Tên nhóm tuỳ chọn (OptionGroup Name)</label>
-              <input type="text" class="form-input" id="opt-group-name" placeholder="VD: Chọn Size, Mức đường, Topping..." required />
+              <input
+                type="text"
+                class="form-input"
+                id="opt-group-name"
+                placeholder="VD: Chọn Size, Mức đường, Topping..."
+                required
+              />
             </div>
 
             <div style="display: flex; gap: 12px">
@@ -2026,7 +2797,11 @@
 
               <div class="form-group" style="flex: 1; justify-content: flex-end">
                 <div style="display: flex; align-items: center; gap: 8px; height: 38px">
-                  <input type="checkbox" id="opt-group-required" style="width: 16px; height: 16px" />
+                  <input
+                    type="checkbox"
+                    id="opt-group-required"
+                    style="width: 16px; height: 16px"
+                  />
                   <label for="opt-group-required" style="font-size: 12.5px; font-weight: 600">
                     Bắt buộc phải chọn (isRequired)
                   </label>
@@ -2034,24 +2809,54 @@
               </div>
             </div>
 
+            <div class="impact-note" id="opt-group-impact-note" hidden>
+              <span>⚠️</span>
+              <span id="opt-group-impact-text"></span>
+            </div>
+
             <div class="form-group">
-              <label class="form-label">Áp dụng cho món đồ uống</label>
-              <select class="form-input" id="opt-group-product-select">
-                <option value="ALL">Áp dụng chung cho tất cả đồ uống</option>
-                <option value="prod-1">Cà phê muối</option>
-                <option value="prod-2">Trà đào cam sả</option>
-                <option value="prod-3">Bạc xỉu 3 tầng</option>
-              </select>
+              <div
+                style="display: flex; justify-content: space-between; align-items: center; gap: 8px"
+              >
+                <label class="form-label" style="margin: 0">
+                  Áp dụng cho các món
+                  <span id="opt-group-products-count" class="shared-count" style="margin-left: 6px"
+                    >0 món</span
+                  >
+                </label>
+                <div style="display: flex; gap: 6px">
+                  <button type="button" class="btn-xs" onclick="setAllGroupProducts(true)">
+                    Chọn tất cả
+                  </button>
+                  <button type="button" class="btn-xs" onclick="setAllGroupProducts(false)">
+                    Bỏ chọn
+                  </button>
+                </div>
+              </div>
+              <div
+                class="check-list"
+                id="opt-group-products-checklist"
+                onchange="updateGroupProductsCount()"
+              >
+                <!-- Populated dynamically, grouped by category -->
+              </div>
             </div>
 
             <!-- Dynamic Options List inside the Group -->
             <div style="display: flex; flex-direction: column; gap: 8px">
               <div style="display: flex; justify-content: space-between; align-items: center">
-                <strong style="font-size: 12.5px; color: var(--color-text)">Danh sách tuỳ chọn (Options):</strong>
-                <button type="button" class="btn-xs" onclick="addOptionRowInput()">+ Thêm tuỳ chọn</button>
+                <strong style="font-size: 12.5px; color: var(--color-text)"
+                  >Danh sách tuỳ chọn (Options):</strong
+                >
+                <button type="button" class="btn-xs" onclick="addOptionRowInput()">
+                  + Thêm tuỳ chọn
+                </button>
               </div>
 
-              <div id="modal-option-rows-container" style="display: flex; flex-direction: column; gap: 8px">
+              <div
+                id="modal-option-rows-container"
+                style="display: flex; flex-direction: column; gap: 8px"
+              >
                 <!-- Option rows added dynamically -->
               </div>
             </div>
@@ -2059,14 +2864,56 @@
 
           <div class="modal-footer">
             <button type="button" class="btn-ghost" onclick="closeOptionGroupModal()">Huỷ</button>
-            <button type="button" class="btn-cancel-action" id="btn-delete-opt-group" style="display: none" onclick="deleteCurrentOptionGroup()">
+            <button
+              type="button"
+              class="btn-cancel-action"
+              id="btn-delete-opt-group"
+              style="display: none"
+              onclick="deleteCurrentOptionGroup()"
+            >
               🗑️ Xoá nhóm
             </button>
-            <button type="submit" class="btn-primary-sm" style="padding: 8px 18px; font-size: 13.5px">
+            <button
+              type="submit"
+              class="btn-primary-sm"
+              style="padding: 8px 18px; font-size: 13.5px"
+            >
               Lưu nhóm tuỳ chọn
             </button>
           </div>
         </form>
+      </div>
+    </div>
+
+    <!-- ================= MODAL 2b: XÁC NHẬN XOÁ NHÓM DÙNG CHUNG ================= -->
+    <div class="modal-backdrop" id="delete-group-modal">
+      <div class="modal-box" style="max-width: 440px">
+        <div class="modal-header">
+          <span class="modal-title">Xoá nhóm tuỳ chọn?</span>
+          <button class="modal-close" onclick="closeDeleteGroupModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p style="font-size: 13.5px" id="delete-group-message"></p>
+          <div class="link-row" id="delete-group-products"></div>
+          <div class="impact-note" style="margin-top: 12px">
+            <span>ℹ️</span>
+            <span
+              >Toàn bộ tuỳ chọn trong nhóm sẽ bị xoá và nhóm được gỡ khỏi các món trên. Đơn hàng cũ
+              không bị ảnh hưởng.</span
+            >
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-ghost" onclick="closeDeleteGroupModal()">Giữ lại</button>
+          <button
+            type="button"
+            class="btn-cancel-action"
+            id="btn-confirm-delete-group"
+            onclick="confirmDeleteOptionGroup()"
+          >
+            🗑️ Xoá nhóm
+          </button>
+        </div>
       </div>
     </div>
 
@@ -2084,7 +2931,13 @@
 
             <div class="form-group">
               <label class="form-label">Tên danh mục</label>
-              <input type="text" class="form-input" id="cat-name" placeholder="VD: Cà phê pha máy, Đá xay..." required />
+              <input
+                type="text"
+                class="form-input"
+                id="cat-name"
+                placeholder="VD: Cà phê pha máy, Đá xay..."
+                required
+              />
             </div>
 
             <div class="form-group">
@@ -2102,10 +2955,20 @@
 
           <div class="modal-footer">
             <button type="button" class="btn-ghost" onclick="closeCategoryModal()">Huỷ</button>
-            <button type="button" class="btn-cancel-action" id="btn-delete-cat" style="display: none" onclick="deleteCurrentCategory()">
+            <button
+              type="button"
+              class="btn-cancel-action"
+              id="btn-delete-cat"
+              style="display: none"
+              onclick="deleteCurrentCategory()"
+            >
               🗑️ Xoá
             </button>
-            <button type="submit" class="btn-primary-sm" style="padding: 8px 18px; font-size: 13.5px">
+            <button
+              type="submit"
+              class="btn-primary-sm"
+              style="padding: 8px 18px; font-size: 13.5px"
+            >
               Lưu danh mục
             </button>
           </div>
@@ -2117,25 +2980,45 @@
     <div class="modal-backdrop" id="cancel-order-modal">
       <div class="modal-box" style="max-width: 460px">
         <div class="modal-header" style="background: #fdf2f2; border-bottom: 1px solid #fee2e2">
-          <span class="modal-title" style="color: var(--color-danger)">⚠️ Xác nhận huỷ đơn hàng</span>
+          <span class="modal-title" style="color: var(--color-danger)"
+            >⚠️ Xác nhận huỷ đơn hàng</span
+          >
           <button class="modal-close" onclick="closeCancelModal()">&times;</button>
         </div>
         <div class="modal-body">
           <p>
-            Vui lòng chọn hoặc nhập <strong>lý do huỷ đơn</strong> để lưu vào lịch sử đối soát của hệ thống:
+            Vui lòng chọn hoặc nhập <strong>lý do huỷ đơn</strong> để lưu vào lịch sử đối soát của
+            hệ thống:
           </p>
 
           <div style="display: flex; flex-wrap: wrap; gap: 8px">
-            <button type="button" class="btn-xs" style="background:#fee2e2; border-color:#fca5a5; font-weight:600" onclick="setCancelReasonText('Hết nguyên liệu pha chế')">
+            <button
+              type="button"
+              class="btn-xs"
+              style="background: #fee2e2; border-color: #fca5a5; font-weight: 600"
+              onclick="setCancelReasonText('Hết nguyên liệu pha chế')"
+            >
               Hết nguyên liệu
             </button>
-            <button type="button" class="btn-xs" onclick="setCancelReasonText('Khách gọi yêu cầu huỷ đơn')">
+            <button
+              type="button"
+              class="btn-xs"
+              onclick="setCancelReasonText('Khách gọi yêu cầu huỷ đơn')"
+            >
               Khách xin huỷ
             </button>
-            <button type="button" class="btn-xs" onclick="setCancelReasonText('Không liên lạc được số điện thoại khách')">
+            <button
+              type="button"
+              class="btn-xs"
+              onclick="setCancelReasonText('Không liên lạc được số điện thoại khách')"
+            >
               Không nghe máy
             </button>
-            <button type="button" class="btn-xs" onclick="setCancelReasonText('Quán quá tải giờ cao điểm')">
+            <button
+              type="button"
+              class="btn-xs"
+              onclick="setCancelReasonText('Quán quá tải giờ cao điểm')"
+            >
               Quán quá tải
             </button>
           </div>
@@ -2145,13 +3028,20 @@
             id="cancel-reason-input"
             rows="3"
             placeholder="Ghi chú chi tiết lý do huỷ..."
-          >Hết nguyên liệu pha chế</textarea>
+          >
+Hết nguyên liệu pha chế</textarea>
         </div>
         <div class="modal-footer">
           <button class="btn-ghost" onclick="closeCancelModal()">Quay lại</button>
           <button
             class="btn-state-action"
-            style="background: var(--color-danger); color: white; min-height: 38px; padding: 6px 16px; font-size: 13.5px"
+            style="
+              background: var(--color-danger);
+              color: white;
+              min-height: 38px;
+              padding: 6px 16px;
+              font-size: 13.5px;
+            "
             onclick="confirmCancelCurrentOrder()"
           >
             Huỷ đơn ngay
@@ -2169,14 +3059,21 @@
         </div>
         <div class="modal-body">
           <p style="font-size: 13.5px">
-            Bạn có chắc chắn muốn kết thúc ca làm việc và đăng xuất khỏi tài khoản <strong>Thu Ngân Quầy 1</strong>?
+            Bạn có chắc chắn muốn kết thúc ca làm việc và đăng xuất khỏi tài khoản
+            <strong>Thu Ngân Quầy 1</strong>?
           </p>
         </div>
         <div class="modal-footer">
           <button class="btn-ghost" onclick="closeLogoutModal()">Ở lại ca</button>
           <button
             class="btn-state-action"
-            style="background: var(--color-danger); color: white; min-height: 38px; padding: 6px 16px; font-size: 13.5px"
+            style="
+              background: var(--color-danger);
+              color: white;
+              min-height: 38px;
+              padding: 6px 16px;
+              font-size: 13.5px;
+            "
             onclick="confirmLogout()"
           >
             Đăng xuất
@@ -2234,7 +3131,11 @@
           shippingFee: 15000,
           total: 136000,
           history: [
-            { time: "10:28:15", text: "Khách hàng đặt đơn thành công từ Website", author: "Hệ thống" },
+            {
+              time: "10:28:15",
+              text: "Khách hàng đặt đơn thành công từ Website",
+              author: "Hệ thống",
+            },
           ],
         },
         {
@@ -2311,8 +3212,16 @@
           history: [
             { time: "10:15:30", text: "Khách đặt đơn lấy tại quán", author: "Hệ thống" },
             { time: "10:16:10", text: "Đã tiếp nhận đơn hàng", author: "Thu Ngân Quầy 1" },
-            { time: "10:17:40", text: "Đối soát thành công VietQR (44.000đ)", author: "Thu Ngân Quầy 1" },
-            { time: "10:18:00", text: "Chuyển trạng thái: Đang pha chế", author: "Thu Ngân Quầy 1" },
+            {
+              time: "10:17:40",
+              text: "Đối soát thành công VietQR (44.000đ)",
+              author: "Thu Ngân Quầy 1",
+            },
+            {
+              time: "10:18:00",
+              text: "Chuyển trạng thái: Đang pha chế",
+              author: "Thu Ngân Quầy 1",
+            },
           ],
         },
         {
@@ -2335,7 +3244,8 @@
               name: "Trà sữa Ô Long nướng",
               qty: 3,
               price: 38000,
-              optionsText: "Size L (+6.000đ), Đường: 50%, Đá: 50%, Topping: Trân châu hoàng kim (+8.000đ)",
+              optionsText:
+                "Size L (+6.000đ), Đường: 50%, Đá: 50%, Topping: Trân châu hoàng kim (+8.000đ)",
               lineTotal: 156000,
               note: "Để riêng trân châu vào ly nhỏ nếu được ạ",
             },
@@ -2344,11 +3254,19 @@
           shippingFee: 0,
           total: 156000,
           history: [
-            { time: "10:02:10", text: "Khách đặt đơn giao hàng (Miễn phí ship ≥ 150k)", author: "Hệ thống" },
+            {
+              time: "10:02:10",
+              text: "Khách đặt đơn giao hàng (Miễn phí ship ≥ 150k)",
+              author: "Hệ thống",
+            },
             { time: "10:03:00", text: "Đã tiếp nhận đơn", author: "Thu Ngân Quầy 1" },
             { time: "10:04:15", text: "Đối soát VietQR thành công", author: "Thu Ngân Quầy 1" },
             { time: "10:06:00", text: "Bắt đầu pha chế", author: "Thu Ngân Quầy 1" },
-            { time: "10:20:00", text: "Bắt đầu giao hàng (Shipper: Chú Hùng)", author: "Thu Ngân Quầy 1" },
+            {
+              time: "10:20:00",
+              text: "Bắt đầu giao hàng (Shipper: Chú Hùng)",
+              author: "Thu Ngân Quầy 1",
+            },
           ],
         },
         {
@@ -2385,7 +3303,11 @@
             { time: "09:31:00", text: "Tiếp nhận đơn", author: "Thu Ngân Quầy 1" },
             { time: "09:33:00", text: "Bắt đầu pha chế", author: "Thu Ngân Quầy 1" },
             { time: "09:48:00", text: "Món đã sẵn sàng tại quầy", author: "Thu Ngân Quầy 1" },
-            { time: "09:52:10", text: "Khách đã lấy món và trả tiền mặt", author: "Thu Ngân Quầy 1" },
+            {
+              time: "09:52:10",
+              text: "Khách đã lấy món và trả tiền mặt",
+              author: "Thu Ngân Quầy 1",
+            },
           ],
         },
         {
@@ -2404,7 +3326,15 @@
           paidBy: "Thu Ngân Quầy 1",
           status: "COMPLETED",
           items: [
-            { id: "item-8", name: "Trà đào cam sả", qty: 2, price: 35000, optionsText: "Size L (+6k)", lineTotal: 82000, note: null },
+            {
+              id: "item-8",
+              name: "Trà đào cam sả",
+              qty: 2,
+              price: 35000,
+              optionsText: "Size L (+6k)",
+              lineTotal: 82000,
+              note: null,
+            },
           ],
           subtotal: 82000,
           shippingFee: 15000,
@@ -2427,7 +3357,15 @@
           paidBy: "Thu Ngân Quầy 1",
           status: "COMPLETED",
           items: [
-            { id: "item-9", name: "Cà phê muối", qty: 1, price: 29000, optionsText: "Size M", lineTotal: 29000, note: null },
+            {
+              id: "item-9",
+              name: "Cà phê muối",
+              qty: 1,
+              price: 29000,
+              optionsText: "Size M",
+              lineTotal: 29000,
+              note: null,
+            },
           ],
           subtotal: 29000,
           shippingFee: 0,
@@ -2450,7 +3388,15 @@
           paidBy: "Thu Ngân Quầy 1",
           status: "PREPARING",
           items: [
-            { id: "item-10", name: "Bạc xỉu 3 tầng", qty: 2, price: 29000, optionsText: "Size L (+6k)", lineTotal: 70000, note: null },
+            {
+              id: "item-10",
+              name: "Bạc xỉu 3 tầng",
+              qty: 2,
+              price: 29000,
+              optionsText: "Size L (+6k)",
+              lineTotal: 70000,
+              note: null,
+            },
           ],
           subtotal: 70000,
           shippingFee: 15000,
@@ -2501,63 +3447,91 @@
           isAvailable: false,
           optionGroupIds: [],
         },
+        {
+          id: "prod-5",
+          name: "Cà phê sữa đá",
+          categoryId: "cat-1",
+          categoryName: "Cà phê Việt",
+          price: 29000,
+          desc: "Phin truyền thống với sữa đặc",
+          isAvailable: true,
+          optionGroupIds: ["grp-1", "grp-2", "grp-3"],
+        },
+        {
+          id: "prod-6",
+          name: "Trà vải hoa hồng",
+          categoryId: "cat-2",
+          categoryName: "Trà tươi & Trái cây",
+          price: 39000,
+          desc: "Vải thiều mọng nước, hương hồng nhẹ",
+          isAvailable: true,
+          optionGroupIds: ["grp-1", "grp-2", "grp-3", "grp-4"],
+        },
       ];
 
-      // 3. DATA STATE: OPTION GROUPS & OPTIONS (Mirrors Prisma OptionGroup & Option)
+      // 3. DATA STATE: OPTION GROUPS & OPTIONS — mirrors Prisma (AD10):
+      //    OptionGroup(id, name, isRequired, maxSelect, sortOrder) ↔ Product (n:n)
+      //    Option(id, groupId, name, priceDelta, sortOrder)
+      //    The n:n link (table _OptionGroupToProduct) is stored ONLY in product.optionGroupIds,
+      //    so both screens always read/write the same source of truth.
       let optionGroupsList = [
         {
           id: "grp-1",
-          name: "Chọn Size (Kích cỡ ly)",
-          productIds: ["prod-1", "prod-3"],
-          productNames: "Cà phê muối, Bạc xỉu 3 tầng",
+          name: "Size",
           isRequired: true,
           maxSelect: 1,
+          sortOrder: 1,
           options: [
-            { id: "opt-1-1", name: "Size M (Tiêu chuẩn)", priceDelta: 0, isAvailable: true, sortOrder: 1 },
-            { id: "opt-1-2", name: "Size L (Ly lớn)", priceDelta: 6000, isAvailable: true, sortOrder: 2 },
+            { id: "opt-1-1", name: "Size M", priceDelta: 0, sortOrder: 1 },
+            { id: "opt-1-2", name: "Size L", priceDelta: 6000, sortOrder: 2 },
           ],
         },
         {
           id: "grp-2",
-          name: "Mức ngọt (Lượng đường)",
-          productIds: ["prod-1", "prod-2", "prod-3"],
-          productNames: "Cà phê muối, Trà đào cam sả, Bạc xỉu",
-          isRequired: false,
+          name: "Đường",
+          isRequired: true,
           maxSelect: 1,
+          sortOrder: 2,
           options: [
-            { id: "opt-2-1", name: "100% đường (Bình thường)", priceDelta: 0, isAvailable: true, sortOrder: 1 },
-            { id: "opt-2-2", name: "70% đường (Ít ngọt)", priceDelta: 0, isAvailable: true, sortOrder: 2 },
-            { id: "opt-2-3", name: "50% đường (Vừa phải)", priceDelta: 0, isAvailable: true, sortOrder: 3 },
-            { id: "opt-2-4", name: "0% đường (Không đường)", priceDelta: 0, isAvailable: true, sortOrder: 4 },
+            { id: "opt-2-1", name: "0%", priceDelta: 0, sortOrder: 1 },
+            { id: "opt-2-2", name: "30%", priceDelta: 0, sortOrder: 2 },
+            { id: "opt-2-3", name: "50%", priceDelta: 0, sortOrder: 3 },
+            { id: "opt-2-4", name: "70%", priceDelta: 0, sortOrder: 4 },
+            { id: "opt-2-5", name: "100%", priceDelta: 0, sortOrder: 5 },
           ],
         },
         {
           id: "grp-3",
-          name: "Lượng đá",
-          productIds: ["prod-1", "prod-2", "prod-3"],
-          productNames: "Cà phê muối, Trà đào cam sả, Bạc xỉu",
-          isRequired: false,
+          name: "Đá",
+          isRequired: true,
           maxSelect: 1,
+          sortOrder: 3,
           options: [
-            { id: "opt-3-1", name: "100% đá (Tiêu chuẩn)", priceDelta: 0, isAvailable: true, sortOrder: 1 },
-            { id: "opt-3-2", name: "50% đá (Ít đá)", priceDelta: 0, isAvailable: true, sortOrder: 2 },
-            { id: "opt-3-3", name: "Không đá", priceDelta: 0, isAvailable: true, sortOrder: 3 },
-            { id: "opt-3-4", name: "Đá riêng", priceDelta: 0, isAvailable: true, sortOrder: 4 },
+            { id: "opt-3-1", name: "Ít đá", priceDelta: 0, sortOrder: 1 },
+            { id: "opt-3-2", name: "Đá vừa", priceDelta: 0, sortOrder: 2 },
+            { id: "opt-3-3", name: "Nhiều đá", priceDelta: 0, sortOrder: 3 },
+            { id: "opt-3-4", name: "Để riêng", priceDelta: 0, sortOrder: 4 },
           ],
         },
         {
           id: "grp-4",
-          name: "Topping thêm",
-          productIds: ["prod-1", "prod-2"],
-          productNames: "Cà phê muối, Trà đào cam sả",
+          name: "Topping",
           isRequired: false,
           maxSelect: 3,
+          sortOrder: 4,
           options: [
-            { id: "opt-4-1", name: "Trân châu trắng giòn", priceDelta: 8000, isAvailable: true, sortOrder: 1 },
-            { id: "opt-4-2", name: "Thạch cà phê sương sáo", priceDelta: 8000, isAvailable: true, sortOrder: 2 },
-            { id: "opt-4-3", name: "Kem cheese béo mặn", priceDelta: 10000, isAvailable: true, sortOrder: 3 },
-            { id: "opt-4-4", name: "Đào miếng thêm", priceDelta: 10000, isAvailable: false, sortOrder: 4 },
+            { id: "opt-4-1", name: "Trân châu", priceDelta: 8000, sortOrder: 1 },
+            { id: "opt-4-2", name: "Thạch", priceDelta: 8000, sortOrder: 2 },
+            { id: "opt-4-3", name: "Kem cheese", priceDelta: 8000, sortOrder: 3 },
           ],
+        },
+        {
+          id: "grp-5",
+          name: "Thêm shot espresso",
+          isRequired: false,
+          maxSelect: 2,
+          sortOrder: 5,
+          options: [{ id: "opt-5-1", name: "1 shot", priceDelta: 10000, sortOrder: 1 }],
         },
       ];
 
@@ -2790,7 +3764,9 @@
       function setFilterStatus(status) {
         currentFilterStatus = status;
         currentPage = 1;
-        document.querySelectorAll(".filter-chip").forEach((chip) => chip.classList.remove("active"));
+        document
+          .querySelectorAll(".filter-chip")
+          .forEach((chip) => chip.classList.remove("active"));
         const chipMap = {
           ALL: "filter-all",
           PENDING: "filter-pending",
@@ -2876,9 +3852,10 @@
         const paginatedOrders = filtered.slice(startIndex, endIndex);
 
         const infoText = document.getElementById("pagination-info-text");
-        infoText.textContent = totalItems === 0
-          ? "Không có đơn nào"
-          : `Hiển thị ${startIndex + 1} - ${endIndex} trong ${totalItems} đơn`;
+        infoText.textContent =
+          totalItems === 0
+            ? "Không có đơn nào"
+            : `Hiển thị ${startIndex + 1} - ${endIndex} trong ${totalItems} đơn`;
 
         document.getElementById("btn-page-prev").disabled = currentPage <= 1;
         document.getElementById("btn-page-next").disabled = currentPage >= totalPages;
@@ -2890,7 +3867,7 @@
             <button class="page-btn ${p === currentPage ? "active" : ""}" onclick="goToPage(${p})">
               ${p}
             </button>
-          `
+          `,
           )
           .join("");
 
@@ -3080,7 +4057,7 @@
                     <td class="text-right" style="color: var(--color-text-muted);">${formatMoney(item.price)}</td>
                     <td class="text-right"><strong>${formatMoney(item.lineTotal)}</strong></td>
                   </tr>
-                `
+                `,
                   )
                   .join("")}
               </tbody>
@@ -3154,7 +4131,7 @@
                   <strong>${h.text}</strong>
                   <span class="history-meta">${h.time} · Thực hiện bởi: ${h.author}</span>
                 </div>
-              `
+              `,
                 )
                 .join("")}
             </div>
@@ -3352,27 +4329,61 @@
       }
 
       // ================= 3. PRODUCT CRUD HANDLERS =================
+      // n:n helpers — product.optionGroupIds is the single source of truth (= _OptionGroupToProduct).
+      function getGroupById(grpId) {
+        return optionGroupsList.find((g) => g.id === grpId);
+      }
+
+      function getProductsUsingGroup(grpId) {
+        return productsList.filter((p) => p.optionGroupIds.includes(grpId));
+      }
+
+      function sortedGroups() {
+        return [...optionGroupsList].sort((a, b) => a.sortOrder - b.sortOrder);
+      }
+
+      function escapeHtml(text) {
+        return String(text).replace(
+          /[&<>"']/g,
+          (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c],
+        );
+      }
+
+      function groupRuleText(grp) {
+        const pick = grp.maxSelect === 1 ? "Đơn chọn" : `Đa chọn ≤ ${grp.maxSelect}`;
+        return `${grp.isRequired ? "Bắt buộc" : "Không bắt buộc"} · ${pick}`;
+      }
+
+      function groupOptionsSummary(grp) {
+        return grp.options
+          .map((o) => (o.priceDelta > 0 ? `${o.name} (+${formatMoney(o.priceDelta)})` : o.name))
+          .join(", ");
+      }
+
       function renderProductsTable() {
         const tbody = document.getElementById("menu-table-body");
         tbody.innerHTML = productsList
           .map((p) => {
-            const groupsCount = p.optionGroupIds ? p.optionGroupIds.length : 0;
+            const groups = sortedGroups().filter((g) => p.optionGroupIds.includes(g.id));
+            const groupsHtml = groups.length
+              ? groups
+                  .map((g) => `<span class="option-pill-tag">${escapeHtml(g.name)}</span>`)
+                  .join(" ")
+              : `<span style="font-size: 12px; color: var(--color-text-muted)">Không có</span>`;
             return `
             <tr>
               <td>
-                <strong style="font-size: 14px">${p.name}</strong>
-                <div class="item-options">${p.desc}</div>
+                <strong style="font-size: 14px">${escapeHtml(p.name)}</strong>
+                <div class="item-options">${escapeHtml(p.desc)}</div>
               </td>
-              <td><span class="type-pill type-delivery">${p.categoryName}</span></td>
+              <td><span class="type-pill type-delivery">${escapeHtml(p.categoryName)}</span></td>
               <td><strong>${formatMoney(p.price)}</strong></td>
               <td>
-                <span class="option-pill-tag" style="cursor: pointer" onclick="switchNavSection('options')">
-                  🎛️ ${groupsCount} nhóm tuỳ chọn
-                </span>
+                <div style="display: flex; flex-wrap: wrap; gap: 4px; max-width: 240px">${groupsHtml}</div>
               </td>
               <td>
                 <label class="switch">
-                  <input type="checkbox" ${p.isAvailable ? "checked" : ""} onchange="toggleProductStockById('${p.id}', this.checked)" />
+                  <input type="checkbox" ${p.isAvailable ? "checked" : ""} onchange="toggleProductStockById('${p.id}', this.checked)" aria-label="Còn hàng: ${escapeHtml(p.name)}" />
                   <span class="slider"></span>
                 </label>
                 <span style="font-size: 12px; margin-left: 8px; font-weight: 600; color: ${p.isAvailable ? "var(--color-support)" : "var(--color-danger)"}">
@@ -3380,7 +4391,7 @@
                 </span>
               </td>
               <td class="text-right">
-                <button class="btn-ghost" onclick="openProductModal('edit', '${p.id}')">✏️ Sửa</button>
+                <button class="btn-ghost" id="btn-edit-${p.id}" onclick="openProductModal('edit', '${p.id}')">✏️ Sửa</button>
               </td>
             </tr>
           `;
@@ -3393,15 +4404,50 @@
         if (prod) {
           prod.isAvailable = isAvailable;
           renderProductsTable();
-          showToast(`Món "${prod.name}" đã đổi sang: ${isAvailable ? "CÒN HÀNG" : "HẾT HÀNG"}`, isAvailable ? "success" : "danger");
+          showToast(
+            `Món "${prod.name}" đã đổi sang: ${isAvailable ? "CÒN HÀNG" : "HẾT HÀNG"}`,
+            isAvailable ? "success" : "danger",
+          );
         }
+      }
+
+      function renderProductGroupsChecklist(prod) {
+        const container = document.getElementById("product-groups-checklist");
+        const selected = prod ? prod.optionGroupIds : [];
+        container.innerHTML = sortedGroups()
+          .map((g) => {
+            const others = getProductsUsingGroup(g.id).filter(
+              (p) => !prod || p.id !== prod.id,
+            ).length;
+            return `
+              <label class="check-row">
+                <input type="checkbox" name="prod-group" value="${g.id}" ${selected.includes(g.id) ? "checked" : ""} />
+                <span class="check-row-main">
+                  <span class="check-row-title">
+                    ${escapeHtml(g.name)}
+                    <span class="status-badge ${g.isRequired ? "badge-pending" : "badge-completed"}">${groupRuleText(g)}</span>
+                  </span>
+                  <span class="check-row-sub">${escapeHtml(groupOptionsSummary(g))}</span>
+                  <span class="check-row-sub">🔗 ${others > 0 ? `Đang dùng ở ${others} món khác` : "Chưa món khác nào dùng"}</span>
+                </span>
+              </label>
+            `;
+          })
+          .join("");
+        updateProductGroupsCount();
+      }
+
+      function updateProductGroupsCount() {
+        const n = document.querySelectorAll(
+          '#product-groups-checklist input[name="prod-group"]:checked',
+        ).length;
+        document.getElementById("prod-groups-selected-count").textContent = `${n} nhóm`;
       }
 
       function openProductModal(mode, prodId = null) {
         const modal = document.getElementById("product-modal");
         const title = document.getElementById("product-modal-title");
         const archiveBtn = document.getElementById("btn-archive-prod");
-        const optionsPreview = document.getElementById("product-options-preview-container");
 
         if (mode === "create") {
           title.textContent = "Thêm món mới vào thực đơn";
@@ -3411,11 +4457,7 @@
           document.getElementById("prod-desc").value = "";
           document.getElementById("prod-available").checked = true;
           archiveBtn.style.display = "none";
-          optionsPreview.innerHTML = `
-            <span style="font-size: 11.5px; color: var(--color-text-muted)">
-              Nhóm tuỳ chọn (Size, Đường, Đá, Topping) có thể gán sau khi tạo món.
-            </span>
-          `;
+          renderProductGroupsChecklist(null);
         } else {
           const prod = productsList.find((p) => p.id === prodId);
           if (!prod) return;
@@ -3427,29 +4469,7 @@
           document.getElementById("prod-desc").value = prod.desc;
           document.getElementById("prod-available").checked = prod.isAvailable;
           archiveBtn.style.display = "inline-flex";
-
-          const assignedGroups = optionGroupsList.filter((g) =>
-            prod.optionGroupIds && prod.optionGroupIds.includes(g.id)
-          );
-
-          if (assignedGroups.length > 0) {
-            optionsPreview.innerHTML = assignedGroups
-              .map(
-                (g) => `
-                <div style="font-size: 12px; display: flex; justify-content: space-between; background: #fff; padding: 6px 10px; border-radius: 4px; border: 1px solid var(--color-border-light)">
-                  <strong>${g.name}</strong>
-                  <span style="color: var(--color-text-muted)">${g.options.map((o) => o.name).join(", ")}</span>
-                </div>
-              `
-              )
-              .join("");
-          } else {
-            optionsPreview.innerHTML = `
-              <span style="font-size: 11.5px; color: var(--color-text-muted)">
-                Món này hiện chưa có nhóm tuỳ chọn (phù hợp với món ăn kèm như Bánh).
-              </span>
-            `;
-          }
+          renderProductGroupsChecklist(prod);
         }
 
         modal.classList.add("open");
@@ -3468,20 +4488,34 @@
         const price = parseInt(document.getElementById("prod-price").value, 10);
         const desc = document.getElementById("prod-desc").value.trim();
         const isAvailable = document.getElementById("prod-available").checked;
+        const optionGroupIds = Array.from(
+          document.querySelectorAll('#product-groups-checklist input[name="prod-group"]:checked'),
+        ).map((el) => el.value);
+
+        if (!Number.isInteger(price) || price < 0) {
+          showToast("Giá niêm yết phải là số nguyên ≥ 0.", "danger");
+          return;
+        }
 
         if (editId) {
           const p = productsList.find((x) => x.id === editId);
           if (p) {
-            p.name = name;
-            p.categoryId = catId;
-            p.categoryName = catName;
-            p.price = price;
-            p.desc = desc;
-            p.isAvailable = isAvailable;
-            showToast(`Đã cập nhật món "${name}" thành công!`, "success");
+            Object.assign(p, {
+              name,
+              categoryId: catId,
+              categoryName: catName,
+              price,
+              desc,
+              isAvailable,
+              optionGroupIds,
+            });
+            showToast(
+              `Đã cập nhật món "${name}" (${optionGroupIds.length} nhóm tuỳ chọn).`,
+              "success",
+            );
           }
         } else {
-          const newProd = {
+          productsList.unshift({
             id: `prod-${Date.now()}`,
             name,
             categoryId: catId,
@@ -3489,14 +4523,14 @@
             price,
             desc,
             isAvailable,
-            optionGroupIds: ["grp-1", "grp-2", "grp-3"],
-          };
-          productsList.unshift(newProd);
+            optionGroupIds,
+          });
           showToast(`Đã thêm món mới "${name}" vào thực đơn!`, "success");
         }
 
         closeProductModal();
         renderProductsTable();
+        renderOptionGroupsView();
       }
 
       function archiveCurrentProduct() {
@@ -3504,48 +4538,84 @@
         const p = productsList.find((x) => x.id === editId);
         if (p) {
           productsList = productsList.filter((x) => x.id !== editId);
-          showToast(`Đã lưu trữ món "${p.name}". Món sẽ không còn hiển thị trên thực đơn khách.`, "danger");
+          showToast(
+            `Đã lưu trữ món "${p.name}". Món sẽ không còn hiển thị trên thực đơn khách.`,
+            "danger",
+          );
           closeProductModal();
           renderProductsTable();
+          renderOptionGroupsView();
         }
       }
 
-      // ================= 4. QUẢN LÝ NHÓM TUỲ CHỌN (OPTION GROUPS & OPTIONS) =================
+      // ================= 4. THƯ VIỆN NHÓM TUỲ CHỌN DÙNG CHUNG (OptionGroup ↔ Product n:n) =================
       let currentOptionFilterProduct = "ALL";
+      let pendingDeleteGroupId = null;
 
       function filterOptionGroupsByProduct(prodId) {
         currentOptionFilterProduct = prodId;
         renderOptionGroupsView();
       }
 
-      function renderOptionGroupsView() {
-        const container = document.getElementById("opt-group-list-container");
-        const filteredGroups = optionGroupsList.filter((grp) => {
-          if (currentOptionFilterProduct === "ALL") return true;
-          return grp.productIds && grp.productIds.includes(currentOptionFilterProduct);
-        });
+      function renderOptionGroupFilter() {
+        const select = document.getElementById("opt-group-filter-prod");
+        if (
+          currentOptionFilterProduct !== "ALL" &&
+          !productsList.some((p) => p.id === currentOptionFilterProduct)
+        ) {
+          currentOptionFilterProduct = "ALL";
+        }
+        select.innerHTML =
+          `<option value="ALL">Tất cả nhóm</option>` +
+          productsList
+            .map(
+              (p) =>
+                `<option value="${p.id}" ${p.id === currentOptionFilterProduct ? "selected" : ""}>${escapeHtml(p.name)} (${p.optionGroupIds.length} nhóm)</option>`,
+            )
+            .join("");
+      }
 
-        if (filteredGroups.length === 0) {
+      function renderOptionGroupsView() {
+        renderOptionGroupFilter();
+        const container = document.getElementById("opt-group-list-container");
+        const filterProd = productsList.find((p) => p.id === currentOptionFilterProduct);
+        const groups = sortedGroups().filter(
+          (g) => !filterProd || filterProd.optionGroupIds.includes(g.id),
+        );
+
+        document.getElementById("opt-group-filter-count").textContent = filterProd
+          ? `${groups.length} nhóm đang gắn vào "${filterProd.name}"`
+          : `${optionGroupsList.length} nhóm trong thư viện`;
+
+        if (groups.length === 0) {
           container.innerHTML = `
             <div style="text-align: center; padding: 30px; color: var(--color-text-muted)">
-              Không có nhóm tuỳ chọn nào cho món đã chọn.
+              ${filterProd ? `Món "${escapeHtml(filterProd.name)}" chưa gắn nhóm tuỳ chọn nào.` : "Thư viện chưa có nhóm tuỳ chọn nào."}
             </div>
           `;
           return;
         }
 
-        container.innerHTML = filteredGroups
+        container.innerHTML = groups
           .map((grp) => {
-            const ruleText = grp.maxSelect === 1 ? "Đơn chọn (1 lựa chọn - Radio)" : `Đa chọn (Tối đa ${grp.maxSelect} loại)`;
-            const requiredBadge = grp.isRequired
-              ? `<span class="status-badge badge-pending">Bắt buộc chọn (isRequired: true)</span>`
-              : `<span class="status-badge badge-completed">Không bắt buộc</span>`;
+            const users = getProductsUsingGroup(grp.id);
+            const chipsHtml = users.length
+              ? users
+                  .map(
+                    (p) => `
+                    <span class="link-chip">
+                      ${escapeHtml(p.name)}
+                      <button type="button" title="Gỡ nhóm khỏi món này" aria-label="Gỡ ${escapeHtml(grp.name)} khỏi ${escapeHtml(p.name)}" onclick="unlinkGroupFromProduct('${grp.id}', '${p.id}')">✕</button>
+                    </span>`,
+                  )
+                  .join("")
+              : `<span class="link-chip is-empty">Chưa gắn món nào — nhóm sẽ không hiện cho khách</span>`;
 
             const rowsHtml = grp.options
               .map(
                 (opt) => `
                 <tr>
-                  <td><strong>${opt.name}</strong></td>
+                  <td><strong>${escapeHtml(opt.name)}</strong></td>
                   <td>
                     ${
                       opt.priceDelta > 0
@@ -3553,22 +4623,8 @@
                         : `<span style="color: var(--color-text-muted)">+0đ</span>`
                     }
                   </td>
-                  <td>
-                    <label class="switch">
-                      <input type="checkbox" ${opt.isAvailable ? "checked" : ""} onchange="toggleOptionStock('${grp.id}', '${opt.id}', this.checked)" />
-                      <span class="slider"></span>
-                    </label>
-                    <span style="font-size: 11px; margin-left: 6px; font-weight: 600; color: ${opt.isAvailable ? "var(--color-support)" : "var(--color-danger)"}">
-                      ${opt.isAvailable ? "Còn hàng" : "Hết hàng"}
-                    </span>
-                  </td>
-                  <td class="text-right">
-                    <button class="btn-ghost" style="padding: 2px 6px; font-size: 11px" onclick="deleteOptionItem('${grp.id}', '${opt.id}')">
-                      🗑️ Xoá
-                    </button>
-                  </td>
                 </tr>
-              `
+              `,
               )
               .join("");
 
@@ -3577,29 +4633,28 @@
                 <div class="opt-group-header">
                   <div>
                     <div class="opt-group-title">
-                      <span>🎛️ ${grp.name}</span>
-                      ${requiredBadge}
-                      <span class="status-badge badge-confirmed">${ruleText}</span>
+                      <span>🎛️ ${escapeHtml(grp.name)}</span>
+                      <span class="status-badge ${grp.isRequired ? "badge-pending" : "badge-completed"}">${grp.isRequired ? "Bắt buộc" : "Không bắt buộc"}</span>
+                      <span class="status-badge badge-confirmed">${grp.maxSelect === 1 ? "Đơn chọn" : `Đa chọn ≤ ${grp.maxSelect}`}</span>
+                      <span class="shared-count">🔗 ${users.length} món</span>
                     </div>
-                    <span style="font-size: 11.5px; color: var(--color-text-muted); margin-top: 4px; display: block">
-                      Áp dụng cho: <strong>${grp.productNames}</strong>
-                    </span>
                   </div>
-
                   <div style="display: flex; gap: 6px">
-                    <button class="btn-ghost" onclick="openOptionGroupModal('edit', '${grp.id}')">
-                      ✏️ Sửa nhóm
-                    </button>
+                    <button class="btn-ghost" id="btn-edit-${grp.id}" onclick="openOptionGroupModal('edit', '${grp.id}')">✏️ Sửa nhóm</button>
+                    <button class="btn-ghost" id="btn-delete-${grp.id}" style="color: var(--color-danger)" onclick="openDeleteGroupModal('${grp.id}')">🗑️</button>
                   </div>
+                </div>
+
+                <div class="link-row">
+                  <span class="link-row-label">Áp dụng cho:</span>
+                  ${chipsHtml}
                 </div>
 
                 <table class="opt-items-table">
                   <thead>
                     <tr>
-                      <th>Tên tuỳ chọn (Option)</th>
+                      <th>Tuỳ chọn</th>
                       <th>Giá phụ thu</th>
-                      <th>Trạng thái tại quầy</th>
-                      <th class="text-right">Thao tác</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -3612,25 +4667,59 @@
           .join("");
       }
 
-      function toggleOptionStock(grpId, optId, isAvailable) {
-        const grp = optionGroupsList.find((g) => g.id === grpId);
-        if (grp) {
-          const opt = grp.options.find((o) => o.id === optId);
-          if (opt) {
-            opt.isAvailable = isAvailable;
-            renderOptionGroupsView();
-            showToast(`Tuỳ chọn "${opt.name}" đã đổi sang: ${isAvailable ? "CÒN HÀNG" : "HẾT HÀNG"}`, isAvailable ? "success" : "danger");
-          }
-        }
+      function unlinkGroupFromProduct(grpId, prodId) {
+        const prod = productsList.find((p) => p.id === prodId);
+        const grp = getGroupById(grpId);
+        if (!prod || !grp) return;
+        prod.optionGroupIds = prod.optionGroupIds.filter((id) => id !== grpId);
+        renderOptionGroupsView();
+        renderProductsTable();
+        showToast(`Đã gỡ nhóm "${grp.name}" khỏi món "${prod.name}". Nhóm vẫn còn trong thư viện.`);
       }
 
-      function deleteOptionItem(grpId, optId) {
-        const grp = optionGroupsList.find((g) => g.id === grpId);
-        if (grp) {
-          grp.options = grp.options.filter((o) => o.id !== optId);
-          renderOptionGroupsView();
-          showToast("Đã xoá tuỳ chọn khỏi nhóm!");
-        }
+      function renderGroupProductsChecklist(grpId) {
+        const container = document.getElementById("opt-group-products-checklist");
+        const byCategory = productsList.reduce((acc, p) => {
+          (acc[p.categoryName] = acc[p.categoryName] || []).push(p);
+          return acc;
+        }, {});
+
+        container.innerHTML = Object.entries(byCategory)
+          .map(
+            ([catName, prods]) => `
+            <div class="check-list-cat">${escapeHtml(catName)}</div>
+            ${prods
+              .map(
+                (p) => `
+              <label class="check-row">
+                <input type="checkbox" name="grp-product" value="${p.id}" ${grpId && p.optionGroupIds.includes(grpId) ? "checked" : ""} />
+                <span class="check-row-main">
+                  <span class="check-row-title">${escapeHtml(p.name)}</span>
+                  <span class="check-row-sub">${formatMoney(p.price)} · đang có ${p.optionGroupIds.length} nhóm</span>
+                </span>
+              </label>`,
+              )
+              .join("")}
+          `,
+          )
+          .join("");
+        updateGroupProductsCount();
+      }
+
+      function updateGroupProductsCount() {
+        const n = document.querySelectorAll(
+          '#opt-group-products-checklist input[name="grp-product"]:checked',
+        ).length;
+        document.getElementById("opt-group-products-count").textContent = `${n} món`;
+      }
+
+      function setAllGroupProducts(checked) {
+        document
+          .querySelectorAll('#opt-group-products-checklist input[name="grp-product"]')
+          .forEach((el) => {
+            el.checked = checked;
+          });
+        updateGroupProductsCount();
       }
 
       function openOptionGroupModal(mode, grpId = null) {
@@ -3638,32 +4727,43 @@
         const title = document.getElementById("opt-group-modal-title");
         const delBtn = document.getElementById("btn-delete-opt-group");
         const rowsContainer = document.getElementById("modal-option-rows-container");
+        const impactNote = document.getElementById("opt-group-impact-note");
 
         rowsContainer.innerHTML = "";
 
         if (mode === "create") {
-          title.textContent = "Thêm nhóm tuỳ chọn mới (OptionGroup)";
+          title.textContent = "Thêm nhóm tuỳ chọn vào thư viện";
           document.getElementById("opt-group-edit-id").value = "";
           document.getElementById("opt-group-name").value = "";
           document.getElementById("opt-group-max-select").value = "1";
           document.getElementById("opt-group-required").checked = false;
           delBtn.style.display = "none";
-
-          addOptionRowInput("Tuỳ chọn 1", 0);
-          addOptionRowInput("Tuỳ chọn 2", 6000);
+          impactNote.hidden = true;
+          addOptionRowInput("", 0);
+          renderGroupProductsChecklist(null);
+          // Pre-tick the product currently filtered, if any — fastest path for "add a group to this drink".
+          if (currentOptionFilterProduct !== "ALL") {
+            const el = document.querySelector(
+              `#opt-group-products-checklist input[value="${currentOptionFilterProduct}"]`,
+            );
+            if (el) el.checked = true;
+            updateGroupProductsCount();
+          }
         } else {
-          const grp = optionGroupsList.find((g) => g.id === grpId);
+          const grp = getGroupById(grpId);
           if (!grp) return;
+          const users = getProductsUsingGroup(grp.id);
           title.textContent = `Chỉnh sửa nhóm: ${grp.name}`;
           document.getElementById("opt-group-edit-id").value = grp.id;
           document.getElementById("opt-group-name").value = grp.name;
-          document.getElementById("opt-group-max-select").value = grp.maxSelect;
+          document.getElementById("opt-group-max-select").value = String(grp.maxSelect);
           document.getElementById("opt-group-required").checked = grp.isRequired;
           delBtn.style.display = "inline-flex";
-
-          grp.options.forEach((opt) => {
-            addOptionRowInput(opt.name, opt.priceDelta);
-          });
+          impactNote.hidden = users.length === 0;
+          document.getElementById("opt-group-impact-text").innerHTML =
+            `Nhóm này đang dùng ở <strong>${users.length} món</strong>. Thay đổi tên, quy tắc hoặc giá phụ thu sẽ áp dụng cho tất cả các món đó ngay khi lưu.`;
+          grp.options.forEach((opt) => addOptionRowInput(opt.name, opt.priceDelta, opt.id));
+          renderGroupProductsChecklist(grp.id);
         }
 
         modal.classList.add("open");
@@ -3673,17 +4773,18 @@
         document.getElementById("option-group-modal").classList.remove("open");
       }
 
-      function addOptionRowInput(name = "", price = 0) {
+      function addOptionRowInput(name = "", price = 0, optId = "") {
         const container = document.getElementById("modal-option-rows-container");
-        const rowId = `row-${Date.now()}-${Math.random().toString(36).substr(2, 4)}`;
+        const rowId = `row-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`;
 
         const div = document.createElement("div");
         div.id = rowId;
+        div.dataset.optId = optId;
         div.style = "display: flex; gap: 8px; align-items: center;";
         div.innerHTML = `
-          <input type="text" class="form-input opt-row-name" placeholder="Tên tuỳ chọn (VD: Size L)" value="${name}" required style="flex: 2" />
-          <input type="number" class="form-input opt-row-price" placeholder="Phụ thu VND" value="${price}" step="1000" required style="flex: 1" />
-          <button type="button" class="btn-ghost" style="color: var(--color-danger); padding: 8px" onclick="document.getElementById('${rowId}').remove()">✕</button>
+          <input type="text" class="form-input opt-row-name" placeholder="Tên tuỳ chọn (VD: Size L)" value="${escapeHtml(name)}" required style="flex: 2" />
+          <input type="number" class="form-input opt-row-price" placeholder="Phụ thu VND" value="${price}" min="0" step="1000" required style="flex: 1" />
+          <button type="button" class="btn-ghost" style="color: var(--color-danger); padding: 8px" aria-label="Xoá tuỳ chọn" onclick="document.getElementById('${rowId}').remove()">✕</button>
         `;
         container.appendChild(div);
       }
@@ -3694,55 +4795,113 @@
         const name = document.getElementById("opt-group-name").value.trim();
         const maxSelect = parseInt(document.getElementById("opt-group-max-select").value, 10);
         const isRequired = document.getElementById("opt-group-required").checked;
-        const prodChoice = document.getElementById("opt-group-product-select").value;
+        const productIds = Array.from(
+          document.querySelectorAll(
+            '#opt-group-products-checklist input[name="grp-product"]:checked',
+          ),
+        ).map((el) => el.value);
 
         const rowEls = document.querySelectorAll("#modal-option-rows-container > div");
         const options = Array.from(rowEls).map((row, idx) => ({
-          id: `opt-${Date.now()}-${idx}`,
+          id: row.dataset.optId || `opt-${Date.now()}-${idx}`,
           name: row.querySelector(".opt-row-name").value.trim(),
-          priceDelta: parseInt(row.querySelector(".opt-row-price").value, 10) || 0,
-          isAvailable: true,
+          priceDelta: parseInt(row.querySelector(".opt-row-price").value, 10),
           sortOrder: idx + 1,
         }));
 
         if (options.length === 0) {
-          alert("Nhóm tuỳ chọn phải có ít nhất 1 tuỳ chọn.");
+          showToast("Nhóm tuỳ chọn phải có ít nhất 1 tuỳ chọn.", "danger");
+          return;
+        }
+        if (options.some((o) => !Number.isInteger(o.priceDelta) || o.priceDelta < 0)) {
+          showToast("Giá phụ thu phải là số nguyên ≥ 0.", "danger");
+          return;
+        }
+        if (maxSelect > options.length) {
+          showToast(
+            `Chọn tối đa ${maxSelect} nhưng nhóm chỉ có ${options.length} tuỳ chọn.`,
+            "danger",
+          );
           return;
         }
 
+        let grpId = editId;
         if (editId) {
-          const g = optionGroupsList.find((x) => x.id === editId);
-          if (g) {
-            g.name = name;
-            g.maxSelect = maxSelect;
-            g.isRequired = isRequired;
-            g.options = options;
-            showToast(`Đã cập nhật nhóm tuỳ chọn "${name}"!`, "success");
-          }
+          const g = getGroupById(editId);
+          if (!g) return;
+          Object.assign(g, { name, maxSelect, isRequired, options });
         } else {
-          const newGrp = {
-            id: `grp-${Date.now()}`,
+          grpId = `grp-${Date.now()}`;
+          const nextSort = Math.max(0, ...optionGroupsList.map((g) => g.sortOrder)) + 1;
+          optionGroupsList.push({
+            id: grpId,
             name,
-            productIds: prodChoice === "ALL" ? ["prod-1", "prod-2", "prod-3"] : [prodChoice],
-            productNames: prodChoice === "ALL" ? "Tất cả đồ uống" : "Món chỉ định",
             isRequired,
             maxSelect,
+            sortOrder: nextSort,
             options,
-          };
-          optionGroupsList.push(newGrp);
-          showToast(`Đã tạo nhóm tuỳ chọn mới "${name}"!`, "success");
+          });
         }
 
+        // Sync the n:n link from the group side.
+        productsList.forEach((p) => {
+          const linked = p.optionGroupIds.includes(grpId);
+          const shouldLink = productIds.includes(p.id);
+          if (shouldLink && !linked) p.optionGroupIds = [...p.optionGroupIds, grpId];
+          if (!shouldLink && linked)
+            p.optionGroupIds = p.optionGroupIds.filter((id) => id !== grpId);
+        });
+
+        showToast(
+          editId
+            ? `Đã cập nhật nhóm "${name}" — áp dụng cho ${productIds.length} món.`
+            : `Đã tạo nhóm "${name}" và gắn vào ${productIds.length} món.`,
+          "success",
+        );
         closeOptionGroupModal();
         renderOptionGroupsView();
+        renderProductsTable();
       }
 
       function deleteCurrentOptionGroup() {
-        const editId = document.getElementById("opt-group-edit-id").value;
-        optionGroupsList = optionGroupsList.filter((g) => g.id !== editId);
-        showToast("Đã xoá nhóm tuỳ chọn thành công.", "danger");
+        openDeleteGroupModal(document.getElementById("opt-group-edit-id").value);
+      }
+
+      function openDeleteGroupModal(grpId) {
+        const grp = getGroupById(grpId);
+        if (!grp) return;
+        pendingDeleteGroupId = grpId;
+        const users = getProductsUsingGroup(grpId);
+        document.getElementById("delete-group-message").innerHTML = users.length
+          ? `Nhóm <strong>${escapeHtml(grp.name)}</strong> đang được dùng ở <strong>${users.length} món</strong>:`
+          : `Nhóm <strong>${escapeHtml(grp.name)}</strong> chưa gắn vào món nào.`;
+        document.getElementById("delete-group-products").innerHTML = users
+          .map(
+            (p) =>
+              `<span class="link-chip is-empty" style="font-weight: 600; color: var(--color-text)">${escapeHtml(p.name)}</span>`,
+          )
+          .join("");
+        document.getElementById("delete-group-modal").classList.add("open");
+      }
+
+      function closeDeleteGroupModal() {
+        pendingDeleteGroupId = null;
+        document.getElementById("delete-group-modal").classList.remove("open");
+      }
+
+      function confirmDeleteOptionGroup() {
+        const grp = getGroupById(pendingDeleteGroupId);
+        if (!grp) return;
+        const affected = getProductsUsingGroup(grp.id).length;
+        optionGroupsList = optionGroupsList.filter((g) => g.id !== grp.id);
+        productsList.forEach((p) => {
+          p.optionGroupIds = p.optionGroupIds.filter((id) => id !== grp.id);
+        });
+        closeDeleteGroupModal();
         closeOptionGroupModal();
         renderOptionGroupsView();
+        renderProductsTable();
+        showToast(`Đã xoá nhóm "${grp.name}" và gỡ khỏi ${affected} món.`, "danger");
       }
 
       // ================= 5. CATEGORY CRUD =================
@@ -3767,7 +4926,7 @@
               <button class="btn-ghost" onclick="openCategoryModal('edit', '${c.id}')">✏️ Sửa</button>
             </td>
           </tr>
-        `
+        `,
           )
           .join("");
       }
@@ -3851,7 +5010,9 @@
         const cat = categoriesList.find((c) => c.id === editId);
         if (cat) {
           if (cat.count > 0) {
-            alert(`Không thể xoá danh mục "${cat.name}" vì vẫn còn ${cat.count} món thuộc danh mục này theo quy tắc SPEC.`);
+            alert(
+              `Không thể xoá danh mục "${cat.name}" vì vẫn còn ${cat.count} món thuộc danh mục này theo quy tắc SPEC.`,
+            );
             return;
           }
           categoriesList = categoriesList.filter((c) => c.id !== editId);
@@ -3867,8 +5028,12 @@
         const shopName = document.getElementById("setting-shop-name").value;
         const openTime = document.getElementById("setting-open-time").value;
         const closeTime = document.getElementById("setting-close-time").value;
-        const shipFee = formatMoney(parseInt(document.getElementById("setting-shipping-fee").value, 10));
-        const freeShip = formatMoney(parseInt(document.getElementById("setting-free-ship-threshold").value, 10));
+        const shipFee = formatMoney(
+          parseInt(document.getElementById("setting-shipping-fee").value, 10),
+        );
+        const freeShip = formatMoney(
+          parseInt(document.getElementById("setting-free-ship-threshold").value, 10),
+        );
 
         showToast(`Đã lưu cài đặt quán thành công!`, "success");
       }
@@ -3909,7 +5074,9 @@
           subtotal: 70000,
           shippingFee: 15000,
           total: 85000,
-          history: [{ time: timeStr, text: "Khách đặt đơn online qua Website", author: "Hệ thống" }],
+          history: [
+            { time: timeStr, text: "Khách đặt đơn online qua Website", author: "Hệ thống" },
+          ],
         };
 
         orders.unshift(newOrder);
@@ -3917,7 +5084,10 @@
         currentPage = 1;
 
         playAudioAlert();
-        showToast(`🔔 CÓ ĐƠN HÀNG MỚI: ${newOrder.code} (${formatMoney(newOrder.total)})!`, "success");
+        showToast(
+          `🔔 CÓ ĐƠN HÀNG MỚI: ${newOrder.code} (${formatMoney(newOrder.total)})!`,
+          "success",
+        );
         renderOrderCards();
       }
 

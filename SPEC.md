@@ -256,7 +256,7 @@ export async function placeOrder(input: unknown): Promise<Result<{ code: string 
 
 - `Category(id, name, sortOrder, isVisible)`
 - `Product(id, categoryId, name, description, basePrice, imageKey, isAvailable, isArchived)` — `imageKey` là object key trong storage, không phải URL (đổi tên từ `imageUrl` ở T15)
-- `OptionGroup(id, productId, name, isRequired, maxSelect)` → `Option(id, groupId, name, priceDelta)`
+- `OptionGroup(id, name, isRequired, maxSelect, sortOrder)` ↔ `Product` (**n:n**, bảng nối ngầm `_OptionGroupToProduct`) → `Option(id, groupId, name, priceDelta, sortOrder)` — một nhóm (VD "Size") dùng chung cho nhiều món; sửa nhóm/option áp dụng cho mọi món gắn nhóm đó. Xoá món chỉ gỡ liên kết, không xoá nhóm; xoá nhóm xoá các option của nó và gỡ khỏi mọi món (đơn cũ không ảnh hưởng nhờ `optionsSnapshot`)
 - `Order(id, code, customerName, phone, address?, note?, fulfillmentType, pickupAt?, paymentMethod, paymentStatus, status, subtotal, shippingFee, total, cancelReason?, paidAt?, paidById?, createdAt)`
 - `OrderItem(id, orderId, productId, productName, unitPrice, quantity, optionsSnapshot JSON)` — **snapshot** tên/giá tại thời điểm đặt
 - `OrderStatusHistory(id, orderId, from, to, adminId?, at)`
