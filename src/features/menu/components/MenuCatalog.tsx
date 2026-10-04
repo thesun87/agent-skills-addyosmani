@@ -2,16 +2,30 @@
 
 import { useState } from "react";
 import type { MenuCategory, MenuProduct } from "../queries";
+import type { CartLineInput } from "@/features/cart/schema";
 import { CategoryNav } from "./CategoryNav";
 import { ProductCard } from "./ProductCard";
+import { ProductOptionsSheet } from "./ProductOptionsSheet";
 
 export interface MenuCatalogProps {
   categories: ReadonlyArray<MenuCategory>;
   onSelectProduct?: (product: MenuProduct) => void;
+  onAddToCart?: (line: CartLineInput) => void;
 }
 
-export function MenuCatalog({ categories, onSelectProduct }: MenuCatalogProps) {
+export function MenuCatalog({ categories, onSelectProduct, onAddToCart }: MenuCatalogProps) {
   const [activeCategoryId, setActiveCategoryId] = useState<string>(categories[0]?.id ?? "");
+  const [selectedProduct, setSelectedProduct] = useState<MenuProduct | null>(null);
+
+  const handleCardClick = (product: MenuProduct) => {
+    setSelectedProduct(product);
+    onSelectProduct?.(product);
+  };
+
+  const handleAddToCart = (line: CartLineInput) => {
+    onAddToCart?.(line);
+    setSelectedProduct(null);
+  };
 
   return (
     <div className="w-full">
@@ -31,12 +45,19 @@ export function MenuCatalog({ categories, onSelectProduct }: MenuCatalogProps) {
 
             <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2 lg:grid-cols-2">
               {category.products.map((product) => (
-                <ProductCard key={product.id} product={product} onSelect={onSelectProduct} />
+                <ProductCard key={product.id} product={product} onSelect={handleCardClick} />
               ))}
             </div>
           </section>
         ))}
       </div>
+
+      <ProductOptionsSheet
+        product={selectedProduct}
+        isOpen={selectedProduct !== null}
+        onClose={() => setSelectedProduct(null)}
+        onAddToCart={handleAddToCart}
+      />
     </div>
   );
 }

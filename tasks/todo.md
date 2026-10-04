@@ -111,18 +111,18 @@
 
 ---
 
-### - [ ] T5: Chọn tuỳ chọn món (C2)
+### - [x] T5: Chọn tuỳ chọn món (C2)
 
 **Description:** Bấm món mở bottom sheet (mobile) / dialog (desktop): nhóm tuỳ chọn single/multi theo `maxSelect`, nhóm bắt buộc, chọn số lượng, giá cập nhật tức thì bằng `calculateLinePrice`. Zod schema `cartLineSchema` dùng chung với server sau này. Nút "Thêm vào giỏ" gọi callback (nối giỏ ở T6).
 
 **Acceptance criteria:**
-- [ ] Nhóm bắt buộc chưa chọn → nút thêm disabled + thông báo rõ
-- [ ] Không vượt quá `maxSelect`; giá = base + Σ delta × số lượng
-- [ ] Sheet có focus trap, đóng bằng Esc, trả focus về thẻ món
+- [x] Nhóm bắt buộc chưa chọn → nút thêm disabled + thông báo rõ
+- [x] Không vượt quá `maxSelect`; giá = base + Σ delta × số lượng
+- [x] Sheet có focus trap, đóng bằng Esc, trả focus về thẻ món
 
 **Verification:**
-- [ ] `pnpm test tests/unit/features/menu`
-- [ ] Manual: chọn Cà phê sữa size L + trân châu → giá đúng
+- [x] `pnpm test tests/unit/features/menu`
+- [x] Manual: chọn Cà phê sữa size L + trân châu → giá đúng
 
 **Dependencies:** T4
 **Files likely touched:** `src/features/menu/components/ProductOptionsSheet.tsx`, `src/features/cart/schema.ts`, `src/components/ui/Sheet.tsx`, tests
