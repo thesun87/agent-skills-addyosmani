@@ -333,13 +333,14 @@
 
 ---
 
-### - [ ] T15: Upload ảnh món lên Supabase Storage (A3)
+### - [ ] T15: Upload ảnh món qua S3 (Supabase Storage) (A3)
 
-**Description:** Bucket public `product-images` (tạo qua migration/config Supabase). Server action nhận file, kiểm loại (jpeg/png/webp) và kích thước (≤ 2MB), đặt tên ngẫu nhiên, upload bằng service role key (chỉ server), lưu `imageUrl`. `next/image` cấu hình domain Storage.
+**Description:** Bucket public `product-images` (khai báo trong `supabase/config.toml`). `src/lib/storage.ts` dùng `@aws-sdk/client-s3` (endpoint, region, access key, bucket, `STORAGE_PUBLIC_BASE_URL` từ env) và chỉ export `uploadImage`, `deleteImage`, `publicUrl`. Migration đổi `Product.imageUrl` → `imageKey`. Server action nhận file, kiểm loại (jpeg/png/webp) và kích thước (≤ 2MB), đặt key ngẫu nhiên `products/<id>.<ext>`, upload, lưu key; xoá object cũ khi thay ảnh. `next/image` cấu hình host từ `STORAGE_PUBLIC_BASE_URL`.
 
 **Acceptance criteria:**
 - [ ] File sai loại/quá lớn bị từ chối với thông báo tiếng Việt
-- [ ] Service role key không xuất hiện trong bundle client (kiểm `pnpm build` output)
+- [ ] DB chỉ lưu object key; S3 access/secret key không xuất hiện trong bundle client (kiểm `pnpm build` output)
+- [ ] Không file nào ngoài `src/lib/storage.ts` import `@aws-sdk/*`
 - [ ] Ảnh mới hiển thị trên menu khách
 
 **Verification:**
@@ -347,7 +348,7 @@
 - [ ] Manual: upload ảnh, xem trên menu
 
 **Dependencies:** T14
-**Files likely touched:** `supabase/config.toml`, `src/lib/storage.ts`, `src/features/menu/admin-actions/product-image.ts`, `next.config.ts`
+**Files likely touched:** `supabase/config.toml`, `prisma/schema.prisma` (+migration), `src/lib/storage.ts`, `src/features/menu/admin-actions/product-image.ts`, `next.config.ts`
 **Estimated scope:** S
 
 ---
@@ -397,7 +398,7 @@
 
 ### - [ ] T18: Menu seed đầy đủ + ảnh có giấy phép
 
-**Description:** Seed toàn bộ menu ~21 món theo bảng trong SPEC kèm tuỳ chọn chuẩn. Chọn ảnh Unsplash/Pexels phù hợp từng món, nén WebP ≤150KB 1:1, lưu `prisma/seed-images/`, ghi `CREDITS.md` (tác giả, link, giấy phép); seed upload ảnh lên Storage local.
+**Description:** Seed toàn bộ menu ~21 món theo bảng trong SPEC kèm tuỳ chọn chuẩn. Chọn ảnh Unsplash/Pexels phù hợp từng món, nén WebP ≤150KB 1:1, lưu `prisma/seed-images/`, ghi `CREDITS.md` (tác giả, link, giấy phép); seed upload ảnh lên Storage local qua `src/lib/storage.ts`.
 
 **Acceptance criteria:**
 - [ ] `pnpm db:seed` idempotent (chạy 2 lần không trùng dữ liệu)
@@ -433,12 +434,13 @@
 
 ### - [ ] T20: Runbook + deploy production — **ASK FIRST, làm cùng chủ quán**
 
-**Description:** Viết `docs/deploy.md`: tạo project Supabase cloud (region Singapore), Vercel project, biến môi trường, chạy migrate, tạo bucket, đổi mật khẩu admin, trỏ domain. Thực hiện cùng chủ quán (tài khoản đứng tên chủ quán). Kiểm VietQR sandbox (Success Criteria #5).
+**Description:** Viết `docs/deploy.md`: tạo project Supabase cloud (region Singapore), **tắt Data API**, bật S3 access key cho Storage, Vercel project, biến môi trường, chạy `pnpm db:deploy`, tạo bucket, đổi mật khẩu admin, trỏ domain; kèm mục **"Đổi provider"** (pg_dump/restore, rclone copy ảnh, đổi env). Thực hiện cùng chủ quán (tài khoản đứng tên chủ quán). Kiểm VietQR sandbox (Success Criteria #5).
 
 **Acceptance criteria:**
 - [ ] Production chạy trên domain của quán, HTTPS
 - [ ] Toàn bộ Success Criteria trong SPEC đạt trên production
 - [ ] Không có secret nào trong repo
+- [ ] Data API tắt: gọi `https://<project>.supabase.co/rest/v1/Order` bằng anon key không trả dữ liệu
 
 **Verification:**
 - [ ] Chạy E2E smoke với `BASE_URL` production

@@ -17,9 +17,10 @@ Xây web đặt món cho Tuấn Linh Coffee bằng Next.js 15 + Prisma + Supabas
 | AD5 | Realtime = **polling** (admin 5s, khách 15s) | Đủ đáp ứng tiêu chí ≤10s/≤15s; tránh phức tạp Supabase Realtime/WebSocket ở v1 |
 | AD6 | Thời gian lưu UTC trong DB; giờ mở cửa/khung pickup tính theo giờ VN bằng **offset cố định UTC+7** (VN không có DST) — không cần `date-fns-tz` | Vercel chạy UTC — tránh lệch 7 tiếng; bớt một dependency |
 | AD7 | Giỏ hàng chỉ lưu **productId + optionIds + quantity** ở client; giá hiển thị tính lại từ menu hiện tại | Giá cũ trong localStorage không bao giờ được tin; server tính lại khi đặt |
-| AD8 | Ảnh upload qua server action admin → Supabase Storage bằng **service role key chỉ ở server** | Không lộ key ra client; bucket public chỉ đọc |
+| AD8 | Storage qua **giao thức S3** (`@aws-sdk/client-s3`) sau lớp `src/lib/storage.ts` (`uploadImage`, `deleteImage`, `publicUrl`); upload chỉ từ server action admin với S3 access key **chỉ ở server**; DB lưu **object key**, URL ghép từ `STORAGE_PUBLIC_BASE_URL` | Không lộ key ra client; đổi provider (R2, S3, MinIO) chỉ cần đổi env + copy file bằng `rclone`, không sửa code/dữ liệu |
+| AD9 | **Tắt Data API** (PostgREST) ở local và production; **không bật RLS** (quyết định của chủ quán 2026-10-04) | App không dùng Data API; tắt nó đóng đường truy cập DB bằng anon key. Đã kiểm local: REST trả 503, Storage và Prisma vẫn chạy |
 
-> Dependency ngoài Tech Stack trong spec: `bcryptjs` (`date-fns-tz` không còn cần — xem AD6). Đã được đồng ý.
+> Dependency ngoài Tech Stack trong spec: `bcryptjs` (`date-fns-tz` không còn cần — xem AD6), `@aws-sdk/client-s3` (AD8, thay cho `@supabase/supabase-js`). Đã được đồng ý.
 
 ## Dependency Graph
 
@@ -75,7 +76,7 @@ T1 Scaffold ──► T2 Supabase+Prisma ──► T3 Pure libs
 ### Phase 4 — Admin quản lý menu & cài đặt
 - [ ] T13: CRUD danh mục (A2) (S)
 - [ ] T14: CRUD món + tuỳ chọn + hết hàng + lưu trữ (A3) (M)
-- [ ] T15: Upload ảnh món lên Supabase Storage (A3) (S)
+- [ ] T15: Upload ảnh món qua S3 (Supabase Storage) + đổi `imageUrl` → `imageKey` (A3) (S)
 - [ ] T16: Trang cài đặt quán (A7) (M)
 
 **Checkpoint 4** — E2E #4 (tắt món → khách không thêm được) xanh; coverage ≥ 80%.
@@ -105,6 +106,7 @@ T1 Scaffold ──► T2 Supabase+Prisma ──► T3 Pure libs
 | Auth.js v5 thay đổi API | Trung bình | Ghim phiên bản; bọc trong `src/features/auth` để dễ thay |
 | Dịch vụ `img.vietqr.io` không khả dụng | Thấp | Luôn hiển thị kèm STK/tên/số tiền/nội dung dạng text để khách chuyển tay |
 | Ảnh mạng vi phạm bản quyền | Trung bình | Chỉ Unsplash/Pexels, ghi CREDITS; khuyến nghị thay ảnh thật trước ra mắt |
+| Data API bị bật lại (vô tình/thay đổi mặc định) → lộ toàn bộ dữ liệu, **không có RLS dự phòng** | Cao | T20: checklist tắt Data API + smoke test production khẳng định `/rest/v1/*` không trả dữ liệu; chạy lại test này sau mỗi lần đổi cấu hình Supabase |
 
 ## Quyết định đã chốt (2026-10-03)
 
@@ -112,3 +114,5 @@ T1 Scaffold ──► T2 Supabase+Prisma ──► T3 Pure libs
 2. Máy dev đã có Docker → dùng Supabase CLI như kế hoạch.
 3. VietQR chỉ kiểm sandbox (quét thấy đúng số tiền/nội dung, không chuyển thật).
 4. Thêm bước thiết kế UI/UX: T3b (khách) và T9b (admin) là prototype được duyệt; prototype đã duyệt là **chuẩn giao diện bắt buộc** cho các task code tương ứng.
+5. Storage qua S3 + lớp `storage.ts`, DB lưu object key (AD8) — 2026-10-04.
+6. Tắt Data API, không bật RLS (AD9) — 2026-10-04.

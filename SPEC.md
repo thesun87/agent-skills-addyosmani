@@ -120,7 +120,8 @@ Seed sẵn menu kiểu quán cafe Việt phổ biến, giá tham khảo mặt b�
 | Validation | Zod (dùng chung schema cho form client và server) |
 | Auth admin | Auth.js v5 (Credentials provider) + bcrypt |
 | UI | Tailwind CSS 4 |
-| Lưu ảnh | Supabase Storage (bucket public `product-images`; upload chỉ qua API admin) |
+| Lưu ảnh | Supabase Storage truy cập qua **giao thức S3** (`@aws-sdk/client-s3`); bucket public `product-images`; upload chỉ qua server action admin. DB chỉ lưu **object key** (VD `products/abc123.webp`), URL công khai = `STORAGE_PUBLIC_BASE_URL` + key |
+| Phạm vi dùng Supabase | **Chỉ** Postgres (qua Prisma) + Storage (qua S3). **Không** dùng Supabase Auth, Data API (PostgREST), Realtime, `supabase-js`. Data API **tắt** ở cả local (`[api] enabled = false`) và production |
 | Môi trường local | Supabase CLI (`supabase start`) — chạy Postgres + Storage trên Docker, không cần tài khoản cloud khi dev |
 | Font | Be Vietnam Pro (UI, hỗ trợ tiếng Việt tốt) + Lora (tiêu đề), qua `next/font/google` |
 | VietQR | Ảnh QR từ `https://img.vietqr.io/image/{bankBin}-{accountNo}-compact2.png?amount=..&addInfo=..` |
@@ -254,7 +255,7 @@ export async function placeOrder(input: unknown): Promise<Result<{ code: string 
 ## Mô hình dữ liệu (tóm tắt)
 
 - `Category(id, name, sortOrder, isVisible)`
-- `Product(id, categoryId, name, description, basePrice, imageUrl, isAvailable, isArchived)`
+- `Product(id, categoryId, name, description, basePrice, imageKey, isAvailable, isArchived)` — `imageKey` là object key trong storage, không phải URL (đổi tên từ `imageUrl` ở T15)
 - `OptionGroup(id, productId, name, isRequired, maxSelect)` → `Option(id, groupId, name, priceDelta)`
 - `Order(id, code, customerName, phone, address?, note?, fulfillmentType, pickupAt?, paymentMethod, paymentStatus, status, subtotal, shippingFee, total, cancelReason?, paidAt?, paidById?, createdAt)`
 - `OrderItem(id, orderId, productId, productName, unitPrice, quantity, optionsSnapshot JSON)` — **snapshot** tên/giá tại thời điểm đặt
@@ -284,6 +285,7 @@ export async function placeOrder(input: unknown): Promise<Result<{ code: string 
 - Đọc secrets từ biến môi trường; có `.env.example`.
 - Rate limit API tạo đơn (VD: 5 đơn / 10 phút / IP) và đăng nhập admin.
 - Xử lý thời gian theo `Asia/Ho_Chi_Minh`.
+- Truy cập file chỉ qua `src/lib/storage.ts` (S3); không gọi SDK/REST riêng của nhà cung cấp ở nơi khác.
 
 **Ask first**
 - Thay đổi schema DB / migration ngoài những gì spec mô tả.
@@ -299,6 +301,7 @@ export async function placeOrder(input: unknown): Promise<Result<{ code: string 
 - Lộ thông tin đơn (SĐT, địa chỉ) khi chưa xác minh SĐT trên trang tra cứu.
 - Xoá hoặc skip test đang fail mà không được đồng ý.
 - Lưu số thẻ/thông tin ngân hàng của khách.
+- Bật lại Data API (PostgREST) của Supabase, hoặc dùng anon key để truy cập dữ liệu.
 
 ## Success Criteria
 
@@ -321,6 +324,8 @@ export async function placeOrder(input: unknown): Promise<Result<{ code: string 
 | 4 | Tự huỷ đơn chuyển khoản chưa trả | Không |
 | 5 | Thương hiệu | Tên **Tuấn Linh Coffee**; màu theo mệnh Hỏa; logo tự thiết kế; ảnh mẫu Unsplash/Pexels (xem phần Thương hiệu) |
 | 6 | Domain & hosting | Chưa có → dev local bằng Supabase CLI; deploy là task cuối |
+| 7 | Truy cập Storage (2026-10-04) | Qua giao thức S3 + lớp `src/lib/storage.ts`; DB lưu object key — đổi sang R2/S3/MinIO chỉ cần đổi biến môi trường |
+| 8 | Data API / RLS (2026-10-04) | **Tắt Data API** ở local và production. **Không bật RLS** — app chỉ truy cập DB qua Prisma phía server; chủ quán chấp nhận rủi ro không có lớp bảo vệ thứ hai |
 
 ## Open Questions
 
