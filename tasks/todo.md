@@ -286,20 +286,20 @@
 
 ---
 
-### - [ ] T12: Chuyển trạng thái, huỷ, xác nhận đã nhận tiền (A5, A6)
+### - [x] T12: Chuyển trạng thái, huỷ, xác nhận đã nhận tiền (A5, A6)
 
 **Description:** `order-state-machine.ts` thuần theo sơ đồ trong SPEC (nhánh pickup/delivery). Server actions `transitionOrder`, `cancelOrder` (bắt buộc lý do), `markPaid` (lưu `paidAt`, `paidById`); mỗi lần đổi ghi `OrderStatusHistory`. UI nút hành động chỉ hiện bước hợp lệ tiếp theo.
 
 **UI Reference:** `docs/design/admin-prototype.html` (Nút chuyển trạng thái trên thẻ đơn, modal huỷ đơn kèm lý do `#cancel-order-modal`) · [admin-ui-notes.md](../docs/design/admin-ui-notes.md#22-màn-hình-quản-lý-đơn-hàng-admindon-hang--a4-a5-a6)
 
 **Acceptance criteria:**
-- [ ] Nút hành động, màu sắc trạng thái và modal huỷ đơn khớp prototype đã duyệt
-- [ ] Chuyển sai (VD `PENDING → DELIVERING`, `READY_FOR_PICKUP` cho đơn giao) bị từ chối ở server
-- [ ] Huỷ không lý do bị từ chối; chỉ huỷ được từ PENDING/CONFIRMED/PREPARING
-- [ ] Khách thấy trạng thái mới trên trang theo dõi ≤ 15s
+- [x] Nút hành động, màu sắc trạng thái và modal huỷ đơn khớp prototype đã duyệt
+- [x] Chuyển sai (VD `PENDING → DELIVERING`, `READY_FOR_PICKUP` cho đơn giao) bị từ chối ở server
+- [x] Huỷ không lý do bị từ chối; chỉ huỷ được từ PENDING/CONFIRMED/PREPARING
+- [x] Khách thấy trạng thái mới trên trang theo dõi ≤ 15s
 
 **Verification:**
-- [ ] `pnpm test tests/unit/features/orders/order-state-machine.test.ts tests/integration/admin-orders`
+- [x] `pnpm test tests/unit/features/orders/order-state-machine.test.ts tests/integration/orders/admin-order-actions`
 - [ ] `pnpm test:e2e e2e/admin-process-order.spec.ts` (E2E #3)
 
 **Dependencies:** T9, T11

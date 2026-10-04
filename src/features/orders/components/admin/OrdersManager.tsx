@@ -7,6 +7,13 @@ import { OrderCard, type AdminOrderSummary } from "./OrderCard";
 import { OrderPagination } from "./OrderPagination";
 import { OrderDetail } from "./OrderDetail";
 import { OrderSoundAlert } from "./OrderSoundAlert";
+import { CancelOrderModal } from "./CancelOrderModal";
+import {
+  transitionOrderAction,
+  cancelOrderAction,
+  markPaidAction,
+} from "../../admin-actions";
+import type { OrderStatusString } from "../../domain/order-state-machine";
 
 interface OrderCounts {
   all: number;
@@ -55,7 +62,8 @@ export function OrdersManager({
     initialOrders[0]?.id || null
   );
 
-  const isActionPending = false;
+  const [cancelModalOrder, setCancelModalOrder] = useState<AdminOrderSummary | null>(null);
+  const [isActionPending, setIsActionPending] = useState(false);
 
   // Helper to update URL query params
   const updateUrl = useCallback(
@@ -156,6 +164,43 @@ export function OrdersManager({
     void fetchOrders({ page: newPage });
   };
 
+  const handleTransition = async (orderId: string, nextStatus: string) => {
+    try {
+      setIsActionPending(true);
+      const res = await transitionOrderAction(orderId, nextStatus as OrderStatusString);
+      if (res.success) {
+        await fetchOrders();
+      } else if (res.error) {
+        alert(res.error);
+      }
+    } finally {
+      setIsActionPending(false);
+    }
+  };
+
+  const handleMarkPaid = async (orderId: string) => {
+    try {
+      setIsActionPending(true);
+      const res = await markPaidAction(orderId);
+      if (res.success) {
+        await fetchOrders();
+      } else if (res.error) {
+        alert(res.error);
+      }
+    } finally {
+      setIsActionPending(false);
+    }
+  };
+
+  const handleConfirmCancel = async (orderId: string, reason: string) => {
+    const res = await cancelOrderAction(orderId, reason);
+    if (res.success) {
+      await fetchOrders();
+    } else if (res.error) {
+      throw new Error(res.error);
+    }
+  };
+
   const selectedOrder = orders.find((o) => o.id === selectedOrderId) || null;
 
   return (
@@ -231,8 +276,18 @@ export function OrdersManager({
         <OrderDetail
           order={selectedOrder}
           isActionPending={isActionPending}
+          onTransition={handleTransition}
+          onOpenCancelModal={(o) => setCancelModalOrder(o)}
+          onMarkPaid={handleMarkPaid}
         />
       </div>
+
+      <CancelOrderModal
+        order={cancelModalOrder}
+        isOpen={!!cancelModalOrder}
+        onClose={() => setCancelModalOrder(null)}
+        onConfirmCancel={handleConfirmCancel}
+      />
     </div>
   );
 }

@@ -106,6 +106,8 @@ model Order {
   subtotal        Int
   shippingFee     Int
   total           Int
+  paidAt          DateTime?
+  paidById        String?
   items           OrderItem[]
   statusHistory   OrderStatusHistory[]
   createdAt       DateTime             @default(now())
