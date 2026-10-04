@@ -336,26 +336,26 @@
 
 ---
 
-### - [ ] T14: CRUD món + tuỳ chọn + hết hàng + lưu trữ (A3)
+### - [x] T14: CRUD món + tuỳ chọn + hết hàng + lưu trữ (A3)
 
 **Description:** `/admin/mon`: danh sách món có công tắc "Hết hàng" một chạm; form tạo/sửa món (tên, mô tả, giá, danh mục) với checklist **gắn nhóm tuỳ chọn dùng chung**. `/admin/tuy-chon`: thư viện nhóm tuỳ chọn (n:n với món — AD10): tạo/sửa/xoá định nghĩa nhóm + option con (việc chọn nhóm áp dụng cho món được thực hiện tập trung tại form món để tinh gọn UX). Món đã có trong đơn → "Lưu trữ" thay vì xoá. Snapshot đơn cũ không bị ảnh hưởng khi đổi giá.
 
 **UI Reference:** `docs/design/admin-prototype.html` (#section-menu, bảng món, `#product-modal`, công tắc hết hàng một chạm; `#section-options`, `#option-group-modal`) · [admin-ui-notes.md](../docs/design/admin-ui-notes.md#23-màn-hình-thêm--chỉnh-sửa-món-adminmon--a3) & [admin-ui-notes.md](../docs/design/admin-ui-notes.md#24-màn-hình-thư-viện-nhóm-tuỳ-chọn-admintuy-chon--optiongroup--product-nn-ad10)
 
 **Acceptance criteria:**
-- [ ] Giao diện form món, form nhóm tuỳ chọn, các trường nhập liệu và copy tiếng Việt khớp 100% prototype đã duyệt
-- [ ] Bật hết hàng → khách không thêm được và `placeOrder` từ chối món đó
-- [ ] Món đã có đơn không xoá cứng được; đơn cũ giữ tên/giá cũ
-- [ ] Validate giá và `priceDelta` là số nguyên ≥ 0; `maxSelect` ≥ 1; nhóm có ít nhất 1 option
-- [ ] Một nhóm gắn được vào nhiều món; sửa option/giá của nhóm → mọi món gắn nhóm đều thấy giá mới
-- [ ] Gán/gỡ nhóm tuỳ chọn được thực hiện tập trung tại form món (`/admin/mon`); form nhóm (`/admin/tuy-chon`) tập trung quản lý định nghĩa nhóm & option con
-- [ ] Xoá nhóm trong thư viện → hỏi xác nhận; tự động gỡ liên kết khỏi các món đang gán; đơn cũ không đổi
-- [ ] Gỡ nhóm khỏi món → giỏ hàng cũ chứa option của nhóm đó bị đánh dấu không hợp lệ (đã có ở T6) và `placeOrder` từ chối
+- [x] Giao diện form món, form nhóm tuỳ chọn, các trường nhập liệu và copy tiếng Việt khớp 100% prototype đã duyệt
+- [x] Bật hết hàng → khách không thêm được và `placeOrder` từ chối món đó
+- [x] Món đã có đơn không xoá cứng được; đơn cũ giữ tên/giá cũ
+- [x] Validate giá và `priceDelta` là số nguyên ≥ 0; `maxSelect` ≥ 1; nhóm có ít nhất 1 option
+- [x] Một nhóm gắn được vào nhiều món; sửa option/giá của nhóm → mọi món gắn nhóm đều thấy giá mới
+- [x] Gán/gỡ nhóm tuỳ chọn được thực hiện tập trung tại form món (`/admin/mon`); form nhóm (`/admin/tuy-chon`) tập trung quản lý định nghĩa nhóm & option con
+- [x] Xoá nhóm trong thư viện → hỏi xác nhận; tự động gỡ liên kết khỏi các món đang gán; đơn cũ không đổi
+- [x] Gỡ nhóm khỏi món → giỏ hàng cũ chứa option của nhóm đó bị đánh dấu không hợp lệ (đã có ở T6) và `placeOrder` từ chối
 
 **Verification:**
-- [ ] `pnpm test tests/integration/admin-products`
-- [ ] `pnpm test tests/integration/admin-option-groups`
-- [ ] `pnpm test:e2e e2e/admin-toggle-availability.spec.ts` (E2E #4)
+- [x] `pnpm test tests/integration/admin-products`
+- [x] `pnpm test tests/integration/admin-option-groups`
+- [x] `pnpm test:e2e e2e/admin-toggle-availability.spec.ts` (E2E #4)
 
 **Dependencies:** T13
 **Files likely touched:** `src/app/admin/mon/{page.tsx,[id]/page.tsx}`, `src/app/admin/tuy-chon/page.tsx`, `src/features/menu/admin-actions/{products,option-groups}.ts`, `src/features/menu/components/admin/{ProductForm,OptionGroupForm,OptionGroupPicker}.tsx`
