@@ -383,20 +383,20 @@
 
 ---
 
-### - [ ] T16: Trang cài đặt quán (A7)
+### - [x] T16: Trang cài đặt quán (A7)
 
 **Description:** `/admin/cai-dat`: tên, địa chỉ, SĐT, giờ mở cửa theo từng thứ (cho phép nghỉ), bán kính giao, phí ship, ngưỡng free ship, VietQR (bank BIN chọn từ danh sách, số TK, tên TK). Validate Zod; thay đổi áp dụng ngay cho menu/checkout.
 
 **UI Reference:** `docs/design/admin-prototype.html` (#section-settings: card giờ mở cửa, card phí giao hàng, card VietQR, card bán kính) · [admin-ui-notes.md](../docs/design/admin-ui-notes.md#26-màn-hình-chỉnh-sửa-cài-đặt-quán-admincai-dat--a7-a8)
 
 **Acceptance criteria:**
-- [ ] Bố cục trang cài đặt, các card cấu hình, công tắc và copy thông báo khớp 100% prototype đã duyệt
-- [ ] Đổi giờ đóng cửa → banner và `placeOrder` phản ánh ngay
-- [ ] Đổi phí ship/ngưỡng → checkout và tổng server khớp giá trị mới
-- [ ] Giờ đóng ≤ giờ mở bị từ chối (trừ khi đánh dấu nghỉ)
+- [x] Bố cục trang cài đặt, các card cấu hình, công tắc và copy thông báo khớp 100% prototype đã duyệt
+- [x] Đổi giờ đóng cửa → banner và `placeOrder` phản ánh ngay
+- [x] Đổi phí ship/ngưỡng → checkout và tổng server khớp giá trị mới
+- [x] Giờ đóng ≤ giờ mở bị từ chối (trừ khi đánh dấu nghỉ)
 
 **Verification:**
-- [ ] `pnpm test tests/integration/admin-settings`
+- [x] `pnpm test tests/integration/admin-settings`
 
 **Dependencies:** T10, T7
 **Files likely touched:** `src/app/admin/cai-dat/page.tsx`, `src/features/settings/{schema.ts,actions.ts,queries.ts}`, `src/features/settings/components/OpeningHoursEditor.tsx`
