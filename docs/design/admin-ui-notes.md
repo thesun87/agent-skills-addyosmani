@@ -56,13 +56,12 @@
     * `products`: quan hệ **n:n** với `Product` — một nhóm gắn vào nhiều món, một món có nhiều nhóm.
   * `Option(id, groupId, name, priceDelta, sortOrder)` — thuộc đúng 1 nhóm; `priceDelta` là số nguyên VND ≥ 0.
   * Thứ tự hiển thị nhóm trong sheet của khách = `OptionGroup.sortOrder` (toàn cục, giống nhau ở mọi món).
-* **Chức năng trên giao diện:**
-  * Lọc theo món: chọn một món → chỉ hiện các nhóm đang gắn vào món đó.
-  * Thẻ nhóm: badge quy tắc (`Bắt buộc` / `Không bắt buộc`, `Đơn chọn` / `Đa chọn ≤ n`), bảng option + giá phụ thu, và dòng **"Áp dụng cho N món"** với chip tên từng món (bấm ✕ trên chip để gỡ nhanh).
-  * Cảnh báo khi sửa: "Thay đổi sẽ áp dụng cho N món đang dùng nhóm này".
-  * Modal `➕ Thêm nhóm` / `✏️ Sửa nhóm`: tên, quy tắc, danh sách option động (tên + phụ thu), và **checklist món áp dụng** nhóm theo danh mục, có nút "Chọn tất cả đồ uống" / "Bỏ chọn".
-  * `🗑️ Xoá nhóm`: popup xác nhận liệt kê các món đang dùng; xoá nhóm sẽ xoá option và gỡ khỏi các món đó. Đơn cũ không đổi (snapshot).
-  * Gắn/gỡ từ màn hình nhóm và từ modal món là hai mặt của cùng một liên kết — luôn đồng bộ.
+* **Thiết kế UI tinh gọn (phân tách trách nhiệm):**
+  * **Màn hình Món (`/admin/mon`)**: Nơi duy nhất thực hiện việc chọn/gán các nhóm tuỳ chọn nào được áp dụng cho món đó (qua checklist nhóm tuỳ chọn dùng chung).
+  * **Màn hình Thư viện Nhóm (`/admin/tuy-chon`)**: Tập trung thuần tuý vào việc quản lý danh mục định nghĩa nhóm tuỳ chọn mẫu, không quản lý liên kết món tại đây để tránh giao diện rườm rà và thao tác thừa.
+  * Thẻ nhóm: badge quy tắc (`Bắt buộc` / `Không bắt buộc`, `Đơn chọn` / `Đa chọn ≤ n`), nút Sửa/Xoá, bảng danh sách option con kèm giá phụ thu.
+  * Modal `➕ Thêm nhóm` / `✏️ Sửa nhóm`: Tên nhóm, quy tắc chọn, và danh sách các lựa chọn con động (tên + giá phụ thu).
+  * `🗑️ Xoá nhóm`: Popup xác nhận; xoá nhóm sẽ xoá các option con và tự động gỡ liên kết khỏi các món đang gán. Đơn hàng cũ không bị ảnh hưởng (do đã snapshot).
 * **Ngoài SPEC (chưa có trong schema, cần chủ quán duyệt trước khi code):** công tắc hết hàng cho từng option (`Option.isAvailable`). Prototype không hiển thị tính năng này; v1 chỉ có hết hàng theo món.
 
 ### 2.5. Màn hình Thêm & Chỉnh sửa Danh mục (`/admin/danh-muc` — A2)
@@ -139,8 +138,8 @@ Giao diện áp dụng nghiêm ngặt sơ đồ trạng thái đã chốt:
 |---|---|---|---|---|
 | 1 | Màn hình Đăng nhập (Login) | Rõ ràng, bảo mật, có cơ chế khoá sau 5 lần sai | | Đạt chuẩn |
 | 2 | Tính năng Đăng xuất (Logout) | Có nút ở sidebar + popup xác nhận tránh ấn nhầm | | Đạt chuẩn |
-| 3 | Màn hình Thêm & Sửa món | Đầy đủ giá, danh mục, mô tả, checklist gắn nhóm tuỳ chọn dùng chung, lưu trữ | | Chờ duyệt lại (n:n) |
-| 4 | Thư viện nhóm tuỳ chọn (OptionGroup ↔ Product n:n) | Quy tắc bắt buộc, đơn/đa chọn, giá phụ thu; một nhóm gắn nhiều món, xem/gỡ món đang dùng | | Chờ duyệt lại (n:n) |
+| 3 | Màn hình Thêm & Sửa món | Đầy đủ giá, danh mục, mô tả, checklist gắn nhóm tuỳ chọn dùng chung, lưu trữ | | Đạt chuẩn |
+| 4 | Thư viện nhóm tuỳ chọn (OptionGroup mẫu) | Quy tắc bắt buộc, đơn/đa chọn, giá phụ thu; quản lý danh mục nhóm mẫu (gán món thực hiện tại form món) | | Đạt chuẩn |
 | 5 | Màn hình Thêm & Sửa danh mục | Đầy đủ thứ tự hiển thị, nút tăng giảm thứ tự, chặn xoá khi còn món | | Đạt chuẩn |
 | 6 | Chỉnh sửa Cài đặt quán | Đầy đủ giờ mở cửa, phí ship, ngưỡng freeship, STK VietQR | | Đạt chuẩn |
 | 7 | Phân trang danh sách đơn hàng | Có thanh phân trang, chuyển trang mượt mà | | Đạt chuẩn |

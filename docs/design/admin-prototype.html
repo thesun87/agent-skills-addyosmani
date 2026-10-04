@@ -2318,40 +2318,12 @@
                 </div>
 
                 <div class="library-hint">
-                  <span style="font-size: 18px">🔗</span>
+                  <span style="font-size: 18px">🎛️</span>
                   <span>
-                    Sửa tên, quy tắc hoặc giá phụ thu của một nhóm sẽ áp dụng ngay cho
-                    <strong>mọi món đang gắn nhóm đó</strong>. Gỡ một món khỏi nhóm không xoá nhóm.
-                    Đơn cũ giữ nguyên giá đã đặt.
+                    Quản lý danh mục các nhóm tuỳ chọn mẫu (Size, Đường, Đá, Topping…). Việc gán
+                    nhóm tuỳ chọn nào cho món nào được thực hiện trực tiếp trong phần
+                    <strong>Quản lý thực đơn (Món)</strong>.
                   </span>
-                </div>
-
-                <!-- Product Filter for Option Groups -->
-                <div
-                  style="
-                    display: flex;
-                    align-items: center;
-                    gap: 10px;
-                    margin-top: 14px;
-                    background: var(--color-surface);
-                    padding: 10px 14px;
-                    border-radius: var(--radius-sm);
-                  "
-                >
-                  <label for="opt-group-filter-prod" style="font-size: 12.5px; font-weight: 600"
-                    >Lọc theo món:</label
-                  >
-                  <select
-                    class="type-select"
-                    id="opt-group-filter-prod"
-                    onchange="filterOptionGroupsByProduct(this.value)"
-                  >
-                    <!-- Populated by JS from productsList -->
-                  </select>
-                  <span
-                    id="opt-group-filter-count"
-                    style="font-size: 12px; color: var(--color-text-muted)"
-                  ></span>
                 </div>
 
                 <!-- Option Groups Cards List -->
@@ -2763,7 +2735,7 @@
 
     <!-- ================= MODAL 2: THÊM & SỬA NHÓM TUỲ CHỌN (OPTION GROUP MODAL) ================= -->
     <div class="modal-backdrop" id="option-group-modal">
-      <div class="modal-box" style="max-width: 600px">
+      <div class="modal-box" style="max-width: 500px">
         <div class="modal-header">
           <span class="modal-title" id="opt-group-modal-title">Thêm nhóm tuỳ chọn mới</span>
           <button class="modal-close" onclick="closeOptionGroupModal()">&times;</button>
@@ -2806,39 +2778,6 @@
                     Bắt buộc phải chọn (isRequired)
                   </label>
                 </div>
-              </div>
-            </div>
-
-            <div class="impact-note" id="opt-group-impact-note" hidden>
-              <span>⚠️</span>
-              <span id="opt-group-impact-text"></span>
-            </div>
-
-            <div class="form-group">
-              <div
-                style="display: flex; justify-content: space-between; align-items: center; gap: 8px"
-              >
-                <label class="form-label" style="margin: 0">
-                  Áp dụng cho các món
-                  <span id="opt-group-products-count" class="shared-count" style="margin-left: 6px"
-                    >0 món</span
-                  >
-                </label>
-                <div style="display: flex; gap: 6px">
-                  <button type="button" class="btn-xs" onclick="setAllGroupProducts(true)">
-                    Chọn tất cả
-                  </button>
-                  <button type="button" class="btn-xs" onclick="setAllGroupProducts(false)">
-                    Bỏ chọn
-                  </button>
-                </div>
-              </div>
-              <div
-                class="check-list"
-                id="opt-group-products-checklist"
-                onchange="updateGroupProductsCount()"
-              >
-                <!-- Populated dynamically, grouped by category -->
               </div>
             </div>
 
@@ -2894,12 +2833,11 @@
         </div>
         <div class="modal-body">
           <p style="font-size: 13.5px" id="delete-group-message"></p>
-          <div class="link-row" id="delete-group-products"></div>
           <div class="impact-note" style="margin-top: 12px">
             <span>ℹ️</span>
             <span
-              >Toàn bộ tuỳ chọn trong nhóm sẽ bị xoá và nhóm được gỡ khỏi các món trên. Đơn hàng cũ
-              không bị ảnh hưởng.</span
+              >Toàn bộ tuỳ chọn trong nhóm sẽ bị xoá vĩnh viễn. Các món đang gán nhóm này sẽ tự động
+              gỡ liên kết. Đơn hàng cũ không bị ảnh hưởng.</span
             >
           </div>
         </div>
@@ -4548,49 +4486,17 @@ Hết nguyên liệu pha chế</textarea>
         }
       }
 
-      // ================= 4. THƯ VIỆN NHÓM TUỲ CHỌN DÙNG CHUNG (OptionGroup ↔ Product n:n) =================
-      let currentOptionFilterProduct = "ALL";
+      // ================= 4. THƯ VIỆN NHÓM TUỲ CHỌN (OptionGroup) =================
       let pendingDeleteGroupId = null;
 
-      function filterOptionGroupsByProduct(prodId) {
-        currentOptionFilterProduct = prodId;
-        renderOptionGroupsView();
-      }
-
-      function renderOptionGroupFilter() {
-        const select = document.getElementById("opt-group-filter-prod");
-        if (
-          currentOptionFilterProduct !== "ALL" &&
-          !productsList.some((p) => p.id === currentOptionFilterProduct)
-        ) {
-          currentOptionFilterProduct = "ALL";
-        }
-        select.innerHTML =
-          `<option value="ALL">Tất cả nhóm</option>` +
-          productsList
-            .map(
-              (p) =>
-                `<option value="${p.id}" ${p.id === currentOptionFilterProduct ? "selected" : ""}>${escapeHtml(p.name)} (${p.optionGroupIds.length} nhóm)</option>`,
-            )
-            .join("");
-      }
-
       function renderOptionGroupsView() {
-        renderOptionGroupFilter();
         const container = document.getElementById("opt-group-list-container");
-        const filterProd = productsList.find((p) => p.id === currentOptionFilterProduct);
-        const groups = sortedGroups().filter(
-          (g) => !filterProd || filterProd.optionGroupIds.includes(g.id),
-        );
-
-        document.getElementById("opt-group-filter-count").textContent = filterProd
-          ? `${groups.length} nhóm đang gắn vào "${filterProd.name}"`
-          : `${optionGroupsList.length} nhóm trong thư viện`;
+        const groups = sortedGroups();
 
         if (groups.length === 0) {
           container.innerHTML = `
             <div style="text-align: center; padding: 30px; color: var(--color-text-muted)">
-              ${filterProd ? `Món "${escapeHtml(filterProd.name)}" chưa gắn nhóm tuỳ chọn nào.` : "Thư viện chưa có nhóm tuỳ chọn nào."}
+              Thư viện chưa có nhóm tuỳ chọn nào. Bấm "Thêm nhóm mới" để tạo nhóm mẫu (Size, Đường, Đá, Topping...).
             </div>
           `;
           return;
@@ -4598,19 +4504,6 @@ Hết nguyên liệu pha chế</textarea>
 
         container.innerHTML = groups
           .map((grp) => {
-            const users = getProductsUsingGroup(grp.id);
-            const chipsHtml = users.length
-              ? users
-                  .map(
-                    (p) => `
-                    <span class="link-chip">
-                      ${escapeHtml(p.name)}
-                      <button type="button" title="Gỡ nhóm khỏi món này" aria-label="Gỡ ${escapeHtml(grp.name)} khỏi ${escapeHtml(p.name)}" onclick="unlinkGroupFromProduct('${grp.id}', '${p.id}')">✕</button>
-                    </span>`,
-                  )
-                  .join("")
-              : `<span class="link-chip is-empty">Chưa gắn món nào — nhóm sẽ không hiện cho khách</span>`;
-
             const rowsHtml = grp.options
               .map(
                 (opt) => `
@@ -4636,18 +4529,12 @@ Hết nguyên liệu pha chế</textarea>
                       <span>🎛️ ${escapeHtml(grp.name)}</span>
                       <span class="status-badge ${grp.isRequired ? "badge-pending" : "badge-completed"}">${grp.isRequired ? "Bắt buộc" : "Không bắt buộc"}</span>
                       <span class="status-badge badge-confirmed">${grp.maxSelect === 1 ? "Đơn chọn" : `Đa chọn ≤ ${grp.maxSelect}`}</span>
-                      <span class="shared-count">🔗 ${users.length} món</span>
                     </div>
                   </div>
                   <div style="display: flex; gap: 6px">
                     <button class="btn-ghost" id="btn-edit-${grp.id}" onclick="openOptionGroupModal('edit', '${grp.id}')">✏️ Sửa nhóm</button>
                     <button class="btn-ghost" id="btn-delete-${grp.id}" style="color: var(--color-danger)" onclick="openDeleteGroupModal('${grp.id}')">🗑️</button>
                   </div>
-                </div>
-
-                <div class="link-row">
-                  <span class="link-row-label">Áp dụng cho:</span>
-                  ${chipsHtml}
                 </div>
 
                 <table class="opt-items-table">
@@ -4667,103 +4554,32 @@ Hết nguyên liệu pha chế</textarea>
           .join("");
       }
 
-      function unlinkGroupFromProduct(grpId, prodId) {
-        const prod = productsList.find((p) => p.id === prodId);
-        const grp = getGroupById(grpId);
-        if (!prod || !grp) return;
-        prod.optionGroupIds = prod.optionGroupIds.filter((id) => id !== grpId);
-        renderOptionGroupsView();
-        renderProductsTable();
-        showToast(`Đã gỡ nhóm "${grp.name}" khỏi món "${prod.name}". Nhóm vẫn còn trong thư viện.`);
-      }
-
-      function renderGroupProductsChecklist(grpId) {
-        const container = document.getElementById("opt-group-products-checklist");
-        const byCategory = productsList.reduce((acc, p) => {
-          (acc[p.categoryName] = acc[p.categoryName] || []).push(p);
-          return acc;
-        }, {});
-
-        container.innerHTML = Object.entries(byCategory)
-          .map(
-            ([catName, prods]) => `
-            <div class="check-list-cat">${escapeHtml(catName)}</div>
-            ${prods
-              .map(
-                (p) => `
-              <label class="check-row">
-                <input type="checkbox" name="grp-product" value="${p.id}" ${grpId && p.optionGroupIds.includes(grpId) ? "checked" : ""} />
-                <span class="check-row-main">
-                  <span class="check-row-title">${escapeHtml(p.name)}</span>
-                  <span class="check-row-sub">${formatMoney(p.price)} · đang có ${p.optionGroupIds.length} nhóm</span>
-                </span>
-              </label>`,
-              )
-              .join("")}
-          `,
-          )
-          .join("");
-        updateGroupProductsCount();
-      }
-
-      function updateGroupProductsCount() {
-        const n = document.querySelectorAll(
-          '#opt-group-products-checklist input[name="grp-product"]:checked',
-        ).length;
-        document.getElementById("opt-group-products-count").textContent = `${n} món`;
-      }
-
-      function setAllGroupProducts(checked) {
-        document
-          .querySelectorAll('#opt-group-products-checklist input[name="grp-product"]')
-          .forEach((el) => {
-            el.checked = checked;
-          });
-        updateGroupProductsCount();
-      }
-
       function openOptionGroupModal(mode, grpId = null) {
         const modal = document.getElementById("option-group-modal");
         const title = document.getElementById("opt-group-modal-title");
         const delBtn = document.getElementById("btn-delete-opt-group");
         const rowsContainer = document.getElementById("modal-option-rows-container");
-        const impactNote = document.getElementById("opt-group-impact-note");
 
         rowsContainer.innerHTML = "";
 
         if (mode === "create") {
-          title.textContent = "Thêm nhóm tuỳ chọn vào thư viện";
+          title.textContent = "Thêm nhóm tuỳ chọn mới";
           document.getElementById("opt-group-edit-id").value = "";
           document.getElementById("opt-group-name").value = "";
           document.getElementById("opt-group-max-select").value = "1";
           document.getElementById("opt-group-required").checked = false;
           delBtn.style.display = "none";
-          impactNote.hidden = true;
           addOptionRowInput("", 0);
-          renderGroupProductsChecklist(null);
-          // Pre-tick the product currently filtered, if any — fastest path for "add a group to this drink".
-          if (currentOptionFilterProduct !== "ALL") {
-            const el = document.querySelector(
-              `#opt-group-products-checklist input[value="${currentOptionFilterProduct}"]`,
-            );
-            if (el) el.checked = true;
-            updateGroupProductsCount();
-          }
         } else {
           const grp = getGroupById(grpId);
           if (!grp) return;
-          const users = getProductsUsingGroup(grp.id);
           title.textContent = `Chỉnh sửa nhóm: ${grp.name}`;
           document.getElementById("opt-group-edit-id").value = grp.id;
           document.getElementById("opt-group-name").value = grp.name;
           document.getElementById("opt-group-max-select").value = String(grp.maxSelect);
           document.getElementById("opt-group-required").checked = grp.isRequired;
           delBtn.style.display = "inline-flex";
-          impactNote.hidden = users.length === 0;
-          document.getElementById("opt-group-impact-text").innerHTML =
-            `Nhóm này đang dùng ở <strong>${users.length} món</strong>. Thay đổi tên, quy tắc hoặc giá phụ thu sẽ áp dụng cho tất cả các món đó ngay khi lưu.`;
           grp.options.forEach((opt) => addOptionRowInput(opt.name, opt.priceDelta, opt.id));
-          renderGroupProductsChecklist(grp.id);
         }
 
         modal.classList.add("open");
@@ -4795,11 +4611,6 @@ Hết nguyên liệu pha chế</textarea>
         const name = document.getElementById("opt-group-name").value.trim();
         const maxSelect = parseInt(document.getElementById("opt-group-max-select").value, 10);
         const isRequired = document.getElementById("opt-group-required").checked;
-        const productIds = Array.from(
-          document.querySelectorAll(
-            '#opt-group-products-checklist input[name="grp-product"]:checked',
-          ),
-        ).map((el) => el.value);
 
         const rowEls = document.querySelectorAll("#modal-option-rows-container > div");
         const options = Array.from(rowEls).map((row, idx) => ({
@@ -4825,13 +4636,12 @@ Hết nguyên liệu pha chế</textarea>
           return;
         }
 
-        let grpId = editId;
         if (editId) {
           const g = getGroupById(editId);
           if (!g) return;
           Object.assign(g, { name, maxSelect, isRequired, options });
         } else {
-          grpId = `grp-${Date.now()}`;
+          const grpId = `grp-${Date.now()}`;
           const nextSort = Math.max(0, ...optionGroupsList.map((g) => g.sortOrder)) + 1;
           optionGroupsList.push({
             id: grpId,
@@ -4843,19 +4653,8 @@ Hết nguyên liệu pha chế</textarea>
           });
         }
 
-        // Sync the n:n link from the group side.
-        productsList.forEach((p) => {
-          const linked = p.optionGroupIds.includes(grpId);
-          const shouldLink = productIds.includes(p.id);
-          if (shouldLink && !linked) p.optionGroupIds = [...p.optionGroupIds, grpId];
-          if (!shouldLink && linked)
-            p.optionGroupIds = p.optionGroupIds.filter((id) => id !== grpId);
-        });
-
         showToast(
-          editId
-            ? `Đã cập nhật nhóm "${name}" — áp dụng cho ${productIds.length} món.`
-            : `Đã tạo nhóm "${name}" và gắn vào ${productIds.length} món.`,
+          editId ? `Đã cập nhật nhóm "${name}".` : `Đã tạo nhóm tuỳ chọn "${name}".`,
           "success",
         );
         closeOptionGroupModal();
@@ -4871,16 +4670,8 @@ Hết nguyên liệu pha chế</textarea>
         const grp = getGroupById(grpId);
         if (!grp) return;
         pendingDeleteGroupId = grpId;
-        const users = getProductsUsingGroup(grpId);
-        document.getElementById("delete-group-message").innerHTML = users.length
-          ? `Nhóm <strong>${escapeHtml(grp.name)}</strong> đang được dùng ở <strong>${users.length} món</strong>:`
-          : `Nhóm <strong>${escapeHtml(grp.name)}</strong> chưa gắn vào món nào.`;
-        document.getElementById("delete-group-products").innerHTML = users
-          .map(
-            (p) =>
-              `<span class="link-chip is-empty" style="font-weight: 600; color: var(--color-text)">${escapeHtml(p.name)}</span>`,
-          )
-          .join("");
+        document.getElementById("delete-group-message").innerHTML =
+          `Bạn có chắc muốn xoá nhóm tuỳ chọn <strong>${escapeHtml(grp.name)}</strong> khỏi danh sách?`;
         document.getElementById("delete-group-modal").classList.add("open");
       }
 
@@ -4892,7 +4683,6 @@ Hết nguyên liệu pha chế</textarea>
       function confirmDeleteOptionGroup() {
         const grp = getGroupById(pendingDeleteGroupId);
         if (!grp) return;
-        const affected = getProductsUsingGroup(grp.id).length;
         optionGroupsList = optionGroupsList.filter((g) => g.id !== grp.id);
         productsList.forEach((p) => {
           p.optionGroupIds = p.optionGroupIds.filter((id) => id !== grp.id);
@@ -4901,7 +4691,7 @@ Hết nguyên liệu pha chế</textarea>
         closeOptionGroupModal();
         renderOptionGroupsView();
         renderProductsTable();
-        showToast(`Đã xoá nhóm "${grp.name}" và gỡ khỏi ${affected} món.`, "danger");
+        showToast(`Đã xoá nhóm "${grp.name}".`, "danger");
       }
 
       // ================= 5. CATEGORY CRUD =================

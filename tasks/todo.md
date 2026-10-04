@@ -316,15 +316,15 @@
 
 ### - [ ] T14: CRUD món + tuỳ chọn + hết hàng + lưu trữ (A3)
 
-**Description:** `/admin/mon`: danh sách món có công tắc "Hết hàng" một chạm; form tạo/sửa món (tên, mô tả, giá, danh mục) với checklist **gắn nhóm tuỳ chọn dùng chung**. `/admin/tuy-chon`: thư viện nhóm tuỳ chọn (n:n với món — AD10): tạo/sửa/xoá nhóm + option con, chọn các món áp dụng. Món đã có trong đơn → "Lưu trữ" thay vì xoá. Snapshot đơn cũ không bị ảnh hưởng khi đổi giá.
+**Description:** `/admin/mon`: danh sách món có công tắc "Hết hàng" một chạm; form tạo/sửa món (tên, mô tả, giá, danh mục) với checklist **gắn nhóm tuỳ chọn dùng chung**. `/admin/tuy-chon`: thư viện nhóm tuỳ chọn (n:n với món — AD10): tạo/sửa/xoá định nghĩa nhóm + option con (việc chọn nhóm áp dụng cho món được thực hiện tập trung tại form món để tinh gọn UX). Món đã có trong đơn → "Lưu trữ" thay vì xoá. Snapshot đơn cũ không bị ảnh hưởng khi đổi giá.
 
 **Acceptance criteria:**
 - [ ] Bật hết hàng → khách không thêm được và `placeOrder` từ chối món đó
 - [ ] Món đã có đơn không xoá cứng được; đơn cũ giữ tên/giá cũ
 - [ ] Validate giá và `priceDelta` là số nguyên ≥ 0; `maxSelect` ≥ 1; nhóm có ít nhất 1 option
 - [ ] Một nhóm gắn được vào nhiều món; sửa option/giá của nhóm → mọi món gắn nhóm đều thấy giá mới
-- [ ] Gắn/gỡ nhóm từ form món và từ form nhóm cho cùng một kết quả
-- [ ] Xoá nhóm đang gắn vào món → hỏi xác nhận, liệt kê các món bị ảnh hưởng; đơn cũ không đổi
+- [ ] Gán/gỡ nhóm tuỳ chọn được thực hiện tập trung tại form món (`/admin/mon`); form nhóm (`/admin/tuy-chon`) tập trung quản lý định nghĩa nhóm & option con
+- [ ] Xoá nhóm trong thư viện → hỏi xác nhận; tự động gỡ liên kết khỏi các món đang gán; đơn cũ không đổi
 - [ ] Gỡ nhóm khỏi món → giỏ hàng cũ chứa option của nhóm đó bị đánh dấu không hợp lệ (đã có ở T6) và `placeOrder` từ chối
 
 **Verification:**
