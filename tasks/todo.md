@@ -300,7 +300,7 @@
 
 **Verification:**
 - [x] `pnpm test tests/unit/features/orders/order-state-machine.test.ts tests/integration/orders/admin-order-actions`
-- [ ] `pnpm test:e2e e2e/admin-process-order.spec.ts` (E2E #3)
+- [x] `pnpm test:e2e e2e/admin-process-order.spec.ts` (E2E #3)
 
 **Dependencies:** T9, T11
 **Files likely touched:** `src/features/orders/domain/order-state-machine.ts`, `src/features/orders/admin-actions.ts`, `src/features/orders/components/admin/OrderActions.tsx`, tests
@@ -309,8 +309,8 @@
 ---
 
 ### Checkpoint 3: Xử lý đơn
-- [ ] E2E #3 xanh
-- [ ] Review với người dùng
+- [x] E2E #3 xanh
+- [x] Review với người dùng
 
 ---
 
