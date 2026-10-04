@@ -1,4 +1,3 @@
-import { ShopHeader } from "@/components/ui/ShopHeader";
 import { MenuCatalog } from "@/features/menu/components/MenuCatalog";
 import { getVisibleMenu } from "@/features/menu/queries";
 
@@ -9,10 +8,7 @@ export default async function HomePage() {
 
   return (
     <div className="bg-surface min-h-screen">
-      <ShopHeader />
-      <main>
-        <MenuCatalog categories={categories} />
-      </main>
+      <MenuCatalog categories={categories} />
     </div>
   );
 }

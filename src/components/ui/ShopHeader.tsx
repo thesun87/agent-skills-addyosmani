@@ -5,23 +5,20 @@ export interface ShopHeaderProps {
   cartCount?: number;
   showStoreBanner?: boolean;
   showPromoStrip?: boolean;
+  children?: React.ReactNode;
 }
 
 export function ShopHeader({
   cartCount,
   showStoreBanner = true,
   showPromoStrip = true,
+  children,
 }: ShopHeaderProps) {
   return (
-    <header className="border-border/80 bg-surface-raised sticky top-0 z-40 border-b shadow-xs">
-      <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
-        <BrandLogo asHeading={true} />
-        <HeaderCartButton cartCount={cartCount} />
-      </div>
-
+    <>
       {showStoreBanner ? (
-        <div className="border-border/40 border-t bg-gradient-to-r from-[#442a22] to-[#2f1d17] px-4 py-2 text-xs text-[#fffaf4]">
-          <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-1">
+        <div className="border-border/40 border-b bg-gradient-to-r from-[#442a22] to-[#2f1d17] px-4 py-2 text-xs text-[#fffaf4]">
+          <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-1">
             <div className="flex items-center gap-2">
               <span className="inline-flex items-center gap-1.5 font-semibold text-[#8ed085]">
                 <span className="h-2 w-2 rounded-full bg-[#4ade80] shadow-[0_0_6px_#4ade80]" />
@@ -36,8 +33,8 @@ export function ShopHeader({
       ) : null}
 
       {showPromoStrip ? (
-        <div className="border-border/60 text-text border-t bg-[#f5e9d9] px-4 py-1.5 text-xs">
-          <div className="mx-auto flex max-w-5xl items-center justify-between">
+        <div className="border-border/60 text-text border-b bg-[#f5e9d9] px-4 py-1.5 text-xs">
+          <div className="mx-auto flex max-w-6xl items-center justify-between">
             <span>
               🛵 <strong className="text-primary font-bold">FREESHIP</strong> cho đơn từ 150.000đ
             </span>
@@ -45,6 +42,14 @@ export function ShopHeader({
           </div>
         </div>
       ) : null}
-    </header>
+
+      <header className="border-border/80 bg-surface-raised sticky top-0 z-40 border-b shadow-xs">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
+          <BrandLogo asHeading={true} />
+          <HeaderCartButton cartCount={cartCount} />
+        </div>
+        {children}
+      </header>
+    </>
   );
 }

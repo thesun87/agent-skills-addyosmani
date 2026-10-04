@@ -69,7 +69,7 @@ export function CartDrawer({
 
   return (
     <div
-      className="animate-in fade-in fixed inset-0 z-50 flex justify-end bg-black/60 backdrop-blur-xs transition-opacity"
+      className="animate-in fade-in fixed inset-0 z-50 flex justify-end bg-black/60 backdrop-blur-xs transition-opacity lg:hidden"
       onClick={onClose}
       aria-modal="true"
       role="dialog"
