@@ -10,9 +10,22 @@ The project is driven by documents, not ad-hoc requests — read them before sta
 
 - `SPEC.md` — approved spec: user stories + acceptance criteria, order state machine, data model, project structure, **Boundaries** (Always / Ask first / Never).
 - `tasks/plan.md` — architecture decisions (AD1–AD9), dependency graph, phases/checkpoints.
-- `tasks/todo.md` — per-task acceptance criteria and verification steps; tick boxes here when a task is done. Definition of Done for every task: tests written first, `pnpm lint && pnpm typecheck && pnpm test` green, UI strings in Vietnamese.
+- `tasks/todo.md` — per-task acceptance criteria and verification steps; tick boxes here when a task is done. Definition of Done for every task: tests written first, `pnpm lint && pnpm typecheck && pnpm test` green, UI strings in Vietnamese, UI strictly matching approved prototypes.
 
 Prototype tasks (T3b customer UI, T9b admin UI) must be approved by the shop owner before the matching code tasks; an approved prototype is the binding UI reference.
+
+## UI implementation & prototype contract
+
+Approved prototypes are the **binding UI reference** for all customer and admin screens. When implementing or modifying any user-facing component or page, agents **must open and inspect the approved prototype files before writing code**:
+
+- **Customer UI (`src/app/(shop)/**`):** `docs/design/customer-prototype.html` & `docs/design/customer-ui-notes.md`
+- **Admin UI (`src/app/admin/**`):** `docs/design/admin-prototype.html` & `docs/design/admin-ui-notes.md`
+
+The prototype is the single source of truth for:
+1. **Layout & Responsive Breakpoints:** DOM hierarchy, grid/flex layouts, sheet/dialog behavior (mobile 375px vs desktop 1280px for customer; 768px vs 1280px for admin).
+2. **Vietnamese Copywriting:** Button labels, placeholder text, field labels, status badges, toast notifications, confirmation modal copy must match the prototype verbatim. Never invent or paraphrase user-facing strings.
+3. **Interactive States:** Empty states, loading/submitting states, disabled buttons, toast alerts, error feedback.
+4. **Design Tokens:** Strictly use brand tokens in `src/app/globals.css` (`bg-primary`, `text-text`, `bg-surface`, `badge-*`, `status-*`). Do not introduce ad-hoc CSS colors or unstyled controls.
 
 ## Commands
 

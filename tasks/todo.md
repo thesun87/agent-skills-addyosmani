@@ -1,7 +1,7 @@
 # Tasks: Tuấn Linh Coffee
 
 > Spec: [SPEC.md](../SPEC.md) · Plan: [plan.md](plan.md)
-> Definition of Done mọi task: test viết trước (TDD) · `pnpm lint && pnpm typecheck && pnpm test` xanh · không secrets trong code · chuỗi UI tiếng Việt.
+> Definition of Done mọi task: test viết trước (TDD) · `pnpm lint && pnpm typecheck && pnpm test` xanh · không secrets trong code · chuỗi UI tiếng Việt · **giao diện bám sát prototype đã duyệt (`docs/design/customer-prototype.html` & `docs/design/admin-prototype.html`)**.
 
 ---
 
@@ -96,6 +96,8 @@
 
 **Description:** Trang `/` (Server Component) đọc danh mục hiển thị + món chưa lưu trữ, sắp theo `sortOrder`. Thanh danh mục dính đầu trang, cuộn tới mục. Thẻ món: ảnh (placeholder nếu chưa có), tên, mô tả, giá. Món `isAvailable=false` mờ + nhãn "Hết hàng", nút thêm bị vô hiệu.
 
+**UI Reference:** `docs/design/customer-prototype.html` (Mục Menu / Catalog: sticky category nav, thẻ món, nhãn hết hàng) · `docs/design/customer-ui-notes.md`
+
 **Acceptance criteria:**
 - [x] Menu render đúng thứ tự danh mục/món từ DB; danh mục ẩn và món lưu trữ không xuất hiện
 - [x] Món hết hàng không bấm thêm được (cả chuột và bàn phím)
@@ -115,6 +117,8 @@
 
 **Description:** Bấm món mở bottom sheet (mobile) / dialog (desktop): nhóm tuỳ chọn single/multi theo `maxSelect`, nhóm bắt buộc, chọn số lượng, giá cập nhật tức thì bằng `calculateLinePrice`. Zod schema `cartLineSchema` dùng chung với server sau này. Nút "Thêm vào giỏ" gọi callback (nối giỏ ở T6).
 
+**UI Reference:** `docs/design/customer-prototype.html` (Mục Options Sheet: bottom sheet mobile, dialog desktop, radio/checkbox option groups) · `docs/design/customer-ui-notes.md`
+
 **Acceptance criteria:**
 - [x] Nhóm bắt buộc chưa chọn → nút thêm disabled + thông báo rõ
 - [x] Không vượt quá `maxSelect`; giá = base + Σ delta × số lượng
@@ -133,6 +137,8 @@
 ### - [x] T6: Giỏ hàng localStorage (C3)
 
 **Description:** Cart store (reducer thuần + hook) lưu `{productId, optionIds, quantity, note}` vào localStorage (bọc try/catch). Gộp dòng trùng món + trùng tuỳ chọn. Icon giỏ có badge số lượng; trang `/gio-hang` sửa số lượng/xoá, hiển thị tạm tính từ giá menu hiện tại; dòng có món đã hết hàng/biến mất được đánh dấu và loại khỏi tổng.
+
+**UI Reference:** `docs/design/customer-prototype.html` (Mục Giỏ hàng: cart drawer / cart page, nút tăng giảm số lượng, tóm tắt tạm tính) · `docs/design/customer-ui-notes.md`
 
 **Acceptance criteria:**
 - [x] Reload trang giỏ còn nguyên; localStorage hỏng/không truy cập được → giỏ rỗng, không crash
@@ -171,6 +177,8 @@
 
 **Description:** `/thanh-toan`: chọn Giao hàng / Lấy tại quán; form tương ứng (form native + `useActionState`, Zod schema dùng chung, không thêm thư viện form); ghi chú bán kính giao; chọn khung giờ pickup từ `pickupSlots`; tóm tắt đơn với phí ship/free ship; chọn COD/tiền mặt tại quầy hoặc chuyển khoản. Gọi `placeOrder`, hiển thị lỗi nghiệp vụ tiếng Việt, xoá giỏ khi thành công và chuyển tới trang xác nhận. Banner "Quán đang đóng cửa, mở lại lúc HH:mm" ở layout khách + khoá nút đặt.
 
+**UI Reference:** `docs/design/customer-prototype.html` (Mục Checkout: tab Giao hàng / Pickup, tóm tắt đơn, banner đóng cửa) · `docs/design/customer-ui-notes.md`
+
 **Acceptance criteria:**
 - [x] Trường bắt buộc thay đổi đúng theo hình thức nhận; lỗi hiển thị ngay dưới trường
 - [x] Phí ship hiển thị khớp kết quả server trả về
@@ -189,6 +197,8 @@
 ### - [x] T9: Xác nhận + theo dõi đơn + VietQR (C6, C8)
 
 **Description:** `/don-hang/[code]`: form nhập SĐT → server so khớp (rate limit) → set cookie ngắn hạn cho đơn đó. Trang hiển thị món, tổng, trạng thái dạng timeline, tự làm mới 15s qua `GET /api/orders/[code]/status`. Đơn chuyển khoản chưa PAID: hiển thị ảnh VietQR (`src/lib/vietqr.ts`) + text STK/tên/số tiền/nội dung. Ngay sau khi đặt, người đặt vào thẳng không cần nhập lại SĐT.
+
+**UI Reference:** `docs/design/customer-prototype.html` (Mục Theo dõi đơn: timeline trạng thái, panel mã VietQR & copy STK) · `docs/design/customer-ui-notes.md`
 
 **Acceptance criteria:**
 - [x] SĐT sai → không lộ bất kỳ thông tin đơn nào (kể cả tồn tại hay không); endpoint status cũng yêu cầu cookie hợp lệ
@@ -236,9 +246,12 @@
 
 **Description:** Migration `AdminUser`; seed 1 admin từ biến môi trường `SEED_ADMIN_EMAIL/PASSWORD` (không hardcode). Auth.js v5 Credentials + bcrypt; khoá 15' sau 5 lần sai; middleware chặn `/admin/**`; helper `requireAdmin()` gọi ở mọi server action/route admin. Trang `/admin/dang-nhap`, nút đăng xuất, layout admin cơ bản.
 
+**UI Reference:** `docs/design/admin-prototype.html` (#section-login, modal đăng nhập, nút đăng xuất ở sidebar & modal xác nhận `#logout-modal`) · [admin-ui-notes.md](../docs/design/admin-ui-notes.md#21-màn-hình-đăng-nhập-admindang-nhap--a1)
+
 **Acceptance criteria:**
+- [ ] Giao diện form đăng nhập và popup xác nhận đăng xuất khớp 100% prototype đã duyệt
 - [ ] Chưa đăng nhập vào `/admin/*` → chuyển về trang đăng nhập; gọi thẳng server action admin → bị từ chối
-- [ ] Sai 5 lần → khoá 15 phút, thông báo không tiết lộ email có tồn tại hay không
+- [ ] Sai 5 lần → khoá 15 phút, thông báo tiếng Việt khớp prototype, không tiết lộ email có tồn tại hay không
 - [ ] Mật khẩu chỉ lưu dạng hash
 
 **Verification:**
@@ -255,7 +268,10 @@
 
 **Description:** `/admin/don-hang`: bảng/danh sách thẻ đơn lọc theo trạng thái, ngày, hình thức; đơn `PENDING` nổi bật. Polling 5s qua `GET /api/admin/orders?since=`. Nút "Bật âm báo" (bắt buộc 1 lần để vượt autoplay), phát âm khi có đơn mới chưa thấy. Xem chi tiết đơn.
 
+**UI Reference:** `docs/design/admin-prototype.html` (#section-orders: bảng danh sách đơn, thanh phân trang, bộ lọc trạng thái/ngày, card chi tiết đơn, nút bật âm báo) · [admin-ui-notes.md](../docs/design/admin-ui-notes.md#22-màn-hình-quản-lý-đơn-hàng-admindon-hang--a4-a5-a6)
+
 **Acceptance criteria:**
+- [ ] Bố cục bảng đơn hàng, thẻ chi tiết, bộ lọc, thanh phân trang và nút bật âm báo khớp 100% prototype đã duyệt
 - [ ] Đơn mới tạo từ trang khách hiện trên admin ≤ 10s
 - [ ] Âm báo phát đúng 1 lần cho mỗi đơn mới khi đã bật
 - [ ] Bộ lọc phản ánh trên URL (giữ khi reload)
@@ -274,7 +290,10 @@
 
 **Description:** `order-state-machine.ts` thuần theo sơ đồ trong SPEC (nhánh pickup/delivery). Server actions `transitionOrder`, `cancelOrder` (bắt buộc lý do), `markPaid` (lưu `paidAt`, `paidById`); mỗi lần đổi ghi `OrderStatusHistory`. UI nút hành động chỉ hiện bước hợp lệ tiếp theo.
 
+**UI Reference:** `docs/design/admin-prototype.html` (Nút chuyển trạng thái trên thẻ đơn, modal huỷ đơn kèm lý do `#cancel-order-modal`) · [admin-ui-notes.md](../docs/design/admin-ui-notes.md#22-màn-hình-quản-lý-đơn-hàng-admindon-hang--a4-a5-a6)
+
 **Acceptance criteria:**
+- [ ] Nút hành động, màu sắc trạng thái và modal huỷ đơn khớp prototype đã duyệt
 - [ ] Chuyển sai (VD `PENDING → DELIVERING`, `READY_FOR_PICKUP` cho đơn giao) bị từ chối ở server
 - [ ] Huỷ không lý do bị từ chối; chỉ huỷ được từ PENDING/CONFIRMED/PREPARING
 - [ ] Khách thấy trạng thái mới trên trang theo dõi ≤ 15s
@@ -301,7 +320,10 @@
 
 **Description:** `/admin/danh-muc`: thêm/sửa/ẩn danh mục, đổi thứ tự (nút lên/xuống). Không xoá được danh mục còn món.
 
+**UI Reference:** `docs/design/admin-prototype.html` (#section-categories, bảng danh mục, modal `#category-modal`, popup chặn xoá danh mục) · [admin-ui-notes.md](../docs/design/admin-ui-notes.md#25-màn-hình-thêm--chỉnh-sửa-danh-mục-admindanh-muc--a2)
+
 **Acceptance criteria:**
+- [ ] Bảng danh mục, nút tăng/giảm thứ tự, modal thêm/sửa và popup chặn xoá khớp 100% prototype đã duyệt
 - [ ] Thay đổi phản ánh trên menu khách (revalidate)
 - [ ] Xoá danh mục còn món → báo lỗi rõ
 
@@ -318,7 +340,10 @@
 
 **Description:** `/admin/mon`: danh sách món có công tắc "Hết hàng" một chạm; form tạo/sửa món (tên, mô tả, giá, danh mục) với checklist **gắn nhóm tuỳ chọn dùng chung**. `/admin/tuy-chon`: thư viện nhóm tuỳ chọn (n:n với món — AD10): tạo/sửa/xoá định nghĩa nhóm + option con (việc chọn nhóm áp dụng cho món được thực hiện tập trung tại form món để tinh gọn UX). Món đã có trong đơn → "Lưu trữ" thay vì xoá. Snapshot đơn cũ không bị ảnh hưởng khi đổi giá.
 
+**UI Reference:** `docs/design/admin-prototype.html` (#section-menu, bảng món, `#product-modal`, công tắc hết hàng một chạm; `#section-options`, `#option-group-modal`) · [admin-ui-notes.md](../docs/design/admin-ui-notes.md#23-màn-hình-thêm--chỉnh-sửa-món-adminmon--a3) & [admin-ui-notes.md](../docs/design/admin-ui-notes.md#24-màn-hình-thư-viện-nhóm-tuỳ-chọn-admintuy-chon--optiongroup--product-nn-ad10)
+
 **Acceptance criteria:**
+- [ ] Giao diện form món, form nhóm tuỳ chọn, các trường nhập liệu và copy tiếng Việt khớp 100% prototype đã duyệt
 - [ ] Bật hết hàng → khách không thêm được và `placeOrder` từ chối món đó
 - [ ] Món đã có đơn không xoá cứng được; đơn cũ giữ tên/giá cũ
 - [ ] Validate giá và `priceDelta` là số nguyên ≥ 0; `maxSelect` ≥ 1; nhóm có ít nhất 1 option
@@ -362,7 +387,10 @@
 
 **Description:** `/admin/cai-dat`: tên, địa chỉ, SĐT, giờ mở cửa theo từng thứ (cho phép nghỉ), bán kính giao, phí ship, ngưỡng free ship, VietQR (bank BIN chọn từ danh sách, số TK, tên TK). Validate Zod; thay đổi áp dụng ngay cho menu/checkout.
 
+**UI Reference:** `docs/design/admin-prototype.html` (#section-settings: card giờ mở cửa, card phí giao hàng, card VietQR, card bán kính) · [admin-ui-notes.md](../docs/design/admin-ui-notes.md#26-màn-hình-chỉnh-sửa-cài-đặt-quán-admincai-dat--a7-a8)
+
 **Acceptance criteria:**
+- [ ] Bố cục trang cài đặt, các card cấu hình, công tắc và copy thông báo khớp 100% prototype đã duyệt
 - [ ] Đổi giờ đóng cửa → banner và `placeOrder` phản ánh ngay
 - [ ] Đổi phí ship/ngưỡng → checkout và tổng server khớp giá trị mới
 - [ ] Giờ đóng ≤ giờ mở bị từ chối (trừ khi đánh dấu nghỉ)
