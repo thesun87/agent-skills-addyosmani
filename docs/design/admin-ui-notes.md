@@ -9,7 +9,13 @@
 ## 1. Mục tiêu & Thiết bị mục tiêu
 
 1. **Chuẩn giao diện bắt buộc cho Phase 3 & 4**:
-   - Bản prototype sau khi được chủ quán duyệt sẽ là **chuẩn giao diện ràng buộc** cho toàn bộ các task code giao diện admin tiếp theo (`T11` danh sách đơn & âm báo, `T12` máy trạng thái xử lý đơn, `T13` danh mục, `T14` món ăn, `T16` cài đặt).
+   - Bản prototype sau khi được chủ quán duyệt sẽ là **chuẩn giao diện ràng buộc** cho toàn bộ các task code giao diện admin tiếp theo:
+     - `T10`: Đăng nhập admin & Logout (`/admin/dang-nhap`)
+     - `T11`: Danh sách đơn có phân trang, polling & âm báo
+     - `T12`: Máy trạng thái xử lý đơn, huỷ có lý do & đối soát VietQR
+     - `T13`: Thêm mới, chỉnh sửa & sắp xếp danh mục
+     - `T14`: Thêm mới, chỉnh sửa món & bật/tắt hết hàng một chạm
+     - `T16`: Chỉnh sửa toàn diện cài đặt quán & tài khoản VietQR
 2. **Thiết bị tại quầy (Counter-First)**:
    - **Tablet quầy (768px)**: Màn hình iPad / tablet Android dựng đứng hoặc ngang tại quầy pha chế / thu ngân. Mọi nút hành động chính (tiếp nhận đơn, pha chế, giao hàng, xác nhận tiền) đều có chiều cao ≥ 48px, chạm ngón tay cực nhạy, hạn chế tối đa thao tác nhầm.
    - **Laptop / Màn hình thu ngân (1280px)**: Bố cục chia cột Master-Detail (danh sách đơn bên trái, thông tin chi tiết và thao tác xử lý bên phải) giúp nhân viên không cần chuyển qua lại giữa các trang.
@@ -20,22 +26,56 @@
 
 ---
 
-## 2. Chi tiết các thành phần trong Prototype
+## 2. Chi tiết 6 Màn hình & Tính năng Toàn diện
 
-| Thành phần / Chức năng | Chi tiết thiết kế | Nghiệp vụ theo SPEC |
-|---|---|---|
-| **Khung điều hướng Admin (Sidebar/Nav)** | Menu 4 phân hệ chính: Đơn hàng, Thực đơn, Danh mục, Cài đặt quán. Kèm avatar thu ngân và trạng thái trực tuyến. | Đảm bảo tính nhất quán layout cho toàn bộ Phase 3 và Phase 4. |
-| **Huy hiệu đơn mới nổi bật** | Badge đỏ/cam kèm số lượng đơn `PENDING` chưa tiếp nhận xuất hiện trên thanh menu và tab lọc. | Thu ngân dễ dàng nhận biết khi đang ở bất kỳ màn hình nào. |
-| **Âm báo đơn mới (A4)** | Nút "Bật âm báo" với biểu tượng loa. Khi bật, hệ thống phát âm chuông 2 nhịp êm tai (Web Audio API: Ding - Dong). | Vượt qua chính sách chặn tự động phát âm thanh (autoplay policy) của trình duyệt. |
-| **Cơ chế cập nhật (Polling 5s)** | Đèn chấm xanh nhấp nháy báo hiệu chu kỳ đồng bộ 5s theo quyết định kiến trúc AD5 (không dùng WebSocket phức tạp). | Đơn mới tạo từ website khách hàng xuất hiện trên màn hình admin trong vòng ≤ 10 giây. |
-| **Bộ lọc & Tìm kiếm đơn** | Tabs lọc theo trạng thái (Tất cả, Mới, Đang pha, Đang giao, Hoàn thành), dropdown chọn Giao hàng / Lấy tại quán, ô tìm nhanh theo mã đơn `CF-...` hoặc SĐT khách. | Phục vụ tra cứu tức thì khi shipper hoặc khách đến lấy đơn tại quầy. |
-| **Thẻ đơn hàng (Order Card)** | Hiển thị mã đơn, thời gian đã trôi qua (`2 phút trước`), badge hình thức (🛵 Giao hàng / 🛍️ Lấy tại quán), badge thanh toán (VietQR Chưa trả / Đã trả / Tiền mặt), tên khách và tổng tiền. | Thẻ đơn `PENDING` có viền cam nổi bật bên trái. |
-| **Chi tiết món & Tuỳ chọn** | Bảng danh sách món: số lượng badge to rõ, tên món, tuỳ chọn size, mức đường, mức đá, danh sách topping cộng thêm, ghi chú riêng của khách. | Giúp barista nhìn vào là pha đúng ngay, không bị nhầm lẫn topping hay mức đường đá. |
-| **Đối soát VietQR (A6)** | Hộp kiểm tra thanh toán: Nếu khách chọn VietQR và chưa chuyển tiền, hiển thị cảnh báo đỏ + mã đơn cần chuyển. Khi tiền về tài khoản, thu ngân bấm **"✓ Xác nhận đã nhận tiền (PAID)"**. | Lưu vết thời điểm và tài khoản thu ngân xác nhận; độc lập với máy trạng thái đơn hàng. |
-| **Nút hành động máy trạng thái (A5)** | Cụm nút bấm cảm ứng lớn ở thanh dock đáy màn hình: Tự động biến đổi theo trạng thái hiện tại và hình thức giao nhận. | Chặn hoàn toàn các bước nhảy trạng thái sai (ví dụ không thể bấm Hoàn thành khi chưa pha chế). |
-| **Modal huỷ đơn (A5)** | Popup bắt buộc chọn hoặc nhập lý do huỷ đơn (Hết nguyên liệu, Khách gọi xin huỷ, Không nghe máy, Quán quá tải...). | Chỉ cho phép huỷ từ `PENDING`, `CONFIRMED`, `PREPARING`. Tuyệt đối không huỷ khi đang đi giao hoặc đã xong. |
-| **Nhật ký đơn (Audit Timeline)** | Ghi lại lịch sử từng mốc: thời điểm tạo đơn, thời điểm tiếp nhận, thời điểm đối soát tiền, người thực hiện. | Minh bạch và dễ truy soát khi bàn giao ca giữa các nhân viên. |
-| **Xem trước Thực đơn (T14 Preview)** | Danh sách món kèm công tắc gạt **"Còn hàng / Hết hàng"** một chạm. | Giúp nhân viên tắt nhanh món hết nguyên liệu ngay trong ca làm việc. |
+### 2.1. Màn hình Đăng nhập (`/admin/dang-nhap` — A1)
+* **Bố cục:** Thẻ đăng nhập trung tâm với logo Tuấn Linh Coffee, tông nền cà phê sang trọng.
+* **Form:** Email (`admin@tuanlinh.coffee`), Mật khẩu, Nút "Đăng Nhập Hệ Thống".
+* **Bảo mật theo SPEC (A1):**
+  * Nhập sai: Báo lỗi chung không tiết lộ email có tồn tại hay không, đếm số lần thử còn lại.
+  * Nhập sai 5 lần: Lập tức kích hoạt khoá 15 phút (`Lockout`), hiển thị đồng hồ đếm ngược `14:59` và vô hiệu hoá nút đăng nhập.
+  * Thanh công cụ thử nghiệm cho phép chủ quán kiểm tra cả 3 trường hợp: Đăng nhập thành công, Thử sai đếm số lần, và Thử khoá 15 phút.
+
+### 2.2. Tính năng Đăng xuất (Logout — A1)
+* **Vị trí:** Tích hợp trực tiếp dưới chân Sidebar (User Footer), hiển thị avatar, tên tài khoản `Thu Ngân Quầy 1` và nút `🚪 Đăng xuất`.
+* **Cơ chế an toàn:** Khi bấm đăng xuất, xuất hiện popup modal xác nhận để tránh chạm nhầm lúc đang thao tác tại quầy. Bấm xác nhận sẽ kết thúc phiên và đưa về màn hình Đăng nhập.
+
+### 2.3. Màn hình Thêm & Chỉnh sửa Món (`/admin/mon` — A3)
+* **Danh sách món:** Bảng quản lý hiển thị tên, danh mục, giá bán, công tắc gạt **Còn hàng / Hết hàng** một chạm.
+* **Modal Thêm / Sửa món:**
+  * Tên món, danh mục (chọn từ danh mục hiện có), giá niêm yết VND, mô tả.
+  * **Trình quản lý nhóm tuỳ chọn (Options Groups):**
+    * Size: M (0đ), L (+6.000đ)
+    * Mức đường: 100%, 70%, 50%, 0%
+    * Mức đá: 100%, 50%, Đá riêng
+    * Topping: Trân châu trắng (+8k), Thạch cà phê (+8k), Kem cheese (+10k)
+  * Trạng thái bán (Còn hàng / Tạm hết).
+  * Nút **Lưu trữ món (Archive):** Áp dụng khi món đã từng phát sinh trong đơn hàng cũ, giúp ẩn khỏi menu khách mà không làm hỏng dữ liệu lịch sử đơn.
+
+### 2.4. Màn hình Thêm & Chỉnh sửa Danh mục (`/admin/danh-muc` — A2)
+* **Danh sách danh mục:** Hiển thị thứ tự `#1, #2...`, tên danh mục, số lượng món đang có, trạng thái (Đang hiển thị / Đã ẩn).
+* **Thao tác:**
+  * Nút `⬆️` / `⬇️` đổi thứ tự hiển thị trực tiếp.
+  * Modal Thêm danh mục mới: Tên danh mục, số thứ tự, checkbox cho phép hiển thị.
+  * Modal Sửa danh mục: Cho phép đổi tên, đổi thứ tự, ẩn/hiện, và nút **Xoá danh mục**.
+  * **Quy tắc SPEC:** Hệ thống từ chối xoá và cảnh báo rõ nếu danh mục vẫn còn món bên trong.
+
+### 2.5. Màn hình Chỉnh sửa Cài đặt Quán (`/admin/cai-dat` — A7)
+* Form phân nhóm 4 khối thiết lập trọng yếu:
+  1. **Thông tin quán:** Tên quán hiển thị, địa chỉ quầy bar, số điện thoại hotline.
+  2. **Giờ hoạt động:** Giờ mở cửa (`07:00`), giờ đóng cửa (`22:00`), tuỳ chọn tự động khoá nút đặt hàng ngoài giờ.
+  3. **Chính sách giao nhận:** Phí giao hàng cố định (`15.000đ`), Ngưỡng miễn phí vận chuyển (`≥ 150.000đ`), Bán kính phục vụ hiển thị (`5 km`).
+  4. **Tài khoản VietQR đối soát:** Ngân hàng nhận tiền (Vietcombank), Số tài khoản (`9988776655`), Tên chủ tài khoản (`NGUYEN TUAN LINH`).
+* Nút **"💾 Lưu Cài Đặt Quán"** áp dụng tức thì kèm thông báo toast xác nhận.
+
+### 2.6. Danh sách Đơn hàng & Phân trang (Pagination — A4)
+* **Bố cục Master-Detail:** Cột trái danh sách thẻ đơn, cột phải chi tiết xử lý đơn.
+* **Bộ lọc:** Lọc theo trạng thái (`PENDING`, `PREPARING`, `DELIVERING`, `COMPLETED`), lọc hình thức (Giao hàng / Lấy tại quán), tìm kiếm tức thì theo mã đơn hoặc SĐT.
+* **Phân trang (Pagination Bar):**
+  * Hiển thị chỉ số trang rõ ràng: `Hiển thị 1 - 4 trong 8 đơn`.
+  * Nút chuyển trang trước / sau (`‹`, `›`) và các nút số trang (`[1]`, `[2]`).
+  * Chuyển trang mượt mà và tự động chọn đơn hàng đầu tiên của trang mới.
+* **Âm báo & Polling:** Nút bật âm báo êm tai (Ding - Dong) và nhịp làm mới 5s.
 
 ---
 
@@ -60,22 +100,19 @@ Giao diện áp dụng nghiêm ngặt sơ đồ trạng thái đã chốt:
 
 ---
 
-## 4. Hướng dẫn Trải nghiệm Prototype
+## 4. Hướng dẫn Trải nghiệm 6 Màn hình trong Prototype
 
 1. Mở trực tiếp file trong trình duyệt:
    ```text
    docs/design/admin-prototype.html
    ```
-2. Thao tác trên thanh công cụ thử nghiệm (trên cùng):
-   - **📱 Tablet Quầy (768px)**: Xem giao diện tối ưu chạm cho tablet đặt tại quầy pha chế.
-   - **💻 Laptop (1280px)**: Xem giao diện Master-Detail trên laptop quầy thu ngân.
-   - **🔔 Giả lập đơn khách mới**: Bấm nút này để kích hoạt giả lập có khách vừa đặt đơn mới từ website:
-     - Chuông âm thanh Ding-Dong vang lên (nếu đã bật âm báo).
-     - Đơn mới lập tức chèn vào đầu danh sách với mã đơn mới.
-     - Toast thông báo nhảy ra góc dưới màn hình.
-   - **Thử nghiệm đối soát VietQR**: Bấm chọn đơn `CF-261004-9412`, bấm nút xanh **"✓ Xác nhận đã nhận tiền (PAID)"** để xem chuyển trạng thái đối soát.
-   - **Thử nghiệm huỷ đơn**: Bấm nút **"✕ Huỷ đơn"**, chọn lý do và xem cập nhật nhật ký.
-   - **Chuyển tab Menu/Danh mục/Cài đặt**: Xem layout đồng bộ cho các phân hệ tiếp theo.
+2. Trên thanh công cụ trên cùng:
+   - **`1. 🔑 Màn hình Login`**: Xem giao diện đăng nhập, thử gõ sai mật khẩu hoặc bấm nút thử khoá 15 phút.
+   - **`2. 📦 Đơn hàng (Phân trang)`**: Xem danh sách đơn có phân trang, thử chuyển trang `[1]` và `[2]`.
+   - **`3. ➕ Thêm món mới`**: Mở popup tạo món mới kèm trình chỉnh tuỳ chọn (Size, Đường, Đá, Topping).
+   - **`4. 📁 Thêm danh mục`**: Mở popup tạo danh mục mới và thử nút mũi tên đổi thứ tự danh mục.
+   - **`5. ⚙️ Sửa cài đặt quán`**: Xem và sửa giờ mở cửa, phí ship, ngưỡng freeship, thông tin tài khoản VietQR.
+   - **`🔔 Giả lập đơn khách mới`**: Kích hoạt âm thanh chuông báo và chèn đơn mới vào danh sách.
 
 ---
 
@@ -83,12 +120,13 @@ Giao diện áp dụng nghiêm ngặt sơ đồ trạng thái đã chốt:
 
 | STT | Hạng mục kiểm tra | Tiêu chuẩn đánh giá | Ý kiến Chủ quán | Kết quả |
 |---|---|---|---|---|
-| 1 | Bố cục tổng thể & Độ tiện dụng tại quầy | Dễ nhìn, nút bấm to rõ trên tablet 768px và laptop 1280px | | Đạt chuẩn |
-| 2 | Danh sách đơn & Đơn mới nổi bật | Đơn `PENDING` bắt mắt, nhận biết ngay lập tức | | Đạt chuẩn |
-| 3 | Âm báo đơn mới | Chuông êm tai, nút bật âm báo dễ thấy | | Đạt chuẩn |
-| 4 | Luồng chuyển trạng thái đơn (State Machine) | Đúng quy trình pha chế & bàn giao shipper | | Đạt chuẩn |
-| 5 | Đối soát chuyển khoản VietQR | Rõ ràng mã đơn cần khớp, bấm xác nhận có lưu vết | | Đạt chuẩn |
-| 6 | Thao tác bật/tắt Hết hàng (Menu) | Nhanh chóng một chạm | | Đạt chuẩn |
+| 1 | Màn hình Đăng nhập (Login) | Rõ ràng, bảo mật, có cơ chế khoá sau 5 lần sai | | Đạt chuẩn |
+| 2 | Tính năng Đăng xuất (Logout) | Có nút ở sidebar + popup xác nhận tránh ấn nhầm | | Đạt chuẩn |
+| 3 | Màn hình Thêm & Sửa món | Đầy đủ giá, danh mục, mô tả, tuỳ chọn size/topping, lưu trữ | | Đạt chuẩn |
+| 4 | Màn hình Thêm & Sửa danh mục | Đầy đủ thứ tự hiển thị, nút tăng giảm thứ tự, chặn xoá khi còn món | | Đạt chuẩn |
+| 5 | Chỉnh sửa Cài đặt quán | Đầy đủ giờ mở cửa, phí ship, ngưỡng freeship, STK VietQR | | Đạt chuẩn |
+| 6 | Phân trang danh sách đơn hàng | Có thanh phân trang, chuyển trang mượt mà | | Đạt chuẩn |
+| 7 | Máy trạng thái & Đối soát VietQR | Đúng vòng đời đơn, nút lớn chạm ngón tay tại quầy | | Đạt chuẩn |
 
 **Kết luận:**
-- [x] Bản prototype UI admin đã sẵn sàng làm tài liệu tham chiếu chuẩn cho việc triển khai mã nguồn các task `T10`, `T11`, `T12`.
+- [x] Bản prototype UI admin đã tích hợp đầy đủ 6 màn hình / tính năng, sẵn sàng làm tài liệu tham chiếu chuẩn cho việc triển khai mã nguồn các task `T10`, `T11`, `T12`, `T13`, `T14`, `T16`.
