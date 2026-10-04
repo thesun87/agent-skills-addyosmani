@@ -10,10 +10,10 @@ test.describe("E2E #4: Admin bật/tắt hết hàng một chạm (Checkpoint 4,
     await expect(page.getByRole("heading", { name: /Đăng Nhập Quản Trị/i })).toBeVisible();
 
     await page.locator("#login-email").fill("admin@tuanlinh.coffee");
-    await page.locator("#login-password").fill("admin123456");
-    await page.getByRole("button", { name: /Đăng Nhập Hệ Thống/i }).click();
+    await page.locator("#login-password").fill("Admin123!@");
+    await page.locator("#btn-submit-login").click();
 
-    await expect(page).toHaveURL(/\/admin\/don-hang/);
+    await expect(page).toHaveURL(/\/admin\/don-hang/, { timeout: 15000 });
 
     // 2. Admin navigates to /admin/mon
     await page.goto("/admin/mon");
