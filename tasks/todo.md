@@ -67,24 +67,24 @@
 
 ### Checkpoint 1: Foundation
 - [x] Tất cả lệnh build/lint/typecheck/test xanh
-- [ ] Stack local khởi động từ đầu theo README trong ≤ 10 phút
-- [ ] Review với người dùng trước khi sang Phase 2
+- [x] Stack local khởi động từ đầu theo README trong ≤ 10 phút
+- [x] Review với người dùng trước khi sang Phase 2
 
 ---
 
 ## Phase 2 — Luồng khách hàng
 
-### - [ ] T3b: Prototype UI khách hàng
+### - [x] T3b: Prototype UI khách hàng
 
 **Description:** Prototype HTML tĩnh click-through (không backend), mobile-first, dùng đúng token màu/font/logo đã duyệt và dữ liệu menu mẫu trong SPEC. Màn hình: menu + thanh danh mục, sheet tuỳ chọn món, giỏ hàng, checkout (giao hàng / lấy tại quán, phí ship/free ship), xác nhận đơn + VietQR, theo dõi đơn (nhập SĐT, timeline), banner đóng cửa, trạng thái lỗi/rỗng (giỏ rỗng, món hết hàng). Publish làm artifact để chủ quán xem trên điện thoại và góp ý.
 
 **Acceptance criteria:**
-- [ ] Đi hết luồng menu → tuỳ chọn → giỏ → checkout → xác nhận bằng cách bấm, ở 375px và 1280px
-- [ ] Có đủ trạng thái: hết hàng, giỏ rỗng, đóng cửa, lỗi form
-- [ ] Chủ quán duyệt; góp ý ghi vào `docs/design/customer-ui-notes.md`
+- [x] Đi hết luồng menu → tuỳ chọn → giỏ → checkout → xác nhận bằng cách bấm, ở 375px và 1280px
+- [x] Có đủ trạng thái: hết hàng, giỏ rỗng, đóng cửa, lỗi form
+- [x] Chủ quán duyệt; góp ý ghi vào `docs/design/customer-ui-notes.md`
 
 **Verification:**
-- [ ] Manual: chủ quán duyệt trên điện thoại thật
+- [x] Manual: chủ quán duyệt trên điện thoại thật
 
 **Dependencies:** Checkpoint 1 (không cần code app, chỉ cần token)
 **Files likely touched:** `docs/design/customer-prototype.html`, `docs/design/customer-ui-notes.md`
