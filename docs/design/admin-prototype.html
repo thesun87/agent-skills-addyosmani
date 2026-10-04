@@ -172,7 +172,7 @@
         min-height: calc(100vh - 50px);
       }
 
-      /* ================= SCREEN 1: LOGIN VIEW ================= */
+      /* ================= 1. LOGIN SCREEN VIEW ================= */
       .login-screen-wrapper {
         flex: 1;
         display: flex;
@@ -482,7 +482,7 @@
         font-size: 10px;
       }
 
-      /* Sidebar User Footer & Logout (Req 2) */
+      /* Sidebar User Footer & Logout */
       .user-footer {
         padding: 12px 14px;
         border-top: 1px solid #33221b;
@@ -673,7 +673,6 @@
         overflow: hidden;
       }
 
-      /* Left Pane: Filters & Order Cards */
       .orders-master {
         width: 410px;
         border-right: 1px solid var(--color-border);
@@ -727,7 +726,6 @@
         color: var(--color-text-muted);
       }
 
-      /* Filter Chips */
       .filter-chips-row {
         display: flex;
         gap: 6px;
@@ -789,7 +787,6 @@
         background: rgba(255, 255, 255, 0.25);
       }
 
-      /* Secondary Filter: Delivery/Pickup */
       .filter-sub-row {
         display: flex;
         justify-content: space-between;
@@ -809,7 +806,6 @@
         cursor: pointer;
       }
 
-      /* Order Cards List */
       .order-cards-list {
         flex: 1;
         overflow-y: auto;
@@ -878,7 +874,6 @@
         flex-wrap: wrap;
       }
 
-      /* Badges */
       .status-badge {
         font-size: 11px;
         font-weight: 600;
@@ -889,47 +884,13 @@
         gap: 4px;
       }
 
-      .badge-pending {
-        background: #fef3c7;
-        color: #92400e;
-        border: 1px solid #fde68a;
-      }
-
-      .badge-confirmed {
-        background: #e0f2fe;
-        color: #075985;
-        border: 1px solid #bae6fd;
-      }
-
-      .badge-preparing {
-        background: #f3e8ff;
-        color: #6b21a8;
-        border: 1px solid #e9d5ff;
-      }
-
-      .badge-delivering {
-        background: #ffedd5;
-        color: #9a3412;
-        border: 1px solid #fed7aa;
-      }
-
-      .badge-ready {
-        background: #ecfdf5;
-        color: #065f46;
-        border: 1px solid #a7f3d0;
-      }
-
-      .badge-completed {
-        background: #f1f5f9;
-        color: #334155;
-        border: 1px solid #e2e8f0;
-      }
-
-      .badge-cancelled {
-        background: #fee2e2;
-        color: #991b1b;
-        border: 1px solid #fecaca;
-      }
+      .badge-pending { background: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
+      .badge-confirmed { background: #e0f2fe; color: #075985; border: 1px solid #bae6fd; }
+      .badge-preparing { background: #f3e8ff; color: #6b21a8; border: 1px solid #e9d5ff; }
+      .badge-delivering { background: #ffedd5; color: #9a3412; border: 1px solid #fed7aa; }
+      .badge-ready { background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; }
+      .badge-completed { background: #f1f5f9; color: #334155; border: 1px solid #e2e8f0; }
+      .badge-cancelled { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
 
       .type-pill {
         font-size: 10.5px;
@@ -938,15 +899,8 @@
         font-weight: 600;
       }
 
-      .type-delivery {
-        background: #eef2ff;
-        color: #3730a3;
-      }
-
-      .type-pickup {
-        background: #fdf4ff;
-        color: #86198f;
-      }
+      .type-delivery { background: #eef2ff; color: #3730a3; }
+      .type-pickup { background: #fdf4ff; color: #86198f; }
 
       .pay-pill {
         font-size: 10.5px;
@@ -955,15 +909,8 @@
         font-weight: 600;
       }
 
-      .pay-unpaid {
-        background: #fef2f2;
-        color: var(--color-danger);
-      }
-
-      .pay-paid {
-        background: #ecfdf5;
-        color: var(--color-support);
-      }
+      .pay-unpaid { background: #fef2f2; color: var(--color-danger); }
+      .pay-paid { background: #ecfdf5; color: var(--color-support); }
 
       .card-customer {
         display: flex;
@@ -973,15 +920,8 @@
         color: var(--color-text);
       }
 
-      .card-name {
-        font-weight: 600;
-      }
-
-      .card-total {
-        font-weight: 700;
-        color: var(--color-primary);
-        font-size: 13.5px;
-      }
+      .card-name { font-weight: 600; }
+      .card-total { font-weight: 700; color: var(--color-primary); font-size: 13.5px; }
 
       .card-summary {
         font-size: 11.5px;
@@ -991,7 +931,7 @@
         text-overflow: ellipsis;
       }
 
-      /* Pagination Bar for Orders (Req 6) */
+      /* Pagination Bar for Orders */
       .pagination-bar {
         padding: 10px 14px;
         border-top: 1px solid var(--color-border);
@@ -1003,15 +943,8 @@
         color: var(--color-text-muted);
       }
 
-      .pagination-info {
-        font-size: 11.5px;
-      }
-
-      .pagination-buttons {
-        display: flex;
-        align-items: center;
-        gap: 4px;
-      }
+      .pagination-info { font-size: 11.5px; }
+      .pagination-buttons { display: flex; align-items: center; gap: 4px; }
 
       .page-btn {
         background: var(--color-surface);
@@ -1026,20 +959,9 @@
         text-align: center;
       }
 
-      .page-btn:hover:not(:disabled) {
-        background: #f2e4d4;
-      }
-
-      .page-btn.active {
-        background: var(--color-primary);
-        border-color: var(--color-primary);
-        color: white;
-      }
-
-      .page-btn:disabled {
-        opacity: 0.4;
-        cursor: not-allowed;
-      }
+      .page-btn:hover:not(:disabled) { background: #f2e4d4; }
+      .page-btn.active { background: var(--color-primary); border-color: var(--color-primary); color: white; }
+      .page-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
       /* Right Pane: Order Details */
       .orders-detail {
@@ -1052,10 +974,7 @@
         background: var(--color-surface);
       }
 
-      .tablet-mode .orders-detail {
-        padding: 14px;
-        gap: 12px;
-      }
+      .tablet-mode .orders-detail { padding: 14px; gap: 12px; }
 
       .detail-card {
         background: var(--color-surface-card);
@@ -1065,11 +984,8 @@
         box-shadow: var(--shadow-sm);
       }
 
-      .tablet-mode .detail-card {
-        padding: 14px;
-      }
+      .tablet-mode .detail-card { padding: 14px; }
 
-      /* Detail Top Header */
       .detail-header {
         display: flex;
         justify-content: space-between;
@@ -1079,11 +995,7 @@
         padding-bottom: 14px;
       }
 
-      .detail-title-group {
-        display: flex;
-        flex-direction: column;
-        gap: 4px;
-      }
+      .detail-title-group { display: flex; flex-direction: column; gap: 4px; }
 
       .detail-code {
         font-family: var(--font-display);
@@ -1095,15 +1007,8 @@
         gap: 10px;
       }
 
-      .detail-meta-text {
-        font-size: 12px;
-        color: var(--color-text-muted);
-      }
-
-      .detail-actions-top {
-        display: flex;
-        gap: 8px;
-      }
+      .detail-meta-text { font-size: 12px; color: var(--color-text-muted); }
+      .detail-actions-top { display: flex; gap: 8px; }
 
       .btn-ghost {
         background: var(--color-surface);
@@ -1119,17 +1024,15 @@
         gap: 6px;
       }
 
-      .btn-ghost:hover {
-        background: #f4e9dc;
-      }
+      .btn-ghost:hover { background: #f4e9dc; }
 
       .btn-primary-sm {
         background: var(--color-primary);
         color: white;
         border: none;
-        padding: 6px 12px;
+        padding: 6px 14px;
         border-radius: var(--radius-sm);
-        font-size: 12px;
+        font-size: 12.5px;
         font-weight: 600;
         cursor: pointer;
         display: inline-flex;
@@ -1137,11 +1040,8 @@
         gap: 6px;
       }
 
-      .btn-primary-sm:hover {
-        background: var(--color-primary-hover);
-      }
+      .btn-primary-sm:hover { background: var(--color-primary-hover); }
 
-      /* Customer info grid */
       .info-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -1149,110 +1049,24 @@
         margin-top: 14px;
       }
 
-      .info-item {
-        display: flex;
-        flex-direction: column;
-        gap: 2px;
-      }
+      .info-item { display: flex; flex-direction: column; gap: 2px; }
+      .info-label { font-size: 11px; font-weight: 600; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+      .info-value { font-size: 13.5px; font-weight: 600; color: var(--color-text); display: flex; align-items: center; gap: 6px; }
 
-      .info-label {
-        font-size: 11px;
-        font-weight: 600;
-        color: var(--color-text-muted);
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-      }
+      .call-link { color: var(--color-info); text-decoration: none; display: inline-flex; align-items: center; gap: 4px; font-size: 12px; }
+      .call-link:hover { text-decoration: underline; }
 
-      .info-value {
-        font-size: 13.5px;
-        font-weight: 600;
-        color: var(--color-text);
-        display: flex;
-        align-items: center;
-        gap: 6px;
-      }
+      .items-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 13px; }
+      .items-table th { text-align: left; padding: 8px 10px; border-bottom: 2px solid var(--color-border); font-size: 11px; font-weight: 600; color: var(--color-text-muted); text-transform: uppercase; }
+      .items-table td { padding: 12px 10px; border-bottom: 1px solid var(--color-border-light); vertical-align: middle; }
 
-      .call-link {
-        color: var(--color-info);
-        text-decoration: none;
-        display: inline-flex;
-        align-items: center;
-        gap: 4px;
-        font-size: 12px;
-      }
+      .item-qty-badge { background: #f4e9dc; color: var(--color-text); font-weight: 700; font-size: 12px; padding: 2px 7px; border-radius: 4px; display: inline-block; }
+      .item-details { display: flex; flex-direction: column; gap: 3px; }
+      .item-title { font-weight: 600; font-size: 13.5px; color: var(--color-text); }
+      .item-options { font-size: 12px; color: var(--color-text-muted); line-height: 1.4; }
+      .item-note { font-size: 11.5px; color: #92400e; background: #fffbeb; padding: 3px 8px; border-radius: 4px; display: inline-block; margin-top: 3px; border-left: 2px solid #f59e0b; }
+      .text-right { text-align: right; }
 
-      .call-link:hover {
-        text-decoration: underline;
-      }
-
-      /* Items Table */
-      .items-table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 10px;
-        font-size: 13px;
-      }
-
-      .items-table th {
-        text-align: left;
-        padding: 8px 10px;
-        border-bottom: 2px solid var(--color-border);
-        font-size: 11px;
-        font-weight: 600;
-        color: var(--color-text-muted);
-        text-transform: uppercase;
-      }
-
-      .items-table td {
-        padding: 12px 10px;
-        border-bottom: 1px solid var(--color-border-light);
-        vertical-align: middle;
-      }
-
-      .item-qty-badge {
-        background: #f4e9dc;
-        color: var(--color-text);
-        font-weight: 700;
-        font-size: 12px;
-        padding: 2px 7px;
-        border-radius: 4px;
-        display: inline-block;
-      }
-
-      .item-details {
-        display: flex;
-        flex-direction: column;
-        gap: 3px;
-      }
-
-      .item-title {
-        font-weight: 600;
-        font-size: 13.5px;
-        color: var(--color-text);
-      }
-
-      .item-options {
-        font-size: 12px;
-        color: var(--color-text-muted);
-        line-height: 1.4;
-      }
-
-      .item-note {
-        font-size: 11.5px;
-        color: #92400e;
-        background: #fffbeb;
-        padding: 3px 8px;
-        border-radius: 4px;
-        display: inline-block;
-        margin-top: 3px;
-        border-left: 2px solid #f59e0b;
-      }
-
-      .text-right {
-        text-align: right;
-      }
-
-      /* Price Calculation Summary */
       .price-summary-box {
         background: var(--color-surface);
         border-radius: var(--radius-sm);
@@ -1265,52 +1079,14 @@
         border: 1px dashed var(--color-border);
       }
 
-      .price-row {
-        display: flex;
-        justify-content: space-between;
-        color: var(--color-text-muted);
-      }
+      .price-row { display: flex; justify-content: space-between; color: var(--color-text-muted); }
+      .price-row.total-row { border-top: 1px solid var(--color-border); padding-top: 8px; font-size: 16px; font-weight: 700; color: var(--color-text); }
+      .price-row.total-row .total-amount { color: var(--color-primary); font-size: 18px; }
 
-      .price-row.total-row {
-        border-top: 1px solid var(--color-border);
-        padding-top: 8px;
-        font-size: 16px;
-        font-weight: 700;
-        color: var(--color-text);
-      }
-
-      .price-row.total-row .total-amount {
-        color: var(--color-primary);
-        font-size: 18px;
-      }
-
-      /* Payment Reconciliation Card */
-      .payment-card {
-        border-left: 4px solid var(--color-accent);
-        background: #fffdf9;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-      }
-
-      .payment-card.is-paid {
-        border-left-color: var(--color-support);
-        background: #fafdf9;
-      }
-
-      .payment-card-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-      }
-
-      .payment-status-title {
-        font-size: 14px;
-        font-weight: 700;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-      }
+      .payment-card { border-left: 4px solid var(--color-accent); background: #fffdf9; display: flex; flex-direction: column; gap: 10px; }
+      .payment-card.is-paid { border-left-color: var(--color-support); background: #fafdf9; }
+      .payment-card-header { display: flex; align-items: center; justify-content: space-between; }
+      .payment-status-title { font-size: 14px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
 
       .btn-mark-paid {
         background: var(--color-support);
@@ -1328,10 +1104,7 @@
         transition: all 0.2s;
       }
 
-      .btn-mark-paid:hover {
-        background: #41673b;
-        transform: translateY(-1px);
-      }
+      .btn-mark-paid:hover { background: #41673b; transform: translateY(-1px); }
 
       .qr-reconcile-info {
         font-size: 12px;
@@ -1347,7 +1120,6 @@
         gap: 8px;
       }
 
-      /* State Machine Big Action Controls */
       .action-dock {
         background: var(--color-surface-raised);
         border: 2px solid var(--color-border);
@@ -1364,30 +1136,11 @@
         z-index: 50;
       }
 
-      .tablet-mode .action-dock {
-        padding: 12px 14px;
-      }
+      .tablet-mode .action-dock { padding: 12px 14px; }
+      .action-info { display: flex; flex-direction: column; gap: 2px; }
+      .action-hint { font-size: 11.5px; color: var(--color-text-muted); font-weight: 500; }
+      .action-buttons-group { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 
-      .action-info {
-        display: flex;
-        flex-direction: column;
-        gap: 2px;
-      }
-
-      .action-hint {
-        font-size: 11.5px;
-        color: var(--color-text-muted);
-        font-weight: 500;
-      }
-
-      .action-buttons-group {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        flex-wrap: wrap;
-      }
-
-      /* Large Touch Friendly Action Buttons */
       .btn-state-action {
         min-height: 48px;
         padding: 10px 24px;
@@ -1404,32 +1157,12 @@
         box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
       }
 
-      .btn-state-action:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
-      }
-
-      .btn-state-action:active {
-        transform: translateY(1px);
-      }
-
-      .btn-primary-action {
-        background: var(--color-primary);
-        color: white;
-      }
-
-      .btn-primary-action:hover {
-        background: var(--color-primary-hover);
-      }
-
-      .btn-success-action {
-        background: var(--color-support);
-        color: white;
-      }
-
-      .btn-success-action:hover {
-        background: #3f6539;
-      }
+      .btn-state-action:hover { transform: translateY(-1px); box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15); }
+      .btn-state-action:active { transform: translateY(1px); }
+      .btn-primary-action { background: var(--color-primary); color: white; }
+      .btn-primary-action:hover { background: var(--color-primary-hover); }
+      .btn-success-action { background: var(--color-support); color: white; }
+      .btn-success-action:hover { background: #3f6539; }
 
       .btn-cancel-action {
         background: transparent;
@@ -1444,12 +1177,8 @@
         transition: all 0.18s;
       }
 
-      .btn-cancel-action:hover {
-        background: var(--color-danger-bg);
-        border-color: var(--color-danger);
-      }
+      .btn-cancel-action:hover { background: var(--color-danger-bg); border-color: var(--color-danger); }
 
-      /* Audit Timeline Log */
       .history-timeline {
         margin-top: 10px;
         display: flex;
@@ -1469,37 +1198,12 @@
         background: var(--color-border);
       }
 
-      .history-item {
-        position: relative;
-        font-size: 12px;
-        color: var(--color-text);
-        display: flex;
-        flex-direction: column;
-        gap: 1px;
-      }
+      .history-item { position: relative; font-size: 12px; color: var(--color-text); display: flex; flex-direction: column; gap: 1px; }
+      .history-dot { position: absolute; left: -19px; top: 3px; width: 10px; height: 10px; border-radius: 50%; background: var(--color-border); border: 2px solid #fff; }
+      .history-item.latest .history-dot { background: var(--color-primary); box-shadow: 0 0 0 3px rgba(184, 50, 42, 0.2); }
+      .history-meta { font-size: 11px; color: var(--color-text-muted); }
 
-      .history-dot {
-        position: absolute;
-        left: -19px;
-        top: 3px;
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        background: var(--color-border);
-        border: 2px solid #fff;
-      }
-
-      .history-item.latest .history-dot {
-        background: var(--color-primary);
-        box-shadow: 0 0 0 3px rgba(184, 50, 42, 0.2);
-      }
-
-      .history-meta {
-        font-size: 11px;
-        color: var(--color-text-muted);
-      }
-
-      /* ================= MODALS & DRAWERS (CANCEL, PRODUCT, CATEGORY, LOGOUT) ================= */
+      /* ================= MODALS & DRAWERS ================= */
       .modal-backdrop {
         position: fixed;
         inset: 0;
@@ -1512,9 +1216,7 @@
         padding: 16px;
       }
 
-      .modal-backdrop.open {
-        display: flex;
-      }
+      .modal-backdrop.open { display: flex; }
 
       .modal-box {
         background: #fff;
@@ -1544,39 +1246,76 @@
         justify-content: space-between;
       }
 
-      .modal-title {
-        font-family: var(--font-display);
-        font-size: 17px;
-        font-weight: 700;
-        color: var(--color-text);
-      }
+      .modal-title { font-family: var(--font-display); font-size: 17px; font-weight: 700; color: var(--color-text); }
+      .modal-close { background: none; border: none; font-size: 22px; color: var(--color-text-muted); cursor: pointer; }
+      .modal-body { padding: 20px; display: flex; flex-direction: column; gap: 16px; font-size: 13px; }
+      .modal-footer { padding: 14px 20px; background: var(--color-surface); border-top: 1px solid var(--color-border); display: flex; justify-content: flex-end; gap: 10px; }
 
-      .modal-close {
-        background: none;
-        border: none;
-        font-size: 22px;
-        color: var(--color-text-muted);
-        cursor: pointer;
-      }
-
-      .modal-body {
-        padding: 20px;
+      /* Option Groups Card in Options Section */
+      .opt-group-container {
         display: flex;
         flex-direction: column;
         gap: 16px;
-        font-size: 13px;
       }
 
-      .modal-footer {
-        padding: 14px 20px;
-        background: var(--color-surface);
-        border-top: 1px solid var(--color-border);
+      .opt-group-card {
+        background: #fff;
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-sm);
+        padding: 16px;
         display: flex;
-        justify-content: flex-end;
-        gap: 10px;
+        flex-direction: column;
+        gap: 12px;
       }
 
-      /* Option Groups Builder (Req 3) */
+      .opt-group-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        border-bottom: 1px solid var(--color-border-light);
+        padding-bottom: 10px;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .opt-group-title {
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--color-text);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .opt-group-meta {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        flex-wrap: wrap;
+        font-size: 11px;
+      }
+
+      .opt-items-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 12.5px;
+      }
+
+      .opt-items-table th {
+        text-align: left;
+        padding: 6px 10px;
+        background: var(--color-surface);
+        font-size: 11px;
+        color: var(--color-text-muted);
+        text-transform: uppercase;
+      }
+
+      .opt-items-table td {
+        padding: 8px 10px;
+        border-bottom: 1px solid var(--color-border-light);
+      }
+
       .options-builder-box {
         border: 1px dashed var(--color-border);
         border-radius: var(--radius-md);
@@ -1608,7 +1347,7 @@
         font-weight: 500;
       }
 
-      /* ================= SECTION VIEWS (MENU, CATEGORIES, SETTINGS) ================= */
+      /* ================= SECTION VIEWS ================= */
       .section-view {
         display: none;
         flex: 1;
@@ -1617,65 +1356,16 @@
         background: var(--color-surface);
       }
 
-      .section-view.active {
-        display: flex;
-        flex-direction: column;
-        gap: 18px;
-      }
+      .section-view.active { display: flex; flex-direction: column; gap: 18px; }
+      .settings-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 18px; }
 
-      /* Settings Form Layout (Req 5) */
-      .settings-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-        gap: 18px;
-      }
-
-      /* Product Out of stock toggle switch */
-      .switch {
-        position: relative;
-        display: inline-block;
-        width: 44px;
-        height: 24px;
-        vertical-align: middle;
-      }
-
-      .switch input {
-        opacity: 0;
-        width: 0;
-        height: 0;
-      }
-
-      .slider {
-        position: absolute;
-        cursor: pointer;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: #cbd5e1;
-        transition: 0.2s;
-        border-radius: 24px;
-      }
-
-      .slider:before {
-        position: absolute;
-        content: "";
-        height: 18px;
-        width: 18px;
-        left: 3px;
-        bottom: 3px;
-        background-color: white;
-        transition: 0.2s;
-        border-radius: 50%;
-      }
-
-      input:checked + .slider {
-        background-color: var(--color-support);
-      }
-
-      input:checked + .slider:before {
-        transform: translateX(20px);
-      }
+      /* Switch */
+      .switch { position: relative; display: inline-block; width: 44px; height: 24px; vertical-align: middle; }
+      .switch input { opacity: 0; width: 0; height: 0; }
+      .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #cbd5e1; transition: 0.2s; border-radius: 24px; }
+      .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: 0.2s; border-radius: 50%; }
+      input:checked + .slider { background-color: var(--color-support); }
+      input:checked + .slider:before { transform: translateX(20px); }
 
       /* Toast Notification */
       .toast-box {
@@ -1697,17 +1387,9 @@
         border-left: 5px solid var(--color-accent);
       }
 
-      .toast-box.show {
-        transform: translateY(0);
-      }
-
-      .toast-box.success {
-        border-left-color: var(--color-support);
-      }
-
-      .toast-box.danger {
-        border-left-color: var(--color-danger);
-      }
+      .toast-box.show { transform: translateY(0); }
+      .toast-box.success { border-left-color: var(--color-support); }
+      .toast-box.danger { border-left-color: var(--color-danger); }
     </style>
   </head>
   <body>
@@ -1730,26 +1412,29 @@
           🖥️ Toàn màn hình
         </button>
 
-        <!-- Quick Jump to all 6 Screens/Features -->
+        <!-- Quick Jump to all Key Screens -->
         <button class="proto-btn" onclick="showLoginView()">
-          1. 🔑 Màn hình Login
+          1. 🔑 Login
         </button>
         <button class="proto-btn" onclick="showDashboardView('orders')">
-          2. 📦 Đơn hàng (Phân trang)
+          2. 📦 Đơn hàng
         </button>
-        <button class="proto-btn" onclick="openProductModal('create')">
-          3. ➕ Thêm món mới
+        <button class="proto-btn" onclick="showDashboardView('menu')">
+          3. 📋 Thực đơn (Món)
         </button>
-        <button class="proto-btn" onclick="openCategoryModal('create')">
-          4. 📁 Thêm danh mục
+        <button class="proto-btn" onclick="showDashboardView('options')">
+          4. 🎛️ Nhóm tuỳ chọn
+        </button>
+        <button class="proto-btn" onclick="showDashboardView('categories')">
+          5. 📁 Danh mục
         </button>
         <button class="proto-btn" onclick="showDashboardView('settings')">
-          5. ⚙️ Sửa cài đặt quán
+          6. ⚙️ Cài đặt quán
         </button>
 
         <!-- Live incoming order simulator -->
         <button class="proto-btn simulate" onclick="simulateNewIncomingOrder()">
-          🔔 Giả lập đơn khách mới
+          🔔 Giả lập đơn khách
         </button>
       </div>
     </div>
@@ -1866,6 +1551,11 @@
                 <span class="nav-icon">📋</span>
                 <span class="nav-label">Thực đơn</span>
               </li>
+              <!-- Dedicated Option Groups Navigation (User Request) -->
+              <li class="nav-item" id="nav-options" onclick="switchNavSection('options')">
+                <span class="nav-icon">🎛️</span>
+                <span class="nav-label">Nhóm tuỳ chọn</span>
+              </li>
               <li class="nav-item" id="nav-categories" onclick="switchNavSection('categories')">
                 <span class="nav-icon">🗂️</span>
                 <span class="nav-label">Danh mục</span>
@@ -1876,7 +1566,7 @@
               </li>
             </ul>
 
-            <!-- Sidebar User Profile & LOGOUT (Req 2) -->
+            <!-- Sidebar User Profile & LOGOUT -->
             <div class="user-footer">
               <div class="user-profile-group">
                 <div class="user-avatar">TL</div>
@@ -1981,7 +1671,7 @@
                   <!-- Dynamically populated by JS -->
                 </div>
 
-                <!-- Pagination Bar (Req 6) -->
+                <!-- Pagination Bar -->
                 <div class="pagination-bar">
                   <span class="pagination-info" id="pagination-info-text">
                     Hiển thị 1 - 4 trong 8 đơn
@@ -2007,7 +1697,7 @@
               </div>
             </div>
 
-            <!-- ================= SECTION 2: MENU & PRODUCTS (Req 3: THÊM & SỬA MÓN) ================= -->
+            <!-- ================= SECTION 2: MENU & PRODUCTS ================= -->
             <div class="section-view" id="section-menu">
               <div class="detail-card">
                 <div class="detail-header">
@@ -2017,7 +1707,6 @@
                     </h2>
                     <p class="detail-meta-text">Bật/tắt hết hàng một chạm và tuỳ chỉnh giá, tuỳ chọn món</p>
                   </div>
-                  <!-- Nút thêm món mới -->
                   <button class="btn-primary-sm" onclick="openProductModal('create')">
                     ➕ Thêm món mới
                   </button>
@@ -2029,6 +1718,7 @@
                       <th>Tên món</th>
                       <th>Danh mục</th>
                       <th>Giá niêm yết</th>
+                      <th>Nhóm tuỳ chọn</th>
                       <th>Trạng thái bán</th>
                       <th class="text-right">Thao tác</th>
                     </tr>
@@ -2040,7 +1730,42 @@
               </div>
             </div>
 
-            <!-- ================= SECTION 3: CATEGORIES (Req 4: THÊM & SỬA DANH MỤC) ================= -->
+            <!-- ================= SECTION 3: QUẢN LÝ NHÓM TUỲ CHỌN (OPTION GROUPS) ================= -->
+            <div class="section-view" id="section-options">
+              <div class="detail-card">
+                <div class="detail-header">
+                  <div>
+                    <h2 style="font-family: var(--font-display); font-size: 18px">
+                      Quản lý nhóm tuỳ chọn (Size, Đường, Đá, Topping)
+                    </h2>
+                    <p class="detail-meta-text">
+                      Thiết lập các nhóm tuỳ chọn linh hoạt (OptionGroup) và tuỳ chọn kèm phụ thu (Option)
+                    </p>
+                  </div>
+                  <button class="btn-primary-sm" onclick="openOptionGroupModal('create')">
+                    ➕ Thêm nhóm tuỳ chọn mới
+                  </button>
+                </div>
+
+                <!-- Product Filter for Option Groups -->
+                <div style="display: flex; align-items: center; gap: 10px; margin-top: 14px; background: var(--color-surface); padding: 10px 14px; border-radius: var(--radius-sm)">
+                  <span style="font-size: 12.5px; font-weight: 600">Lọc theo món áp dụng:</span>
+                  <select class="type-select" id="opt-group-filter-prod" onchange="filterOptionGroupsByProduct(this.value)">
+                    <option value="ALL">Tất cả món áp dụng</option>
+                    <option value="prod-1">Cà phê muối</option>
+                    <option value="prod-2">Trà đào cam sả</option>
+                    <option value="prod-3">Bạc xỉu 3 tầng</option>
+                  </select>
+                </div>
+
+                <!-- Option Groups Cards List -->
+                <div class="opt-group-container" id="opt-group-list-container" style="margin-top: 16px">
+                  <!-- Dynamically populated by JS -->
+                </div>
+              </div>
+            </div>
+
+            <!-- ================= SECTION 4: CATEGORIES ================= -->
             <div class="section-view" id="section-categories">
               <div class="detail-card">
                 <div class="detail-header">
@@ -2050,7 +1775,6 @@
                     </h2>
                     <p class="detail-meta-text">Thêm danh mục, đổi thứ tự hiển thị và quản lý ẩn/hiện</p>
                   </div>
-                  <!-- Nút thêm danh mục mới -->
                   <button class="btn-primary-sm" onclick="openCategoryModal('create')">
                     ➕ Thêm danh mục
                   </button>
@@ -2073,7 +1797,7 @@
               </div>
             </div>
 
-            <!-- ================= SECTION 4: SETTINGS (Req 5: SỬA CÀI ĐẶT QUÁN) ================= -->
+            <!-- ================= SECTION 5: SETTINGS ================= -->
             <div class="section-view" id="section-settings">
               <form onsubmit="handleSaveSettings(event)" style="display: flex; flex-direction: column; gap: 18px">
                 <div class="settings-grid">
@@ -2198,7 +1922,7 @@
       </div>
     </div>
 
-    <!-- ================= MODAL 1: THÊM & SỬA MÓN (Req 3) ================= -->
+    <!-- ================= MODAL 1: THÊM & SỬA MÓN ================= -->
     <div class="modal-backdrop" id="product-modal">
       <div class="modal-box">
         <div class="modal-header">
@@ -2237,45 +1961,16 @@
               <textarea class="form-input" id="prod-desc" rows="2" placeholder="Mô tả hương vị, nguyên liệu đặc trưng..."></textarea>
             </div>
 
-            <!-- Options Groups Preview & Config -->
+            <!-- Options Groups assigned to this Product -->
             <div class="options-builder-box">
               <div style="display: flex; justify-content: space-between; align-items: center">
-                <strong style="font-size: 12.5px; color: var(--color-text)">Nhóm tuỳ chọn áp dụng cho món:</strong>
-                <button type="button" class="btn-xs" onclick="showToast('Thêm nhóm tuỳ chọn mới')">+ Thêm nhóm</button>
+                <strong style="font-size: 12.5px; color: var(--color-text)">Nhóm tuỳ chọn áp dụng:</strong>
+                <button type="button" class="btn-xs" onclick="switchNavSection('options'); closeProductModal();">
+                  ⚙️ Quản lý chi tiết
+                </button>
               </div>
-
-              <div class="option-group-card">
-                <div style="display: flex; justify-content: space-between; font-size: 12px; font-weight: 600">
-                  <span>1. Chọn Size (Bắt buộc)</span>
-                  <span style="color: var(--color-primary)">Đơn chọn</span>
-                </div>
-                <div style="display: flex; gap: 6px; flex-wrap: wrap">
-                  <span class="option-pill-tag">Size M (+0đ)</span>
-                  <span class="option-pill-tag">Size L (+6.000đ)</span>
-                </div>
-              </div>
-
-              <div class="option-group-card">
-                <div style="display: flex; justify-content: space-between; font-size: 12px; font-weight: 600">
-                  <span>2. Mức Đường & Đá</span>
-                  <span style="color: var(--color-text-muted)">Tuỳ chọn</span>
-                </div>
-                <div style="display: flex; gap: 6px; flex-wrap: wrap">
-                  <span class="option-pill-tag">Đường: 100%, 70%, 50%, 0%</span>
-                  <span class="option-pill-tag">Đá: 100%, 50%, Đá riêng</span>
-                </div>
-              </div>
-
-              <div class="option-group-card">
-                <div style="display: flex; justify-content: space-between; font-size: 12px; font-weight: 600">
-                  <span>3. Topping Thêm (Tối đa 3 loại)</span>
-                  <span style="color: var(--color-support)">Đa chọn</span>
-                </div>
-                <div style="display: flex; gap: 6px; flex-wrap: wrap">
-                  <span class="option-pill-tag">Trân châu trắng (+8k)</span>
-                  <span class="option-pill-tag">Thạch cà phê (+8k)</span>
-                  <span class="option-pill-tag">Kem cheese (+10k)</span>
-                </div>
+              <div id="product-options-preview-container" style="display: flex; flex-direction: column; gap: 6px">
+                <!-- Populated dynamically -->
               </div>
             </div>
 
@@ -2301,7 +1996,81 @@
       </div>
     </div>
 
-    <!-- ================= MODAL 2: THÊM & SỬA DANH MỤC (Req 4) ================= -->
+    <!-- ================= MODAL 2: THÊM & SỬA NHÓM TUỲ CHỌN (OPTION GROUP MODAL) ================= -->
+    <div class="modal-backdrop" id="option-group-modal">
+      <div class="modal-box" style="max-width: 520px">
+        <div class="modal-header">
+          <span class="modal-title" id="opt-group-modal-title">Thêm nhóm tuỳ chọn mới</span>
+          <button class="modal-close" onclick="closeOptionGroupModal()">&times;</button>
+        </div>
+
+        <form onsubmit="handleSaveOptionGroup(event)">
+          <div class="modal-body">
+            <input type="hidden" id="opt-group-edit-id" value="" />
+
+            <div class="form-group">
+              <label class="form-label">Tên nhóm tuỳ chọn (OptionGroup Name)</label>
+              <input type="text" class="form-input" id="opt-group-name" placeholder="VD: Chọn Size, Mức đường, Topping..." required />
+            </div>
+
+            <div style="display: flex; gap: 12px">
+              <div class="form-group" style="flex: 1">
+                <label class="form-label">Quy tắc chọn (maxSelect)</label>
+                <select class="form-input" id="opt-group-max-select">
+                  <option value="1">Đơn chọn (1 lựa chọn - Radio)</option>
+                  <option value="2">Chọn tối đa 2 loại (Checkbox)</option>
+                  <option value="3">Chọn tối đa 3 loại (Checkbox)</option>
+                  <option value="5">Chọn tối đa 5 loại (Checkbox)</option>
+                </select>
+              </div>
+
+              <div class="form-group" style="flex: 1; justify-content: flex-end">
+                <div style="display: flex; align-items: center; gap: 8px; height: 38px">
+                  <input type="checkbox" id="opt-group-required" style="width: 16px; height: 16px" />
+                  <label for="opt-group-required" style="font-size: 12.5px; font-weight: 600">
+                    Bắt buộc phải chọn (isRequired)
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Áp dụng cho món đồ uống</label>
+              <select class="form-input" id="opt-group-product-select">
+                <option value="ALL">Áp dụng chung cho tất cả đồ uống</option>
+                <option value="prod-1">Cà phê muối</option>
+                <option value="prod-2">Trà đào cam sả</option>
+                <option value="prod-3">Bạc xỉu 3 tầng</option>
+              </select>
+            </div>
+
+            <!-- Dynamic Options List inside the Group -->
+            <div style="display: flex; flex-direction: column; gap: 8px">
+              <div style="display: flex; justify-content: space-between; align-items: center">
+                <strong style="font-size: 12.5px; color: var(--color-text)">Danh sách tuỳ chọn (Options):</strong>
+                <button type="button" class="btn-xs" onclick="addOptionRowInput()">+ Thêm tuỳ chọn</button>
+              </div>
+
+              <div id="modal-option-rows-container" style="display: flex; flex-direction: column; gap: 8px">
+                <!-- Option rows added dynamically -->
+              </div>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn-ghost" onclick="closeOptionGroupModal()">Huỷ</button>
+            <button type="button" class="btn-cancel-action" id="btn-delete-opt-group" style="display: none" onclick="deleteCurrentOptionGroup()">
+              🗑️ Xoá nhóm
+            </button>
+            <button type="submit" class="btn-primary-sm" style="padding: 8px 18px; font-size: 13.5px">
+              Lưu nhóm tuỳ chọn
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- ================= MODAL 3: THÊM & SỬA DANH MỤC ================= -->
     <div class="modal-backdrop" id="category-modal">
       <div class="modal-box" style="max-width: 440px">
         <div class="modal-header">
@@ -2344,7 +2113,7 @@
       </div>
     </div>
 
-    <!-- ================= MODAL 3: HUỶ ĐƠN HÀNG ================= -->
+    <!-- ================= MODAL 4: HUỶ ĐƠN HÀNG ================= -->
     <div class="modal-backdrop" id="cancel-order-modal">
       <div class="modal-box" style="max-width: 460px">
         <div class="modal-header" style="background: #fdf2f2; border-bottom: 1px solid #fee2e2">
@@ -2391,7 +2160,7 @@
       </div>
     </div>
 
-    <!-- ================= MODAL 4: XÁC NHẬN ĐĂNG XUẤT (Req 2) ================= -->
+    <!-- ================= MODAL 5: XÁC NHẬN ĐĂNG XUẤT ================= -->
     <div class="modal-backdrop" id="logout-confirm-modal">
       <div class="modal-box" style="max-width: 400px">
         <div class="modal-header">
@@ -2424,7 +2193,7 @@
 
     <!-- ================= JAVASCRIPT LOGIC ================= -->
     <script>
-      // 1. DATA STATE: ORDERS (8 sample orders to demonstrate pagination - Req 6)
+      // 1. DATA STATE: ORDERS
       const INITIAL_ORDERS = [
         {
           id: "ord-1",
@@ -2690,7 +2459,7 @@
         },
       ];
 
-      // 2. DATA STATE: PRODUCTS (Req 3)
+      // 2. DATA STATE: PRODUCTS
       let productsList = [
         {
           id: "prod-1",
@@ -2700,6 +2469,7 @@
           price: 29000,
           desc: "Best-seller đậm đà với lớp kem mặn béo ngậy đặc trưng",
           isAvailable: true,
+          optionGroupIds: ["grp-1", "grp-2", "grp-3", "grp-4"],
         },
         {
           id: "prod-2",
@@ -2709,6 +2479,7 @@
           price: 35000,
           desc: "Đào miếng giòn ngọt, cam tươi và sả thanh mát giải nhiệt",
           isAvailable: true,
+          optionGroupIds: ["grp-2", "grp-3", "grp-4"],
         },
         {
           id: "prod-3",
@@ -2718,6 +2489,7 @@
           price: 29000,
           desc: "Ngọt dịu thơm sữa, phân lớp bắt mắt",
           isAvailable: true,
+          optionGroupIds: ["grp-1", "grp-2", "grp-3"],
         },
         {
           id: "prod-4",
@@ -2727,10 +2499,69 @@
           price: 32000,
           desc: "Bánh nướng nóng giòn mỗi sáng chuẩn bơ Pháp",
           isAvailable: false,
+          optionGroupIds: [],
         },
       ];
 
-      // 3. DATA STATE: CATEGORIES (Req 4)
+      // 3. DATA STATE: OPTION GROUPS & OPTIONS (Mirrors Prisma OptionGroup & Option)
+      let optionGroupsList = [
+        {
+          id: "grp-1",
+          name: "Chọn Size (Kích cỡ ly)",
+          productIds: ["prod-1", "prod-3"],
+          productNames: "Cà phê muối, Bạc xỉu 3 tầng",
+          isRequired: true,
+          maxSelect: 1,
+          options: [
+            { id: "opt-1-1", name: "Size M (Tiêu chuẩn)", priceDelta: 0, isAvailable: true, sortOrder: 1 },
+            { id: "opt-1-2", name: "Size L (Ly lớn)", priceDelta: 6000, isAvailable: true, sortOrder: 2 },
+          ],
+        },
+        {
+          id: "grp-2",
+          name: "Mức ngọt (Lượng đường)",
+          productIds: ["prod-1", "prod-2", "prod-3"],
+          productNames: "Cà phê muối, Trà đào cam sả, Bạc xỉu",
+          isRequired: false,
+          maxSelect: 1,
+          options: [
+            { id: "opt-2-1", name: "100% đường (Bình thường)", priceDelta: 0, isAvailable: true, sortOrder: 1 },
+            { id: "opt-2-2", name: "70% đường (Ít ngọt)", priceDelta: 0, isAvailable: true, sortOrder: 2 },
+            { id: "opt-2-3", name: "50% đường (Vừa phải)", priceDelta: 0, isAvailable: true, sortOrder: 3 },
+            { id: "opt-2-4", name: "0% đường (Không đường)", priceDelta: 0, isAvailable: true, sortOrder: 4 },
+          ],
+        },
+        {
+          id: "grp-3",
+          name: "Lượng đá",
+          productIds: ["prod-1", "prod-2", "prod-3"],
+          productNames: "Cà phê muối, Trà đào cam sả, Bạc xỉu",
+          isRequired: false,
+          maxSelect: 1,
+          options: [
+            { id: "opt-3-1", name: "100% đá (Tiêu chuẩn)", priceDelta: 0, isAvailable: true, sortOrder: 1 },
+            { id: "opt-3-2", name: "50% đá (Ít đá)", priceDelta: 0, isAvailable: true, sortOrder: 2 },
+            { id: "opt-3-3", name: "Không đá", priceDelta: 0, isAvailable: true, sortOrder: 3 },
+            { id: "opt-3-4", name: "Đá riêng", priceDelta: 0, isAvailable: true, sortOrder: 4 },
+          ],
+        },
+        {
+          id: "grp-4",
+          name: "Topping thêm",
+          productIds: ["prod-1", "prod-2"],
+          productNames: "Cà phê muối, Trà đào cam sả",
+          isRequired: false,
+          maxSelect: 3,
+          options: [
+            { id: "opt-4-1", name: "Trân châu trắng giòn", priceDelta: 8000, isAvailable: true, sortOrder: 1 },
+            { id: "opt-4-2", name: "Thạch cà phê sương sáo", priceDelta: 8000, isAvailable: true, sortOrder: 2 },
+            { id: "opt-4-3", name: "Kem cheese béo mặn", priceDelta: 10000, isAvailable: true, sortOrder: 3 },
+            { id: "opt-4-4", name: "Đào miếng thêm", priceDelta: 10000, isAvailable: false, sortOrder: 4 },
+          ],
+        },
+      ];
+
+      // 4. DATA STATE: CATEGORIES
       let categoriesList = [
         { id: "cat-1", name: "Cà phê Việt", sortOrder: 1, isVisible: true, count: 6 },
         { id: "cat-2", name: "Trà tươi & Trái cây", sortOrder: 2, isVisible: true, count: 5 },
@@ -2745,16 +2576,16 @@
       let searchQuery = "";
       let isSoundEnabled = false;
 
-      // Pagination state (Req 6)
+      // Pagination state
       let currentPage = 1;
-      const pageSize = 4; // 4 orders per page on left pane
+      const pageSize = 4;
 
-      // Auth state (Req 1 & 2)
+      // Auth state
       let failedLoginCount = 0;
       let isLockedOut = false;
       let lockoutTimer = null;
 
-      // ================= LOGIN & AUTH HANDLERS (Req 1 & 2) =================
+      // ================= LOGIN & AUTH =================
       function showLoginView() {
         document.getElementById("view-dashboard").style.display = "none";
         document.getElementById("view-login").style.display = "flex";
@@ -2848,7 +2679,6 @@
         showToast("Đã mở khoá đăng nhập.");
       }
 
-      // Logout Modal Handlers (Req 2)
       function openLogoutModal() {
         document.getElementById("logout-confirm-modal").classList.add("open");
       }
@@ -2863,7 +2693,7 @@
         showLoginView();
       }
 
-      // ================= AUDIO ALERT (A4) =================
+      // ================= AUDIO ALERT =================
       function playAudioAlert() {
         if (!isSoundEnabled) return;
         try {
@@ -2875,7 +2705,7 @@
           const osc1 = ctx.createOscillator();
           const gain1 = ctx.createGain();
           osc1.type = "sine";
-          osc1.frequency.setValueAtTime(587.33, now); // D5
+          osc1.frequency.setValueAtTime(587.33, now);
           gain1.gain.setValueAtTime(0.3, now);
           gain1.gain.exponentialRampToValueAtTime(0.001, now + 0.6);
           osc1.connect(gain1);
@@ -2886,7 +2716,7 @@
           const osc2 = ctx.createOscillator();
           const gain2 = ctx.createGain();
           osc2.type = "sine";
-          osc2.frequency.setValueAtTime(880, now + 0.15); // A5
+          osc2.frequency.setValueAtTime(880, now + 0.15);
           gain2.gain.setValueAtTime(0.35, now + 0.15);
           gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.9);
           osc2.connect(gain2);
@@ -2918,7 +2748,6 @@
         }
       }
 
-      // Viewport Switcher
       function setViewMode(mode) {
         const vp = document.getElementById("admin-viewport");
         document.getElementById("btn-view-tablet").classList.toggle("active", mode === "tablet");
@@ -2930,9 +2759,8 @@
         if (mode === "full") vp.classList.add("fullscreen-mode");
       }
 
-      // Navigation switching (Orders, Menu, Categories, Settings)
       function switchNavSection(section) {
-        ["orders", "menu", "categories", "settings"].forEach((s) => {
+        ["orders", "menu", "options", "categories", "settings"].forEach((s) => {
           const navEl = document.getElementById(`nav-${s}`);
           if (navEl) navEl.classList.toggle("active", s === section);
 
@@ -2947,19 +2775,21 @@
         const titles = {
           orders: "Quản lý đơn hàng",
           menu: "Quản lý thực đơn đồ uống & bánh",
+          options: "Quản lý nhóm tuỳ chọn (Size, Đường, Đá, Topping)",
           categories: "Quản lý danh mục món",
           settings: "Cài đặt quán & Giao nhận",
         };
         titleEl.innerHTML = `<span>${titles[section]}</span>`;
 
         if (section === "menu") renderProductsTable();
+        if (section === "options") renderOptionGroupsView();
         if (section === "categories") renderCategoriesTable();
       }
 
-      // ================= ORDERS LIST & PAGINATION (Req 6) =================
+      // ================= ORDERS LIST & PAGINATION =================
       function setFilterStatus(status) {
         currentFilterStatus = status;
-        currentPage = 1; // reset to page 1 on filter change
+        currentPage = 1;
         document.querySelectorAll(".filter-chip").forEach((chip) => chip.classList.remove("active"));
         const chipMap = {
           ALL: "filter-all",
@@ -3032,7 +2862,6 @@
         renderOrderCards();
       }
 
-      // Render Left Pane Order Cards with Pagination
       function renderOrderCards() {
         const listContainer = document.getElementById("order-cards-container");
         const filtered = getFilteredOrders();
@@ -3046,7 +2875,6 @@
         const endIndex = Math.min(startIndex + pageSize, totalItems);
         const paginatedOrders = filtered.slice(startIndex, endIndex);
 
-        // Update pagination bar
         const infoText = document.getElementById("pagination-info-text");
         infoText.textContent = totalItems === 0
           ? "Không có đơn nào"
@@ -3076,7 +2904,6 @@
           return;
         }
 
-        // Keep selected order valid
         if (!paginatedOrders.some((o) => o.id === selectedOrderId)) {
           selectedOrderId = paginatedOrders[0].id;
         }
@@ -3145,7 +2972,6 @@
         return map[status] || status;
       }
 
-      // Render Right Pane: Order Detail View
       function renderOrderDetail() {
         const pane = document.getElementById("order-detail-pane");
         const order = orders.find((o) => o.id === selectedOrderId);
@@ -3187,13 +3013,10 @@
               </div>
             </div>
 
-            <!-- Customer & Delivery Info Grid -->
             <div class="info-grid">
               <div class="info-item">
                 <span class="info-label">Khách hàng</span>
-                <span class="info-value">
-                  ${order.customerName}
-                </span>
+                <span class="info-value">${order.customerName}</span>
               </div>
 
               <div class="info-item">
@@ -3246,9 +3069,7 @@
                   .map(
                     (item) => `
                   <tr>
-                    <td>
-                      <span class="item-qty-badge">${item.qty}x</span>
-                    </td>
+                    <td><span class="item-qty-badge">${item.qty}x</span></td>
                     <td>
                       <div class="item-details">
                         <span class="item-title">${item.name}</span>
@@ -3265,7 +3086,6 @@
               </tbody>
             </table>
 
-            <!-- Price Breakdown Summary -->
             <div class="price-summary-box">
               <div class="price-row">
                 <span>Tạm tính tiền món:</span>
@@ -3282,7 +3102,7 @@
             </div>
           </div>
 
-          <!-- Payment Reconciliation Card (A6) -->
+          <!-- Payment Card -->
           <div class="detail-card payment-card ${isPaid ? "is-paid" : ""}">
             <div class="payment-card-header">
               <div class="payment-status-title">
@@ -3340,7 +3160,7 @@
             </div>
           </div>
 
-          <!-- Bottom Action Dock (State Machine Controls - A5) -->
+          <!-- Bottom Action Dock -->
           <div class="action-dock">
             <div class="action-info">
               <span class="action-hint">Trạng thái hiện tại:</span>
@@ -3369,7 +3189,6 @@
         return names[status] || status;
       }
 
-      // State Machine Transition Buttons (Strictly according to SPEC)
       function renderStateMachineButtons(order) {
         const status = order.status;
         const isDelivery = order.fulfillmentType === "DELIVERY";
@@ -3532,34 +3351,40 @@
         }
       }
 
-      // ================= 3. PRODUCT CRUD HANDLERS (Req 3) =================
+      // ================= 3. PRODUCT CRUD HANDLERS =================
       function renderProductsTable() {
         const tbody = document.getElementById("menu-table-body");
         tbody.innerHTML = productsList
-          .map(
-            (p) => `
-          <tr>
-            <td>
-              <strong style="font-size: 14px">${p.name}</strong>
-              <div class="item-options">${p.desc}</div>
-            </td>
-            <td><span class="type-pill type-delivery">${p.categoryName}</span></td>
-            <td><strong>${formatMoney(p.price)}</strong></td>
-            <td>
-              <label class="switch">
-                <input type="checkbox" ${p.isAvailable ? "checked" : ""} onchange="toggleProductStockById('${p.id}', this.checked)" />
-                <span class="slider"></span>
-              </label>
-              <span style="font-size: 12px; margin-left: 8px; font-weight: 600; color: ${p.isAvailable ? "var(--color-support)" : "var(--color-danger)"}">
-                ${p.isAvailable ? "Còn hàng" : "Hết hàng"}
-              </span>
-            </td>
-            <td class="text-right">
-              <button class="btn-ghost" onclick="openProductModal('edit', '${p.id}')">✏️ Sửa</button>
-            </td>
-          </tr>
-        `
-          )
+          .map((p) => {
+            const groupsCount = p.optionGroupIds ? p.optionGroupIds.length : 0;
+            return `
+            <tr>
+              <td>
+                <strong style="font-size: 14px">${p.name}</strong>
+                <div class="item-options">${p.desc}</div>
+              </td>
+              <td><span class="type-pill type-delivery">${p.categoryName}</span></td>
+              <td><strong>${formatMoney(p.price)}</strong></td>
+              <td>
+                <span class="option-pill-tag" style="cursor: pointer" onclick="switchNavSection('options')">
+                  🎛️ ${groupsCount} nhóm tuỳ chọn
+                </span>
+              </td>
+              <td>
+                <label class="switch">
+                  <input type="checkbox" ${p.isAvailable ? "checked" : ""} onchange="toggleProductStockById('${p.id}', this.checked)" />
+                  <span class="slider"></span>
+                </label>
+                <span style="font-size: 12px; margin-left: 8px; font-weight: 600; color: ${p.isAvailable ? "var(--color-support)" : "var(--color-danger)"}">
+                  ${p.isAvailable ? "Còn hàng" : "Hết hàng"}
+                </span>
+              </td>
+              <td class="text-right">
+                <button class="btn-ghost" onclick="openProductModal('edit', '${p.id}')">✏️ Sửa</button>
+              </td>
+            </tr>
+          `;
+          })
           .join("");
       }
 
@@ -3576,6 +3401,7 @@
         const modal = document.getElementById("product-modal");
         const title = document.getElementById("product-modal-title");
         const archiveBtn = document.getElementById("btn-archive-prod");
+        const optionsPreview = document.getElementById("product-options-preview-container");
 
         if (mode === "create") {
           title.textContent = "Thêm món mới vào thực đơn";
@@ -3585,6 +3411,11 @@
           document.getElementById("prod-desc").value = "";
           document.getElementById("prod-available").checked = true;
           archiveBtn.style.display = "none";
+          optionsPreview.innerHTML = `
+            <span style="font-size: 11.5px; color: var(--color-text-muted)">
+              Nhóm tuỳ chọn (Size, Đường, Đá, Topping) có thể gán sau khi tạo món.
+            </span>
+          `;
         } else {
           const prod = productsList.find((p) => p.id === prodId);
           if (!prod) return;
@@ -3596,6 +3427,29 @@
           document.getElementById("prod-desc").value = prod.desc;
           document.getElementById("prod-available").checked = prod.isAvailable;
           archiveBtn.style.display = "inline-flex";
+
+          const assignedGroups = optionGroupsList.filter((g) =>
+            prod.optionGroupIds && prod.optionGroupIds.includes(g.id)
+          );
+
+          if (assignedGroups.length > 0) {
+            optionsPreview.innerHTML = assignedGroups
+              .map(
+                (g) => `
+                <div style="font-size: 12px; display: flex; justify-content: space-between; background: #fff; padding: 6px 10px; border-radius: 4px; border: 1px solid var(--color-border-light)">
+                  <strong>${g.name}</strong>
+                  <span style="color: var(--color-text-muted)">${g.options.map((o) => o.name).join(", ")}</span>
+                </div>
+              `
+              )
+              .join("");
+          } else {
+            optionsPreview.innerHTML = `
+              <span style="font-size: 11.5px; color: var(--color-text-muted)">
+                Món này hiện chưa có nhóm tuỳ chọn (phù hợp với món ăn kèm như Bánh).
+              </span>
+            `;
+          }
         }
 
         modal.classList.add("open");
@@ -3635,6 +3489,7 @@
             price,
             desc,
             isAvailable,
+            optionGroupIds: ["grp-1", "grp-2", "grp-3"],
           };
           productsList.unshift(newProd);
           showToast(`Đã thêm món mới "${name}" vào thực đơn!`, "success");
@@ -3655,7 +3510,242 @@
         }
       }
 
-      // ================= 4. CATEGORY CRUD HANDLERS (Req 4) =================
+      // ================= 4. QUẢN LÝ NHÓM TUỲ CHỌN (OPTION GROUPS & OPTIONS) =================
+      let currentOptionFilterProduct = "ALL";
+
+      function filterOptionGroupsByProduct(prodId) {
+        currentOptionFilterProduct = prodId;
+        renderOptionGroupsView();
+      }
+
+      function renderOptionGroupsView() {
+        const container = document.getElementById("opt-group-list-container");
+        const filteredGroups = optionGroupsList.filter((grp) => {
+          if (currentOptionFilterProduct === "ALL") return true;
+          return grp.productIds && grp.productIds.includes(currentOptionFilterProduct);
+        });
+
+        if (filteredGroups.length === 0) {
+          container.innerHTML = `
+            <div style="text-align: center; padding: 30px; color: var(--color-text-muted)">
+              Không có nhóm tuỳ chọn nào cho món đã chọn.
+            </div>
+          `;
+          return;
+        }
+
+        container.innerHTML = filteredGroups
+          .map((grp) => {
+            const ruleText = grp.maxSelect === 1 ? "Đơn chọn (1 lựa chọn - Radio)" : `Đa chọn (Tối đa ${grp.maxSelect} loại)`;
+            const requiredBadge = grp.isRequired
+              ? `<span class="status-badge badge-pending">Bắt buộc chọn (isRequired: true)</span>`
+              : `<span class="status-badge badge-completed">Không bắt buộc</span>`;
+
+            const rowsHtml = grp.options
+              .map(
+                (opt) => `
+                <tr>
+                  <td><strong>${opt.name}</strong></td>
+                  <td>
+                    ${
+                      opt.priceDelta > 0
+                        ? `<strong style="color: var(--color-primary)">+${formatMoney(opt.priceDelta)}</strong>`
+                        : `<span style="color: var(--color-text-muted)">+0đ</span>`
+                    }
+                  </td>
+                  <td>
+                    <label class="switch">
+                      <input type="checkbox" ${opt.isAvailable ? "checked" : ""} onchange="toggleOptionStock('${grp.id}', '${opt.id}', this.checked)" />
+                      <span class="slider"></span>
+                    </label>
+                    <span style="font-size: 11px; margin-left: 6px; font-weight: 600; color: ${opt.isAvailable ? "var(--color-support)" : "var(--color-danger)"}">
+                      ${opt.isAvailable ? "Còn hàng" : "Hết hàng"}
+                    </span>
+                  </td>
+                  <td class="text-right">
+                    <button class="btn-ghost" style="padding: 2px 6px; font-size: 11px" onclick="deleteOptionItem('${grp.id}', '${opt.id}')">
+                      🗑️ Xoá
+                    </button>
+                  </td>
+                </tr>
+              `
+              )
+              .join("");
+
+            return `
+              <div class="opt-group-card">
+                <div class="opt-group-header">
+                  <div>
+                    <div class="opt-group-title">
+                      <span>🎛️ ${grp.name}</span>
+                      ${requiredBadge}
+                      <span class="status-badge badge-confirmed">${ruleText}</span>
+                    </div>
+                    <span style="font-size: 11.5px; color: var(--color-text-muted); margin-top: 4px; display: block">
+                      Áp dụng cho: <strong>${grp.productNames}</strong>
+                    </span>
+                  </div>
+
+                  <div style="display: flex; gap: 6px">
+                    <button class="btn-ghost" onclick="openOptionGroupModal('edit', '${grp.id}')">
+                      ✏️ Sửa nhóm
+                    </button>
+                  </div>
+                </div>
+
+                <table class="opt-items-table">
+                  <thead>
+                    <tr>
+                      <th>Tên tuỳ chọn (Option)</th>
+                      <th>Giá phụ thu</th>
+                      <th>Trạng thái tại quầy</th>
+                      <th class="text-right">Thao tác</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    ${rowsHtml}
+                  </tbody>
+                </table>
+              </div>
+            `;
+          })
+          .join("");
+      }
+
+      function toggleOptionStock(grpId, optId, isAvailable) {
+        const grp = optionGroupsList.find((g) => g.id === grpId);
+        if (grp) {
+          const opt = grp.options.find((o) => o.id === optId);
+          if (opt) {
+            opt.isAvailable = isAvailable;
+            renderOptionGroupsView();
+            showToast(`Tuỳ chọn "${opt.name}" đã đổi sang: ${isAvailable ? "CÒN HÀNG" : "HẾT HÀNG"}`, isAvailable ? "success" : "danger");
+          }
+        }
+      }
+
+      function deleteOptionItem(grpId, optId) {
+        const grp = optionGroupsList.find((g) => g.id === grpId);
+        if (grp) {
+          grp.options = grp.options.filter((o) => o.id !== optId);
+          renderOptionGroupsView();
+          showToast("Đã xoá tuỳ chọn khỏi nhóm!");
+        }
+      }
+
+      function openOptionGroupModal(mode, grpId = null) {
+        const modal = document.getElementById("option-group-modal");
+        const title = document.getElementById("opt-group-modal-title");
+        const delBtn = document.getElementById("btn-delete-opt-group");
+        const rowsContainer = document.getElementById("modal-option-rows-container");
+
+        rowsContainer.innerHTML = "";
+
+        if (mode === "create") {
+          title.textContent = "Thêm nhóm tuỳ chọn mới (OptionGroup)";
+          document.getElementById("opt-group-edit-id").value = "";
+          document.getElementById("opt-group-name").value = "";
+          document.getElementById("opt-group-max-select").value = "1";
+          document.getElementById("opt-group-required").checked = false;
+          delBtn.style.display = "none";
+
+          addOptionRowInput("Tuỳ chọn 1", 0);
+          addOptionRowInput("Tuỳ chọn 2", 6000);
+        } else {
+          const grp = optionGroupsList.find((g) => g.id === grpId);
+          if (!grp) return;
+          title.textContent = `Chỉnh sửa nhóm: ${grp.name}`;
+          document.getElementById("opt-group-edit-id").value = grp.id;
+          document.getElementById("opt-group-name").value = grp.name;
+          document.getElementById("opt-group-max-select").value = grp.maxSelect;
+          document.getElementById("opt-group-required").checked = grp.isRequired;
+          delBtn.style.display = "inline-flex";
+
+          grp.options.forEach((opt) => {
+            addOptionRowInput(opt.name, opt.priceDelta);
+          });
+        }
+
+        modal.classList.add("open");
+      }
+
+      function closeOptionGroupModal() {
+        document.getElementById("option-group-modal").classList.remove("open");
+      }
+
+      function addOptionRowInput(name = "", price = 0) {
+        const container = document.getElementById("modal-option-rows-container");
+        const rowId = `row-${Date.now()}-${Math.random().toString(36).substr(2, 4)}`;
+
+        const div = document.createElement("div");
+        div.id = rowId;
+        div.style = "display: flex; gap: 8px; align-items: center;";
+        div.innerHTML = `
+          <input type="text" class="form-input opt-row-name" placeholder="Tên tuỳ chọn (VD: Size L)" value="${name}" required style="flex: 2" />
+          <input type="number" class="form-input opt-row-price" placeholder="Phụ thu VND" value="${price}" step="1000" required style="flex: 1" />
+          <button type="button" class="btn-ghost" style="color: var(--color-danger); padding: 8px" onclick="document.getElementById('${rowId}').remove()">✕</button>
+        `;
+        container.appendChild(div);
+      }
+
+      function handleSaveOptionGroup(e) {
+        e.preventDefault();
+        const editId = document.getElementById("opt-group-edit-id").value;
+        const name = document.getElementById("opt-group-name").value.trim();
+        const maxSelect = parseInt(document.getElementById("opt-group-max-select").value, 10);
+        const isRequired = document.getElementById("opt-group-required").checked;
+        const prodChoice = document.getElementById("opt-group-product-select").value;
+
+        const rowEls = document.querySelectorAll("#modal-option-rows-container > div");
+        const options = Array.from(rowEls).map((row, idx) => ({
+          id: `opt-${Date.now()}-${idx}`,
+          name: row.querySelector(".opt-row-name").value.trim(),
+          priceDelta: parseInt(row.querySelector(".opt-row-price").value, 10) || 0,
+          isAvailable: true,
+          sortOrder: idx + 1,
+        }));
+
+        if (options.length === 0) {
+          alert("Nhóm tuỳ chọn phải có ít nhất 1 tuỳ chọn.");
+          return;
+        }
+
+        if (editId) {
+          const g = optionGroupsList.find((x) => x.id === editId);
+          if (g) {
+            g.name = name;
+            g.maxSelect = maxSelect;
+            g.isRequired = isRequired;
+            g.options = options;
+            showToast(`Đã cập nhật nhóm tuỳ chọn "${name}"!`, "success");
+          }
+        } else {
+          const newGrp = {
+            id: `grp-${Date.now()}`,
+            name,
+            productIds: prodChoice === "ALL" ? ["prod-1", "prod-2", "prod-3"] : [prodChoice],
+            productNames: prodChoice === "ALL" ? "Tất cả đồ uống" : "Món chỉ định",
+            isRequired,
+            maxSelect,
+            options,
+          };
+          optionGroupsList.push(newGrp);
+          showToast(`Đã tạo nhóm tuỳ chọn mới "${name}"!`, "success");
+        }
+
+        closeOptionGroupModal();
+        renderOptionGroupsView();
+      }
+
+      function deleteCurrentOptionGroup() {
+        const editId = document.getElementById("opt-group-edit-id").value;
+        optionGroupsList = optionGroupsList.filter((g) => g.id !== editId);
+        showToast("Đã xoá nhóm tuỳ chọn thành công.", "danger");
+        closeOptionGroupModal();
+        renderOptionGroupsView();
+      }
+
+      // ================= 5. CATEGORY CRUD =================
       function renderCategoriesTable() {
         const tbody = document.getElementById("categories-table-body");
         tbody.innerHTML = categoriesList
@@ -3771,7 +3861,7 @@
         }
       }
 
-      // ================= 5. SETTINGS FORM HANDLERS (Req 5) =================
+      // ================= 6. SETTINGS FORM =================
       function handleSaveSettings(e) {
         e.preventDefault();
         const shopName = document.getElementById("setting-shop-name").value;
@@ -3780,10 +3870,10 @@
         const shipFee = formatMoney(parseInt(document.getElementById("setting-shipping-fee").value, 10));
         const freeShip = formatMoney(parseInt(document.getElementById("setting-free-ship-threshold").value, 10));
 
-        showToast(`Đã lưu cấu hình: Giờ bán ${openTime}-${closeTime}, Phí ship ${shipFee}, Free ship ${freeShip}!`, "success");
+        showToast(`Đã lưu cài đặt quán thành công!`, "success");
       }
 
-      // ================= 6. SIMULATION & HELPERS =================
+      // ================= 7. SIMULATION & HELPERS =================
       function simulateNewIncomingOrder() {
         const now = new Date();
         const timeStr = `${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}:${String(now.getSeconds()).padStart(2, "0")}`;
@@ -3824,7 +3914,7 @@
 
         orders.unshift(newOrder);
         selectedOrderId = newOrder.id;
-        currentPage = 1; // jump to first page to show new order
+        currentPage = 1;
 
         playAudioAlert();
         showToast(`🔔 CÓ ĐƠN HÀNG MỚI: ${newOrder.code} (${formatMoney(newOrder.total)})!`, "success");
@@ -3864,10 +3954,10 @@
         }, 3500);
       }
 
-      // Initialize
       window.addEventListener("DOMContentLoaded", () => {
         renderOrderCards();
         renderProductsTable();
+        renderOptionGroupsView();
         renderCategoriesTable();
       });
     </script>
