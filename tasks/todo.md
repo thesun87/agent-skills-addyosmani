@@ -92,18 +92,18 @@
 
 ---
 
-### - [ ] T4: Menu theo danh mục (C1)
+### - [x] T4: Menu theo danh mục (C1)
 
 **Description:** Trang `/` (Server Component) đọc danh mục hiển thị + món chưa lưu trữ, sắp theo `sortOrder`. Thanh danh mục dính đầu trang, cuộn tới mục. Thẻ món: ảnh (placeholder nếu chưa có), tên, mô tả, giá. Món `isAvailable=false` mờ + nhãn "Hết hàng", nút thêm bị vô hiệu.
 
 **Acceptance criteria:**
-- [ ] Menu render đúng thứ tự danh mục/món từ DB; danh mục ẩn và món lưu trữ không xuất hiện
-- [ ] Món hết hàng không bấm thêm được (cả chuột và bàn phím)
-- [ ] Không cuộn ngang ở 320px; ảnh có kích thước cố định (không CLS)
+- [x] Menu render đúng thứ tự danh mục/món từ DB; danh mục ẩn và món lưu trữ không xuất hiện
+- [x] Món hết hàng không bấm thêm được (cả chuột và bàn phím)
+- [x] Không cuộn ngang ở 320px; ảnh có kích thước cố định (không CLS)
 
 **Verification:**
-- [ ] `pnpm test tests/unit/features/menu tests/integration/menu`
-- [ ] Manual: xem ở 320px và 1280px
+- [x] `pnpm test tests/unit/features/menu tests/integration/menu`
+- [x] Manual: xem ở 320px và 1280px
 
 **Dependencies:** T2, T3, T3b (UI theo prototype đã duyệt — áp dụng cho T4–T9)
 **Files likely touched:** `src/app/(shop)/page.tsx`, `src/features/menu/queries.ts`, `src/features/menu/components/{CategoryNav,ProductCard}.tsx`, tests
