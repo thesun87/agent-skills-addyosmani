@@ -316,19 +316,19 @@
 
 ## Phase 4 — Admin quản lý menu & cài đặt
 
-### - [ ] T13: CRUD danh mục (A2)
+### - [x] T13: CRUD danh mục (A2)
 
 **Description:** `/admin/danh-muc`: thêm/sửa/ẩn danh mục, đổi thứ tự (nút lên/xuống). Không xoá được danh mục còn món.
 
 **UI Reference:** `docs/design/admin-prototype.html` (#section-categories, bảng danh mục, modal `#category-modal`, popup chặn xoá danh mục) · [admin-ui-notes.md](../docs/design/admin-ui-notes.md#25-màn-hình-thêm--chỉnh-sửa-danh-mục-admindanh-muc--a2)
 
 **Acceptance criteria:**
-- [ ] Bảng danh mục, nút tăng/giảm thứ tự, modal thêm/sửa và popup chặn xoá khớp 100% prototype đã duyệt
-- [ ] Thay đổi phản ánh trên menu khách (revalidate)
-- [ ] Xoá danh mục còn món → báo lỗi rõ
+- [x] Bảng danh mục, nút tăng/giảm thứ tự, modal thêm/sửa và popup chặn xoá khớp 100% prototype đã duyệt
+- [x] Thay đổi phản ánh trên menu khách (revalidate)
+- [x] Xoá danh mục còn món → báo lỗi rõ
 
 **Verification:**
-- [ ] `pnpm test tests/integration/admin-categories`
+- [x] `pnpm test tests/integration/admin-categories`
 
 **Dependencies:** T10
 **Files likely touched:** `src/app/admin/danh-muc/page.tsx`, `src/features/menu/admin-actions/categories.ts`, tests
