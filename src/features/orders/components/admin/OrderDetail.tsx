@@ -150,7 +150,7 @@ export function OrderDetail({
               {order.customerPhone}
               <a
                 href={`tel:${order.customerPhone.replace(/\s+/g, "")}`}
-                className="call-link text-xs text-sky-600 hover:underline"
+                className="call-link text-xs font-medium text-sky-700 hover:underline"
               >
                 📞 Gọi
               </a>

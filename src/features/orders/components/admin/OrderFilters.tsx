@@ -92,10 +92,11 @@ export function OrderFilters({
 
       {/* Fulfillment Type Dropdown */}
       <div className="filter-sub-row flex justify-between items-center text-xs text-text-muted">
-        <span>Hình thức:</span>
+        <label htmlFor="filter-type-select">Hình thức:</label>
         <select
           className="type-select px-2 py-1 rounded border border-border bg-surface text-xs text-text cursor-pointer outline-none"
           id="filter-type-select"
+          aria-label="Lọc theo hình thức nhận hàng"
           value={fulfillment}
           onChange={(e) => onFulfillmentChange(e.target.value)}
         >

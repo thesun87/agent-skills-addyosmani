@@ -377,7 +377,7 @@ export function ProductManager({
                           ))}
                         </div>
                       ) : (
-                        <span className="text-xs text-text-muted/60">Không có</span>
+                        <span className="text-xs text-text-muted">Không có</span>
                       )}
                     </td>
                     <td className="py-3.5 px-3">

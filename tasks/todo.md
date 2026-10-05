@@ -446,18 +446,18 @@
 
 ---
 
-### - [ ] T19: Kiểm a11y, hiệu năng, responsive
+### - [x] T19: Kiểm a11y, hiệu năng, responsive
 
 **Description:** Thêm `@axe-core/playwright` cho menu, checkout, theo dõi đơn, admin đơn hàng. Lighthouse mobile trang menu. Kiểm 320/375/768/1024/1440. Sửa các vấn đề phát hiện.
 
 **Acceptance criteria:**
-- [ ] Axe: 0 lỗi mức serious/critical
-- [ ] Menu: LCP < 2.5s, CLS < 0.1 (Lighthouse mobile, build production)
-- [ ] Không cuộn ngang ở mọi breakpoint
+- [x] Axe: 0 lỗi mức serious/critical
+- [x] Menu: LCP < 2.5s, CLS < 0.1 (Lighthouse mobile, build production)
+- [x] Không cuộn ngang ở mọi breakpoint
 
 **Verification:**
-- [ ] `pnpm test:e2e e2e/a11y.spec.ts`
-- [ ] Lighthouse report lưu vào `docs/perf/`
+- [x] `pnpm test:e2e e2e/a11y.spec.ts`
+- [x] Lighthouse report lưu vào `docs/perf/`
 
 **Dependencies:** T12, T16, T17, T18
 **Files likely touched:** `e2e/a11y.spec.ts`, các component cần sửa

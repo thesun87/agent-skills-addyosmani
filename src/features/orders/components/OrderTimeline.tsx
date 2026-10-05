@@ -98,7 +98,7 @@ export function OrderTimeline({ status, fulfillment, cancelReason }: OrderTimeli
                     ? "text-primary font-bold"
                     : isCompleted
                       ? "text-text"
-                      : "text-text-muted/70"
+                      : "text-text-muted"
                 }`}
               >
                 {step.label}
