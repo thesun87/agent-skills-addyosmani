@@ -413,11 +413,3 @@ enabled = true
 # and column/key alignment. Set to "null" to emit raw, unformatted SQL.
 # format_options = "{\"keywordCase\":\"upper\",\"indent\":2,\"maxWidth\":180,\"commaStyle\":\"trailing\"}"
 
-[storage]
-enabled = true
-
-[storage.buckets.product-images]
-public = true
-file_size_limit = "2MiB"
-allowed_mime_types = ["image/jpeg", "image/png", "image/webp"]
-
