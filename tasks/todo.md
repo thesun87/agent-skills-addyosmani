@@ -412,16 +412,16 @@
 
 ## Phase 5 — Thương hiệu, chất lượng, ra mắt
 
-### - [ ] T17: Chốt logo + header/footer
+### - [x] T17: Chốt logo + header/footer
 
-**Description:** Chuyển chữ trong `docs/brand/logo-draft.svg` thành path; xuất `public/brand/logo.svg`, `logo-mark.svg`, `logo-mono.svg`, favicon (`app/icon.svg`, `apple-icon.png`), ảnh OG 1200×630. Header khách có logo + giỏ; footer có địa chỉ/SĐT/giờ mở cửa từ settings.
+**Description:** Chuyển chữ trong `docs/brand/logo-draft.svg` thành path; xuất `public/brand/logo.svg`, `logo-mark.svg`, `logo-mono.svg`, favicon (`src/app/icon.svg`, `apple-icon.png`), ảnh OG 1200×630. Header khách có logo + giỏ; footer có địa chỉ/SĐT/giờ mở cửa từ settings.
 
 **Acceptance criteria:**
-- [ ] Logo hiển thị giống nhau trên máy không cài Lora/Be Vietnam Pro
-- [ ] Favicon và ảnh OG đúng khi chia sẻ link
+- [x] Logo hiển thị giống nhau trên máy không cài Lora/Be Vietnam Pro
+- [x] Favicon và ảnh OG đúng khi chia sẻ link
 
 **Verification:**
-- [ ] Manual: kiểm tab trình duyệt, preview link (opengraph.xyz hoặc tương đương)
+- [x] Manual: kiểm tab trình duyệt, preview link (opengraph.xyz hoặc tương đương)
 
 **Dependencies:** T4
 **Files likely touched:** `public/brand/*`, `src/app/icon.svg`, `src/app/opengraph-image.png`, `src/components/layout/{SiteHeader,SiteFooter}.tsx`
