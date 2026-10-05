@@ -1,4 +1,4 @@
-import { S3Client, PutObjectCommand, DeleteObjectCommand } from "@aws-sdk/client-s3";
+import { S3Client, PutObjectCommand, DeleteObjectCommand, CreateBucketCommand } from "@aws-sdk/client-s3";
 
 const endpoint = process.env.STORAGE_ENDPOINT || "http://127.0.0.1:54321/storage/v1/s3";
 const region = process.env.STORAGE_REGION || "local";
@@ -50,7 +50,18 @@ export async function uploadImage(
     ContentType: contentType,
   });
 
-  await s3Client.send(command);
+  try {
+    await s3Client.send(command);
+  } catch (error: unknown) {
+    const err = error as { name?: string; $metadata?: { httpStatusCode?: number } };
+    if (err?.name === "NoSuchBucket" || err?.$metadata?.httpStatusCode === 404) {
+      await s3Client.send(new CreateBucketCommand({ Bucket: bucket }));
+      await s3Client.send(command);
+    } else {
+      throw error;
+    }
+  }
+
   return key;
 }
 

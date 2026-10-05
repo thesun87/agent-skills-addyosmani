@@ -94,7 +94,8 @@ export async function uploadProductImageAction(
       key: storedKey,
       url: publicUrl(storedKey),
     };
-  } catch {
+  } catch (error) {
+    console.error("uploadProductImageAction error:", error);
     return {
       success: false,
       error: "Tải ảnh lên thất bại. Vui lòng thử lại sau.",
