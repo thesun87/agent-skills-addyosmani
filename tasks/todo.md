@@ -429,16 +429,16 @@
 
 ---
 
-### - [ ] T18: Menu seed đầy đủ + ảnh có giấy phép
+### - [x] T18: Menu seed đầy đủ + ảnh có giấy phép
 
 **Description:** Seed toàn bộ menu ~21 món theo bảng trong SPEC kèm tuỳ chọn chuẩn. Chọn ảnh Unsplash/Pexels phù hợp từng món, nén WebP ≤150KB 1:1, lưu `prisma/seed-images/`, ghi `CREDITS.md` (tác giả, link, giấy phép); seed upload ảnh lên Storage local qua `src/lib/storage.ts`.
 
 **Acceptance criteria:**
-- [ ] `pnpm db:seed` idempotent (chạy 2 lần không trùng dữ liệu)
-- [ ] Mỗi ảnh có dòng tương ứng trong CREDITS.md
+- [x] `pnpm db:seed` idempotent (chạy 2 lần không trùng dữ liệu)
+- [x] Mỗi ảnh có dòng tương ứng trong CREDITS.md
 
 **Verification:**
-- [ ] Manual: reset DB → seed → menu đủ món có ảnh
+- [x] Manual: reset DB → seed → menu đủ món có ảnh
 
 **Dependencies:** T15
 **Files likely touched:** `prisma/seed.ts`, `prisma/seed-data/menu.ts`, `prisma/seed-images/*`, `prisma/seed-images/CREDITS.md`

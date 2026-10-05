@@ -1,12 +1,15 @@
+import fs from "fs";
+import path from "path";
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
+import { uploadImage } from "../src/lib/storage";
 import { SEED_MENU, SEED_OPTION_GROUPS, type SeedProduct } from "./seed-data/menu";
 
 const db = new PrismaClient();
 
-async function seedSharedOptionGroups() {
+async function seedSharedOptionGroups(client: PrismaClient = db) {
   for (const [groupIndex, group] of Object.values(SEED_OPTION_GROUPS).entries()) {
-    await db.optionGroup.upsert({
+    await client.optionGroup.upsert({
       where: { id: group.id },
       create: {
         id: group.id,
@@ -24,8 +27,8 @@ async function seedSharedOptionGroups() {
     });
 
     // Re-sync options under this group
-    await db.option.deleteMany({ where: { groupId: group.id } });
-    await db.option.createMany({
+    await client.option.deleteMany({ where: { groupId: group.id } });
+    await client.option.createMany({
       data: group.options.map((option, optionIndex) => ({
         groupId: group.id,
         name: option.name,
@@ -37,16 +40,38 @@ async function seedSharedOptionGroups() {
   }
 }
 
-async function seedProduct(categoryId: string, product: SeedProduct, sortOrder: number) {
+async function seedProduct(
+  client: PrismaClient = db,
+  categoryId: string,
+  product: SeedProduct,
+  sortOrder: number,
+) {
+  let imageKey: string | undefined = undefined;
+
+  if (product.imageFile) {
+    const imagePath = path.resolve(__dirname, "seed-images", product.imageFile);
+    if (fs.existsSync(imagePath)) {
+      const buffer = fs.readFileSync(imagePath);
+      const key = `products/${product.id}.webp`;
+      try {
+        await uploadImage(key, buffer, "image/webp");
+        imageKey = key;
+      } catch (err) {
+        console.warn(`Could not upload seed image for ${product.id}:`, err);
+      }
+    }
+  }
+
   const fields = {
     categoryId,
     name: product.name,
     description: product.description,
     basePrice: product.basePrice,
     sortOrder,
+    ...(imageKey ? { imageKey } : {}),
   };
 
-  await db.product.upsert({
+  await client.product.upsert({
     where: { id: product.id },
     create: {
       id: product.id,
@@ -64,24 +89,24 @@ async function seedProduct(categoryId: string, product: SeedProduct, sortOrder: 
   });
 }
 
-async function main() {
-  await seedSharedOptionGroups();
+export async function seedDatabase(client: PrismaClient = db) {
+  await seedSharedOptionGroups(client);
 
   for (const [categoryIndex, category] of SEED_MENU.entries()) {
     const fields = { name: category.name, sortOrder: categoryIndex };
-    await db.category.upsert({
+    await client.category.upsert({
       where: { id: category.id },
       create: { id: category.id, ...fields },
       update: fields,
     });
 
     for (const [productIndex, product] of category.products.entries()) {
-      await seedProduct(category.id, product, productIndex);
+      await seedProduct(client, category.id, product, productIndex);
     }
   }
 
   // Seed default shop settings (07:00 - 22:00, ship 15k, free threshold 150k, 5km)
-  await db.shopSettings.upsert({
+  await client.shopSettings.upsert({
     where: { id: "default" },
     create: {
       id: "default",
@@ -110,7 +135,7 @@ async function main() {
   const adminEmail = process.env.SEED_ADMIN_EMAIL || "admin@tuanlinh.coffee";
   const adminPassword = process.env.SEED_ADMIN_PASSWORD || "Admin123!@";
   const passwordHash = await bcrypt.hash(adminPassword, 10);
-  await db.adminUser.upsert({
+  await client.adminUser.upsert({
     where: { email: adminEmail },
     create: {
       email: adminEmail,
@@ -121,14 +146,24 @@ async function main() {
   });
 
   const productCount = SEED_MENU.reduce((sum, c) => sum + c.products.length, 0);
+  return {
+    categoryCount: SEED_MENU.length,
+    productCount,
+  };
+}
+
+async function main() {
+  const result = await seedDatabase(db);
   console.info(
-    `Seeded ${SEED_MENU.length} categories, ${productCount} products, ShopSettings, and AdminUser.`,
+    `Seeded ${result.categoryCount} categories, ${result.productCount} products, ShopSettings, and AdminUser.`,
   );
 }
 
-main()
-  .catch((error: unknown) => {
-    console.error("Seed failed:", error);
-    process.exitCode = 1;
-  })
-  .finally(() => db.$disconnect());
+if (process.env.NODE_ENV !== "test" && require.main === module) {
+  main()
+    .catch((error: unknown) => {
+      console.error("Seed failed:", error);
+      process.exitCode = 1;
+    })
+    .finally(() => db.$disconnect());
+}
