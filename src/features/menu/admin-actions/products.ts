@@ -3,6 +3,7 @@
 import { db } from "@/lib/db";
 import { requireAdmin, UnauthorizedError } from "@/features/auth/require-admin";
 import { revalidatePath } from "next/cache";
+import { publicUrl } from "@/lib/storage";
 
 export interface CreateProductInput {
   name: string;
@@ -35,7 +36,7 @@ export interface ActionResult<T = unknown> {
 
 export async function getAdminProducts(categoryId?: string) {
   await requireAdmin();
-  return db.product.findMany({
+  const products = await db.product.findMany({
     where: {
       ...(categoryId ? { categoryId } : {}),
     },
@@ -56,6 +57,11 @@ export async function getAdminProducts(categoryId?: string) {
       },
     },
   });
+
+  return products.map((p) => ({
+    ...p,
+    imageUrl: publicUrl(p.imageKey),
+  }));
 }
 
 export type AdminProductItem = Awaited<ReturnType<typeof getAdminProducts>>[number];
@@ -134,7 +140,13 @@ export async function createProductAction(
   revalidatePath("/");
   revalidatePath("/(shop)");
 
-  return { success: true, product };
+  return {
+    success: true,
+    product: {
+      ...product,
+      imageUrl: publicUrl(product.imageKey),
+    },
+  };
 }
 
 export async function updateProductAction(
@@ -235,7 +247,13 @@ export async function updateProductAction(
   revalidatePath("/");
   revalidatePath("/(shop)");
 
-  return { success: true, product };
+  return {
+    success: true,
+    product: {
+      ...product,
+      imageUrl: publicUrl(product.imageKey),
+    },
+  };
 }
 
 export async function toggleProductAvailabilityAction(

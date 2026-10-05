@@ -11,6 +11,10 @@ import {
   toggleProductAvailabilityAction,
   archiveProductAction,
 } from "@/features/menu/admin-actions/products";
+import {
+  uploadProductImageAction,
+  deleteProductImageAction,
+} from "@/features/menu/admin-actions/product-image";
 import { formatVnd } from "@/lib/money";
 
 interface ProductManagerProps {
@@ -37,6 +41,9 @@ export function ProductManager({
   const [formDescription, setFormDescription] = useState("");
   const [formSelectedGroupIds, setFormSelectedGroupIds] = useState<string[]>([]);
   const [formIsAvailable, setFormIsAvailable] = useState(true);
+  const [selectedImageFile, setSelectedImageFile] = useState<File | null>(null);
+  const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null);
+  const [removeImageFlag, setRemoveImageFlag] = useState(false);
 
   // Loading & error
   const [isPending, setIsPending] = useState(false);
@@ -60,6 +67,9 @@ export function ProductManager({
     setFormDescription("");
     setFormSelectedGroupIds([]);
     setFormIsAvailable(true);
+    setSelectedImageFile(null);
+    setImagePreviewUrl(null);
+    setRemoveImageFlag(false);
     setFormError(null);
     setIsModalOpen(true);
   };
@@ -72,8 +82,37 @@ export function ProductManager({
     setFormDescription(p.description || "");
     setFormSelectedGroupIds(p.optionGroups.map((g) => g.id));
     setFormIsAvailable(p.isAvailable);
+    setSelectedImageFile(null);
+    setImagePreviewUrl(p.imageUrl || null);
+    setRemoveImageFlag(false);
     setFormError(null);
     setIsModalOpen(true);
+  };
+
+  const handleImageFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (file.size > 2 * 1024 * 1024) {
+      setFormError("Kích thước file ảnh không được vượt quá 2MB.");
+      return;
+    }
+
+    if (!["image/jpeg", "image/png", "image/webp"].includes(file.type)) {
+      setFormError("Chỉ chấp nhận file ảnh định dạng JPEG, PNG hoặc WebP.");
+      return;
+    }
+
+    setSelectedImageFile(file);
+    setImagePreviewUrl(URL.createObjectURL(file));
+    setRemoveImageFlag(false);
+    setFormError(null);
+  };
+
+  const handleRemoveImage = () => {
+    setSelectedImageFile(null);
+    setImagePreviewUrl(null);
+    setRemoveImageFlag(true);
   };
 
   const closeModal = () => {
@@ -139,6 +178,8 @@ export function ProductManager({
       setIsPending(true);
       setFormError(null);
 
+      let savedProduct: AdminProductItem;
+
       if (editingProduct) {
         const res = await updateProductAction(editingProduct.id, {
           name: formName.trim(),
@@ -149,14 +190,16 @@ export function ProductManager({
           optionGroupIds: formSelectedGroupIds,
         });
 
-        const updated = res.product;
-        if (!res.success || !updated) {
+        if (!res.success || !res.product) {
           setFormError(res.error || "Không thể cập nhật món.");
           return;
         }
+        savedProduct = res.product;
 
-        setProducts((prev) => prev.map((p) => (p.id === editingProduct.id ? updated : p)));
-        showToast("Đã lưu món ăn!", "success");
+        if (removeImageFlag && editingProduct.imageUrl) {
+          await deleteProductImageAction(editingProduct.id);
+          savedProduct = { ...savedProduct, imageUrl: null, imageKey: null };
+        }
       } else {
         const res = await createProductAction({
           name: formName.trim(),
@@ -167,13 +210,35 @@ export function ProductManager({
           optionGroupIds: formSelectedGroupIds,
         });
 
-        const created = res.product;
-        if (!res.success || !created) {
+        if (!res.success || !res.product) {
           setFormError(res.error || "Không thể tạo món mới.");
           return;
         }
+        savedProduct = res.product;
+      }
 
-        setProducts((prev) => [...prev, created]);
+      // If a new image file was selected, upload via S3 action
+      if (selectedImageFile) {
+        const formData = new FormData();
+        formData.append("file", selectedImageFile);
+        formData.append("productId", savedProduct.id);
+        const uploadRes = await uploadProductImageAction(formData);
+        if (uploadRes.success && uploadRes.url) {
+          savedProduct = {
+            ...savedProduct,
+            imageUrl: uploadRes.url,
+            imageKey: uploadRes.key || savedProduct.imageKey,
+          };
+        } else if (!uploadRes.success) {
+          showToast(uploadRes.error || "Không thể tải ảnh lên S3.", "danger");
+        }
+      }
+
+      if (editingProduct) {
+        setProducts((prev) => prev.map((p) => (p.id === editingProduct.id ? savedProduct : p)));
+        showToast("Đã lưu món ăn!", "success");
+      } else {
+        setProducts((prev) => [...prev, savedProduct]);
         showToast("Đã thêm món mới vào thực đơn!", "success");
       }
 
@@ -252,6 +317,7 @@ export function ProductManager({
           <table className="items-table w-full text-left border-collapse text-sm">
             <thead>
               <tr className="border-b border-border text-xs uppercase tracking-wider text-text-muted bg-surface/50">
+                <th className="py-3 px-3 w-14 text-center">Ảnh</th>
                 <th className="py-3 px-3">Tên món</th>
                 <th className="py-3 px-3">Danh mục</th>
                 <th className="py-3 px-3">Giá niêm yết</th>
@@ -263,13 +329,27 @@ export function ProductManager({
             <tbody id="menu-table-body" className="divide-y divide-border-light">
               {products.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="py-8 text-center text-text-muted">
+                  <td colSpan={7} className="py-8 text-center text-text-muted">
                     Chưa có món nào. Bấm &quot;Thêm món mới&quot; để bổ sung vào thực đơn.
                   </td>
                 </tr>
               ) : (
                 products.map((p) => (
                   <tr key={p.id} className="hover:bg-surface/30 transition-colors">
+                    <td className="py-3 px-3 text-center">
+                      {p.imageUrl ? (
+                        /* eslint-disable-next-line @next/next/no-img-element */
+                        <img
+                          src={p.imageUrl}
+                          alt={p.name}
+                          className="w-11 h-11 object-cover rounded-lg border border-border mx-auto shadow-2xs"
+                        />
+                      ) : (
+                        <div className="w-11 h-11 rounded-lg bg-surface border border-border flex items-center justify-center text-lg text-text-muted mx-auto select-none">
+                          ☕
+                        </div>
+                      )}
+                    </td>
                     <td className="py-3.5 px-3">
                       <div className="font-semibold text-text">{p.name}</div>
                       {p.description && (
@@ -429,6 +509,67 @@ export function ProductManager({
                     onChange={(e) => setFormDescription(e.target.value)}
                     placeholder="Mô tả hương vị, nguyên liệu đặc trưng..."
                   />
+                </div>
+
+                {/* Product Image Upload */}
+                <div className="form-group flex flex-col gap-1.5">
+                  <label className="form-label text-xs font-semibold text-text">
+                    Hình ảnh món
+                  </label>
+                  <div className="flex items-center gap-4 p-3 rounded-xl border border-dashed border-border bg-surface/30">
+                    {imagePreviewUrl ? (
+                      <div className="relative group shrink-0">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={imagePreviewUrl}
+                          alt="Preview món"
+                          className="w-16 h-16 object-cover rounded-lg border border-border shadow-2xs"
+                        />
+                        <button
+                          type="button"
+                          onClick={handleRemoveImage}
+                          title="Xoá ảnh này"
+                          className="absolute -top-2 -right-2 bg-red-600 hover:bg-red-700 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs shadow-xs cursor-pointer"
+                        >
+                          &times;
+                        </button>
+                      </div>
+                    ) : (
+                      <div className="w-16 h-16 rounded-lg bg-surface border border-border flex items-center justify-center text-2xl text-text-muted shrink-0 select-none">
+                        📷
+                      </div>
+                    )}
+                    <div className="flex-1 flex flex-col gap-1">
+                      <div className="flex items-center gap-2">
+                        <label
+                          htmlFor="prod-image-input"
+                          className="btn-secondary-sm inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border bg-white hover:bg-surface text-xs font-semibold text-text shadow-2xs cursor-pointer transition-colors"
+                        >
+                          <span>📁</span>
+                          <span>{imagePreviewUrl ? "Đổi ảnh khác" : "Tải ảnh từ máy"}</span>
+                        </label>
+                        <input
+                          id="prod-image-input"
+                          type="file"
+                          accept="image/jpeg,image/png,image/webp"
+                          className="sr-only"
+                          onChange={handleImageFileChange}
+                        />
+                        {imagePreviewUrl && (
+                          <button
+                            type="button"
+                            onClick={handleRemoveImage}
+                            className="text-xs text-red-600 hover:text-red-700 hover:underline font-medium cursor-pointer"
+                          >
+                            Xoá ảnh
+                          </button>
+                        )}
+                      </div>
+                      <span className="text-[11px] text-text-muted">
+                        Chấp nhận JPEG, PNG, WebP (Tối đa 2MB). Lưu trữ S3.
+                      </span>
+                    </div>
+                  </div>
                 </div>
 
                 {/* Shared option groups checklist */}
