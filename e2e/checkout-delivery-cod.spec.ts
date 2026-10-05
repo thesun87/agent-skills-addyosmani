@@ -26,9 +26,9 @@ test.describe("E2E #1: Đặt giao hàng COD (Success Criteria #1)", () => {
     await expect(sheet).toBeVisible();
 
     // Select required options: Size (M), Đường (100%), Đá (Đá vừa)
-    await sheet.getByRole("button", { name: /^M$/i }).click();
-    await sheet.getByRole("button", { name: "100%" }).click();
-    await sheet.getByRole("button", { name: "Đá vừa" }).click();
+    await sheet.getByRole("button", { name: /Size M|^M$/i }).click();
+    await sheet.getByRole("button", { name: /100% đường|100%/i }).click();
+    await sheet.getByRole("button", { name: /Đá vừa/i }).click();
 
     const addToCartBtn = sheet.getByRole("button", { name: /Thêm vào giỏ/i });
     await expect(addToCartBtn).toBeEnabled();

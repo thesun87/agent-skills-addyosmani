@@ -24,9 +24,9 @@ test.describe("E2E #3: Admin xử lý đơn (Checkpoint 3, A1, A4, A5, A6)", () 
     const sheet = page.getByRole("dialog");
     await expect(sheet).toBeVisible();
 
-    await sheet.getByRole("button", { name: /^M$/i }).click();
-    await sheet.getByRole("button", { name: "100%" }).click();
-    await sheet.getByRole("button", { name: "Đá vừa" }).click();
+    await sheet.getByRole("button", { name: /Size M|^M$/i }).click();
+    await sheet.getByRole("button", { name: /100% đường|100%/i }).click();
+    await sheet.getByRole("button", { name: /Đá vừa/i }).click();
 
     const addToCartBtn = sheet.getByRole("button", { name: /Thêm vào giỏ/i });
     await addToCartBtn.click();
